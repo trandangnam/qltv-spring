@@ -1,0 +1,51 @@
+package qltv.web.controllers;
+
+import jakarta.validation.Valid;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import qltv.web.dto.ThanhVienDTO;
+import qltv.web.models.ThanhVien;
+import qltv.web.services.ThanhVienService;
+import qltv.web.services.impl.ThanhVienServiceImpl;
+
+@Controller
+public class AuthController {
+    private ThanhVienService tvService;
+
+    public AuthController(ThanhVienService tvService) {
+        this.tvService = tvService;
+    }
+    
+    @GetMapping("/register")
+    public String getRegisterForm(Model model) {
+        ThanhVienDTO thanhVien = new ThanhVienDTO();
+        model.addAttribute("thanhVien", thanhVien);
+        return "register";
+    }
+    
+    @PostMapping("/register/save")
+    public String register(@Valid @ModelAttribute("thanhVien") ThanhVienDTO thanhVien, 
+            BindingResult result, Model model) {
+        ThanhVienDTO tvDTO = tvService.findMemberById(thanhVien.getMaTV());
+        ThanhVien tv = ThanhVienServiceImpl.mapToThanhVien(tvDTO);
+        
+        if (tv.getHoTen() != null) {
+            return "redirect:/register?fail";
+        }
+        if (result.hasErrors()) {
+            model.addAttribute("thanhVien", thanhVien);
+            return "register";
+        }
+        tvService.saveThanhVien(thanhVien);
+        return "redirect:/login?success";
+    }
+    
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
+}

@@ -1,0 +1,87 @@
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{dashboard-layout}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thành viên</title>
+  </head>
+  <body>
+    <div layout:fragment="body">
+      <div class="block block-rounded">
+        <div class="block-header block-header-default">
+          <h3 class="block-title">Danh sách thành viên</h3>
+          <div class="block-options">
+            <a href="/thanhvien/new" class="btn btn-success">
+              <i class="fa fa-fw fa-plus me-1"></i> Thêm thành viên
+            </a>
+          </div>
+        </div>
+        <div class="block-content">
+          <form th:action="@{/thanhvien/search}">
+            <div class="input-group">
+              <input
+                type="search"
+                class="form-control"
+                placeholder="Tìm kiếm theo tên..."
+                name="query"
+              />
+              <button type="submit" class="btn btn-alt-primary">
+                <i class="fa fa-search me-1 opacity-50"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="block-content">
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-vcenter">
+              <thead>
+                <tr>
+                  <th>Mã</th>
+                  <th>Họ tên</th>
+                  <th>Khoa</th>
+                  <th>Ngành</th>
+                  <th>SĐT</th>
+                  <th>Email</th>
+                  <th class="text-center" style="width: 100px">Hành động</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="tv : ${listThanhVien}">
+                  <td class="fw-semibold fs-sm" th:utext="${tv.maTV}"></td>
+                  <td class="fs-sm" th:utext="${tv.hoTen}"></td>
+                  <td class="fs-sm" th:utext="${tv.khoa}"></td>
+                  <td class="fs-sm" th:utext="${tv.nganh}"></td>
+                  <td class="fs-sm" th:utext="${tv.sdt}"></td>
+                  <td class="fs-sm" th:utext="${tv.email}"></td>
+                  <td class="text-center">
+                    <div class="btn-group">
+                      <a
+                        th:href="@{/thanhvien/{maTV}/edit(maTV=${tv.maTV})}"
+                        class="btn btn-sm btn-alt-secondary"
+                        data-bs-toggle="tooltip"
+                        title="Sửa"
+                      >
+                        <i class="fa fa-fw fa-pencil-alt"></i>
+                      </a>
+                      <a
+                        th:href="@{/thanhvien/{maTV}/delete(maTV=${tv.maTV})}"
+                        class="btn btn-sm btn-alt-secondary"
+                        data-bs-toggle="tooltip"
+                        title="Xoá"
+                      >
+                        <i class="fa fa-fw fa-times"></i>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

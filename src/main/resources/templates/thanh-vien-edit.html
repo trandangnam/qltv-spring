@@ -1,0 +1,165 @@
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{dashboard-layout}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sửa thông tin thành viên</title>
+    <script defer th:src="@{/assets/js/pages/thanh-vien-edit.js}"></script>
+  </head>
+  <body>
+    <div layout:fragment="body">
+      <div class="content content-full">
+        <div class="block-header block-header-default">
+          <h3 class="block-title">Sửa thông tin thành viên</h3>
+        </div>
+        <div class="block block-content">
+          <form
+            role="form"
+            method="post"
+            th:action="@{/thanhvien/{maTV}/edit(maTV=${thanhVien.maTV})}"
+            th:object="${thanhVien}"
+          >
+            <div class="mb-4">
+              <label class="form-label" for="val-matv">Mã thành viên</label>
+              <input
+                type="text"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('maTV')} ? is-invalid : ''"
+                id="val-matv"
+                name="val-matv"
+                th:field="*{maTV}"
+                placeholder="Nhập mã thành viên"
+                disabled
+              />
+              <div
+                th:if="${#fields.hasErrors('maTV')}"
+                class="invalid-feedback"
+                th:errors="*{maTV}"
+              ></div>
+            </div>
+            <div class="mb-4">
+              <label class="form-label" for="val-hoten"
+                >Họ tên <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('hoTen')} ? is-invalid : ''"
+                id="val-hoten"
+                name="val-hoten"
+                th:field="*{hoTen}"
+                placeholder="Nhập họ tên"
+              />
+              <div
+                th:if="${#fields.hasErrors('hoTen')}"
+                class="invalid-feedback"
+                th:errors="*{hoTen}"
+              ></div>
+            </div>
+            <div class="mb-4">
+              <label class="form-label" for="val-khoa"
+                >Khoa <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('khoa')} ? is-invalid : ''"
+                id="val-khoa"
+                name="val-khoa"
+                th:field="*{khoa}"
+                placeholder="Nhập khoa"
+              />
+              <div
+                th:if="${#fields.hasErrors('khoa')}"
+                class="invalid-feedback"
+                th:errors="*{khoa}"
+              ></div>
+            </div>
+            <div class="mb-4">
+              <label class="form-label" for="val-nganh"
+                >Ngành <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('nganh')} ? is-invalid : ''"
+                id="val-nganh"
+                name="val-nganh"
+                th:field="*{nganh}"
+                placeholder="Nhập ngành"
+              />
+              <div
+                th:if="${#fields.hasErrors('nganh')}"
+                class="invalid-feedback"
+                th:errors="*{nganh}"
+              ></div>
+            </div>
+            <div class="mb-4">
+              <label class="form-label" for="val-sdt"
+                >Số điện thoại <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('sdt')} ? is-invalid : ''"
+                id="val-sdt"
+                name="val-sdt"
+                th:field="*{sdt}"
+                placeholder="Nhập số điện thoại"
+              />
+              <div
+                th:if="${#fields.hasErrors('sdt')}"
+                class="invalid-feedback"
+                th:errors="*{sdt}"
+              ></div>
+            </div>
+            <div class="mb-4">
+              <label class="form-label" for="val-email"
+                >Email <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('email')} ? is-invalid : ''"
+                id="val-email"
+                name="val-email"
+                th:field="*{email}"
+                placeholder="Nhập email hợp lệ"
+              />
+              <div
+                th:if="${#fields.hasErrors('email')}"
+                class="invalid-feedback"
+                th:errors="*{email}"
+              ></div>
+            </div>
+            <div class="mb-4">
+              <label class="form-label" for="val-password"
+                >Mật khẩu <span class="text-danger">*</span></label
+              >
+              <input
+                type="password"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('password')} ? is-invalid : ''"
+                id="val-password"
+                name="val-password"
+                th:field="*{password}"
+                placeholder="Nhập mật khẩu"
+              />
+              <div
+                th:if="${#fields.hasErrors('password')}"
+                class="invalid-feedback"
+                th:errors="*{password}"
+              ></div>
+            </div>
+            <div class="mb-4">
+              <button type="submit" class="btn btn-alt-primary">Lưu</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
