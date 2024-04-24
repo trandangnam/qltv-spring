@@ -15,6 +15,6 @@ public interface ThanhVienService {
     public void updateThanhVien(ThanhVienDTO thanhVien);
 
     public void deleteThanhVien(long maTV);
-    
+
     public List<ThanhVienDTO> searchThanhVien(String query);
 }
