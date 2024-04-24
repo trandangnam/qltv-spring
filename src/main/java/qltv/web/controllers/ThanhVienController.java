@@ -4,8 +4,6 @@ import jakarta.validation.Valid;
 import qltv.web.dto.ThanhVienDTO;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -85,7 +83,7 @@ public class ThanhVienController {
     public String updateThanhVien(@PathVariable("maTV") long maTV,
             @Valid @ModelAttribute("thanhVien") ThanhVienDTO thanhVien,
             BindingResult result, Model model) {
-        
+
         String username = SecurityUtil.getUserSession();
         if (username == null) {
             return "redirect:/login";

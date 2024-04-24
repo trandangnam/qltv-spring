@@ -26,10 +26,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         ThanhVien user = tvRepository.findFirstByMaTV(username);
-        
+
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        
+
         if (user != null) {
             User authUser = new User(
                     String.valueOf(user.getMaTV()),
@@ -40,7 +40,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         } else {
             throw new UsernameNotFoundException("Mã thành viên hoặc mật khẩu không hợp lệ");
         }
-        
+
     }
 
 }

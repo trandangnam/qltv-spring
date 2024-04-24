@@ -15,12 +15,13 @@ import qltv.web.services.impl.ThanhVienServiceImpl;
 
 @Controller
 public class AuthController {
+
     private ThanhVienService tvService;
 
     public AuthController(ThanhVienService tvService) {
         this.tvService = tvService;
     }
-    
+
     @GetMapping("/register")
     public String getRegisterForm(Model model) {
         String username = SecurityUtil.getUserSession();
@@ -31,18 +32,18 @@ public class AuthController {
         model.addAttribute("thanhVien", thanhVien);
         return "register";
     }
-    
+
     @PostMapping("/register/save")
-    public String register(@Valid @ModelAttribute("thanhVien") ThanhVienDTO thanhVien, 
+    public String register(@Valid @ModelAttribute("thanhVien") ThanhVienDTO thanhVien,
             BindingResult result, Model model) {
         String username = SecurityUtil.getUserSession();
         if (username != null) {
             return "redirect:/thanhvien";
         }
-        
+
         ThanhVienDTO tvDTO = tvService.findMemberById(thanhVien.getMaTV());
         ThanhVien tv = ThanhVienServiceImpl.mapToThanhVien(tvDTO);
-        
+
         if (tv.getHoTen() != null) {
             return "redirect:/register?fail";
         }
@@ -53,14 +54,13 @@ public class AuthController {
         tvService.saveThanhVien(thanhVien);
         return "redirect:/login?success";
     }
-    
+
     @GetMapping("/login")
     public String loginPage() {
         String username = SecurityUtil.getUserSession();
         if (username != null) {
             return "redirect:/thanhvien";
         }
-        
         return "login";
     }
 }
