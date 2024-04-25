@@ -11,4 +11,7 @@ public interface XuLyRepository extends JpaRepository<XuLy, Long> { // trong Ä‘Ã
     List<XuLy> searchXuLy(@Param("query") String query);
     
     XuLy findByMaXL(long maXuLy);
+
+    @Query("SELECT MAX(xuLy.maXL) FROM XuLy xuLy")
+    Long getMaxMaXL();
 }

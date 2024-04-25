@@ -123,4 +123,6 @@ public class ThanhVienController {
         model.addAttribute("listThanhVien", listThanhVien);
         return "thanh-vien-list";
     }
+
+    
 }

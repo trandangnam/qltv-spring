@@ -18,4 +18,8 @@ public interface XuLyService {
     public void deleteXuLy(long maXL);
 
     public List<XuLyDTO> searchXuLy(String query);
+    
+    public Long getMaxMaXL();
+
+    public String validateXuLy(String maTV, String hinhThucXL, String soTien);
 }
