@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import qltv.web.dto.XuLyDTO;
 import qltv.web.models.XuLy;
 import qltv.web.repositories.XuLyRepository;
@@ -17,11 +18,12 @@ import qltv.web.services.XuLyService;
  *
  * @author Acer
  */
+@Service
 public class XuLyServiceImpl implements XuLyService{
     XuLyRepository xuLyRepository;
     
     @Autowired
-    XuLyServiceImpl(XuLyRepository xuLyReponsitory){
+    public XuLyServiceImpl(XuLyRepository xuLyReponsitory){
         this.xuLyRepository = xuLyReponsitory;
     }
     
@@ -83,8 +85,8 @@ public class XuLyServiceImpl implements XuLyService{
     }
 
     @Override
-    public List<XuLyDTO> searchXuLy(String query) {
-        List<XuLy> xuLys = xuLyRepository.searchXuLy(query);
+    public List<XuLyDTO> searchXuLy(String maTV) {
+        List<XuLy> xuLys = xuLyRepository.searchXuLy(maTV);
         return xuLys.stream().map(xuLy -> mapToXuLyDTO(xuLy)).collect(Collectors.toList());
     }
 }
