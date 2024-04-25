@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+
+    <title>Quản lý thành viên</title>
+    <link rel="shortcut icon" th:href="@{/assets/media/favicons/favicon.png}" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      th:href="@{assets/media/favicons/favicon-192x192.png}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      th:href="@{assets/media/favicons/apple-touch-icon-180x180.png}"
+    />
+
+    <link
+      rel="stylesheet"
+      id="css-main"
+      th:href="@{assets/css/oneui.min.css}"
+    />
+    <script defer src="@{assets/js/oneui.app.min.js}"></script>
+    <script defer src="@{assets/js/pages/index.js}"></script>
+  </head>
+
+  <body>
+    <div
+      id="page-container"
+      class="sidebar-dark side-scroll page-header-fixed page-header-dark main-content-boxed"
+    >
+      <!-- Sidebar -->
+      <nav id="sidebar" aria-label="Main Navigation">
+        <!-- Side Header -->
+        <div class="content-header bg-white-5">
+          <!-- Logo -->
+          <a class="fw-semibold text-dual" th:href="@{/}">
+            <span class="smini-visible">
+              <i class="fa fa-circle-notch text-primary"></i>
+            </span>
+            <span class="smini-hide fs-5 tracking-wider">QLTV</span>
+          </a>
+          <!-- END Logo -->
+
+          <!-- Extra -->
+          <div>
+            <!-- Close Sidebar, Visible only on mobile screens -->
+            <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
+            <a
+              class="d-lg-none btn btn-sm btn-alt-secondary ms-1"
+              data-toggle="layout"
+              data-action="sidebar_close"
+              th:href="@{#}"
+            >
+              <i class="fa fa-fw fa-times"></i>
+            </a>
+            <!-- END Close Sidebar -->
+          </div>
+          <!-- END Extra -->
+        </div>
+        <!-- END Side Header -->
+
+        <!-- Sidebar Scrolling -->
+        <div class="js-sidebar-scroll">
+          <!-- Side Navigation -->
+          <div class="content-side">
+            <ul class="nav-main">
+              <li class="nav-main-item">
+                <a class="nav-main-link" th:href="@{/register}">
+                  <i class="nav-main-link-icon si si-rocket"></i>
+                  <span class="nav-main-link-name">Đăng ký</span>
+                </a>
+              </li>
+              <li class="nav-main-item">
+                <a class="nav-main-link active" th:href="@{/login}">
+                  <i class="nav-main-link-icon si si-home"></i>
+                  <span class="nav-main-link-name">Đăng nhập</span>
+                </a>
+              </li>
+              <li class="nav-main-item">
+                <a class="nav-main-link" th:href="@{/profile}">
+                  <i class="nav-main-link-icon si si-wallet"></i>
+                  <span class="nav-main-link-name">Cá nhân</span>
+                </a>
+              </li>
+              <li class="nav-main-item">
+                <a class="nav-main-link" th:href="@{/logout}">
+                  <i class="nav-main-link-icon si si-envelope"></i>
+                  <span class="nav-main-link-name">Đăng xuất</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- END Side Navigation -->
+        </div>
+        <!-- END Sidebar Scrolling -->
+      </nav>
+      <!-- END Sidebar -->
+
+      <!-- Header -->
+      <header id="page-header">
+        <!-- Header Content -->
+        <div class="content-header">
+          <!-- Left Section -->
+          <div class="d-flex align-items-center">
+            <!-- Logo -->
+            <a
+              class="fw-semibold fs-5 tracking-wider text-dual me-3"
+              th:href="@{/}"
+            >
+              QLTV
+            </a>
+            <!-- END Logo -->
+          </div>
+          <!-- END Left Section -->
+
+          <!-- Right Section -->
+          <div class="d-flex align-items-center">
+            <!-- Menu -->
+            <div class="d-none d-lg-block">
+              <ul class="nav-main nav-main-horizontal nav-main-hover">
+                <li class="nav-main-item">
+                  <a class="nav-main-link" th:href="@{/register}">
+                    <i class="nav-main-link-icon si si-rocket"></i>
+                    <span class="nav-main-link-name">Đăng ký</span>
+                  </a>
+                </li>
+                <li class="nav-main-item">
+                  <a class="nav-main-link active" th:href="@{/login}">
+                    <i class="nav-main-link-icon si si-home"></i>
+                    <span class="nav-main-link-name">Đăng nhập</span>
+                  </a>
+                </li>
+                <li class="nav-main-item">
+                  <a
+                    class="nav-main-link nav-main-link-submenu"
+                    data-toggle="submenu"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    th:href="@{#}"
+                  >
+                    <i class="nav-main-link-icon fa fa-brush"></i>
+                  </a>
+                  <ul class="nav-main-submenu nav-main-submenu-right">
+                    <li class="nav-main-item">
+                      <a class="nav-main-link" th:href="@{/profile}">
+                        <i
+                          class="nav-main-link-icon fa fa-square text-default"
+                        ></i>
+                        <span class="nav-main-link-name">Cá nhân</span>
+                      </a>
+                    </li>
+                    <li class="nav-main-item">
+                      <a class="nav-main-link" th:href="@{/logout}">
+                        <i
+                          class="nav-main-link-icon fa fa-square text-amethyst"
+                        ></i>
+                        <span class="nav-main-link-name">Đăng xuất</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <!-- END Menu -->
+
+            <!-- Toggle Sidebar -->
+            <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
+            <button
+              type="button"
+              class="btn btn-sm btn-alt-secondary d-lg-none ms-1"
+              data-toggle="layout"
+              data-action="sidebar_toggle"
+            >
+              <i class="fa fa-fw fa-bars"></i>
+            </button>
+            <!-- END Toggle Sidebar -->
+          </div>
+          <!-- END Right Section -->
+        </div>
+        <!-- END Header Content -->
+
+        <!-- Header Search -->
+        <div id="page-header-search" class="overlay-header bg-body-extra-light">
+          <div class="content-header">
+            <form class="w-100" method="POST">
+              <div class="input-group input-group-sm">
+                <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
+                <button
+                  type="button"
+                  class="btn btn-alt-danger"
+                  data-toggle="layout"
+                  data-action="header_search_off"
+                >
+                  <i class="fa fa-fw fa-times-circle"></i>
+                </button>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Search or hit ESC.."
+                  id="page-header-search-input"
+                  name="page-header-search-input"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- END Header Search -->
+
+        <!-- Header Loader -->
+        <!-- Please check out the Loaders page under Components category to see examples of showing/hiding it -->
+        <div id="page-header-loader" class="overlay-header bg-primary-lighter">
+          <div class="content-header">
+            <div class="w-100 text-center">
+              <i class="fa fa-fw fa-circle-notch fa-spin text-primary"></i>
+            </div>
+          </div>
+        </div>
+        <!-- END Header Loader -->
+      </header>
+      <!-- END Header -->
+
+      <!-- Main Container -->
+      <main id="main-container">
+        <!-- Hero -->
+        <div
+          class="bg-image"
+          style="background-image: url('assets/media/photos/photo36@2x.jpg')"
+        >
+          <div class="bg-primary-dark-op py-9 overflow-hidden">
+            <div class="content content-full text-center">
+              <h1 class="display-4 fw-semibold text-white mb-2">
+                Đặt chỗ mượn thiết bị
+              </h1>
+              <p class="fs-4 fw-normal text-white-50 mb-5">
+                Quản lý thành viên
+              </p>
+              <div>
+                <button class="btn btn-primary px-3 py-2 m-1">
+                  <i class="fa fa-fw fa-link opacity-50 me-1"></i> Xem thiết bị
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END Hero -->
+
+        <section>
+          <div th:each="tb : ${thietBiResponse.content}">
+            <span th:utext="${tb.maTB}"></span>
+            <span th:utext="${tb.tenTB}"></span>
+            <span th:utext="${tb.moTaTB}"></span>
+            <div th:each="ttsd : ${tb.thongTinSuDung}">
+              <span th:utext="${ttsd.maTT}"></span>
+              <span th:utext="${ttsd.tgMuon}"></span>
+              <span th:utext="${ttsd.tgTra}"></span>
+            </div>
+          </div>
+          <div th:utext="${thietBiResponse.pageNo}"></div>
+          <div th:utext="${thietBiResponse.pageSize}"></div>
+          <div th:utext="${thietBiResponse.totalElements}"></div>
+          <div th:utext="${thietBiResponse.totalPages}"></div>
+        </section>
+      </main>
+      <!-- END Main Container -->
+    </div>
+    <!-- END Page Container -->
+  </body>
+</html>

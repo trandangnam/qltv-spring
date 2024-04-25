@@ -9,9 +9,11 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.util.Date;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 @Entity
 @Table(name = "thongtinsd")
 public class ThongTinSuDung {
@@ -32,11 +34,11 @@ public class ThongTinSuDung {
     private Date tgDatCho;
 
     @ManyToOne
-    @JoinColumn(name = "MaTV")
+    @JoinColumn(name = "maTV")
     private ThanhVien thanhVien;
 
     @ManyToOne
-    @JoinColumn(name = "MaTB", nullable = true)
+    @JoinColumn(name = "maTB", nullable = true)
     private ThietBi thietBi;
 
     public ThongTinSuDung() {

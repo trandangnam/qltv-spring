@@ -29,7 +29,7 @@ public class XuLy {
     private int trangThaiXL;
 
     @ManyToOne
-    @JoinColumn(name = "MaTV")
+    @JoinColumn(name = "maTV")
     private ThanhVien thanhVien;
 
     public XuLy() {

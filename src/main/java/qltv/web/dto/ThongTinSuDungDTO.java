@@ -7,8 +7,6 @@ import jakarta.persistence.TemporalType;
 import java.util.Date;
 import lombok.Builder;
 import lombok.Data;
-import qltv.web.models.ThanhVien;
-import qltv.web.models.ThietBi;
 
 @Data
 @Builder
@@ -26,16 +24,16 @@ public class ThongTinSuDungDTO {
 
     @ManyToOne
     @JoinColumn(name = "MaTV")
-    private ThanhVien thanhVien;
+    private ThanhVienDTO thanhVien;
 
     @ManyToOne
     @JoinColumn(name = "MaTB", nullable = true)
-    private ThietBi thietBi;
+    private ThietBiDTO thietBi;
 
     public ThongTinSuDungDTO() {
     }
 
-    public ThongTinSuDungDTO(int maTT, Date tgVao, Date tgMuon, Date tgTra, Date tgDatCho, ThanhVien thanhVien, ThietBi thietBi) {
+    public ThongTinSuDungDTO(int maTT, Date tgVao, Date tgMuon, Date tgTra, Date tgDatCho, ThanhVienDTO thanhVien, ThietBiDTO thietBi) {
         this.maTT = maTT;
         this.tgVao = tgVao;
         this.tgMuon = tgMuon;
