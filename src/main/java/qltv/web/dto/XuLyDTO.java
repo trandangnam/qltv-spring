@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotEmpty;
 import java.util.Date;
 import lombok.Builder;
 import lombok.Data;
-import qltv.web.models.ThanhVien;
 
 @Data
 @Builder
@@ -25,12 +24,12 @@ public class XuLyDTO {
 
     @ManyToOne
     @JoinColumn(name = "MaTV")
-    private ThanhVien thanhVien;
+    private ThanhVienDTO thanhVien;
 
     public XuLyDTO() {
     }
 
-    public XuLyDTO(int maXL, String hinhThucXL, int soTien, Date ngayXL, int trangThaiXL, ThanhVien thanhVien) {
+    public XuLyDTO(int maXL, String hinhThucXL, int soTien, Date ngayXL, int trangThaiXL, ThanhVienDTO thanhVien) {
         this.maXL = maXL;
         this.hinhThucXL = hinhThucXL;
         this.soTien = soTien;

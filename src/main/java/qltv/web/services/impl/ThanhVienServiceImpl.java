@@ -8,6 +8,7 @@ import qltv.web.models.ThanhVien;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import qltv.web.mappers.ThanhVienMapper;
 import qltv.web.repositories.ThanhVienRepository;
 import qltv.web.services.ThanhVienService;
 
@@ -26,59 +27,27 @@ public class ThanhVienServiceImpl implements ThanhVienService {
     @Override
     public List<ThanhVienDTO> getAllThanhVien() {
         List<ThanhVien> members = (ArrayList) tvRepository.findAll();
-        return members.stream().map(member -> mapToThanhVienDto(member)).collect(Collectors.toList());
-    }
-
-    public static ThanhVienDTO mapToThanhVienDto(ThanhVien tv) {
-        if (tv == null) {
-            return new ThanhVienDTO();
-        }
-        ThanhVienDTO dto = ThanhVienDTO.builder()
-                .maTV(tv.getMaTV())
-                .hoTen(tv.getHoTen())
-                .khoa(tv.getKhoa())
-                .nganh(tv.getNganh())
-                .sdt(tv.getSdt())
-                .password(tv.getPassword())
-                .email(tv.getEmail())
-                .build();
-        return dto;
+        return members.stream().map(member -> ThanhVienMapper.mapToThanhVienDto(member)).collect(Collectors.toList());
     }
 
     @Override
     public ThanhVien saveThanhVien(ThanhVienDTO tv) {
         tv.setPassword(passwordEncoder.encode(tv.getPassword()));
-        ThanhVien thanhVien = mapToThanhVien(tv);
+        ThanhVien thanhVien = ThanhVienMapper.mapToThanhVien(tv);
         return tvRepository.save(thanhVien);
     }
 
     @Override
     public ThanhVienDTO findMemberById(long maTV) {
         ThanhVien thanhVien = tvRepository.findByMaTV(maTV);
-        return mapToThanhVienDto(thanhVien);
+        return ThanhVienMapper.mapToThanhVienDto(thanhVien);
     }
 
     @Override
     public void updateThanhVien(ThanhVienDTO thanhVienDto) {
         thanhVienDto.setPassword(passwordEncoder.encode(thanhVienDto.getPassword()));
-        ThanhVien thanhVien = mapToThanhVien(thanhVienDto);
+        ThanhVien thanhVien = ThanhVienMapper.mapToThanhVien(thanhVienDto);
         tvRepository.save(thanhVien);
-    }
-
-    public static ThanhVien mapToThanhVien(ThanhVienDTO tv) {
-        if (tv == null) {
-            return new ThanhVien();
-        }
-        ThanhVien model = ThanhVien.builder()
-                .maTV(tv.getMaTV())
-                .hoTen(tv.getHoTen())
-                .khoa(tv.getKhoa())
-                .nganh(tv.getNganh())
-                .sdt(tv.getSdt())
-                .password(tv.getPassword())
-                .email(tv.getEmail())
-                .build();
-        return model;
     }
 
     @Override
@@ -89,6 +58,6 @@ public class ThanhVienServiceImpl implements ThanhVienService {
     @Override
     public List<ThanhVienDTO> searchThanhVien(String query) {
         List<ThanhVien> listThanhVien = tvRepository.searchThanhVien(query);
-        return listThanhVien.stream().map(thanhVien -> mapToThanhVienDto(thanhVien)).collect(Collectors.toList());
+        return listThanhVien.stream().map(thanhVien -> ThanhVienMapper.mapToThanhVienDto(thanhVien)).collect(Collectors.toList());
     }
 }

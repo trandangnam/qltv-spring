@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import qltv.web.dto.ThanhVienDTO;
+import qltv.web.mappers.ThanhVienMapper;
 import qltv.web.models.ThanhVien;
 import qltv.web.security.SecurityUtil;
 import qltv.web.services.ThanhVienService;
-import qltv.web.services.impl.ThanhVienServiceImpl;
 
 @Controller
 public class AuthController {
@@ -42,7 +42,7 @@ public class AuthController {
         }
 
         ThanhVienDTO tvDTO = tvService.findMemberById(thanhVien.getMaTV());
-        ThanhVien tv = ThanhVienServiceImpl.mapToThanhVien(tvDTO);
+        ThanhVien tv = ThanhVienMapper.mapToThanhVien(tvDTO);
 
         if (tv.getHoTen() != null) {
             return "redirect:/register?fail";

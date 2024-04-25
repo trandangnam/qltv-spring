@@ -32,6 +32,8 @@ public class SecurityConfig {
                         .requestMatchers("/assets/**").permitAll()
                         .requestMatchers("/thanhvien/**").permitAll()
                         .requestMatchers("/xuly/**").permitAll()
+                        .requestMatchers("/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                 .loginPage("/login")
