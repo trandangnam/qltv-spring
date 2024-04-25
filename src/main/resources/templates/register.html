@@ -1,26 +1,12 @@
 <html
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{main-layout}"
 >
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Đăng ký - Quản lý thành viên</title>
-    <meta name="description" content="Đăng ký - Quản lý thành viên" />
-    <link rel="shortcut icon" th:href="@{/assets/media/favicons/favicon.png}" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="192x192"
-      th:href="@{/assets/media/favicons/favicon-192x192.png}"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      th:href="@{/assets/media/favicons/apple-touch-icon-180x180.png}"
-    />
-    <link rel="stylesheet" th:href="@{/assets/css/oneui.min.css}" />
-    <script defer th:src="@{/assets/js/oneui.app.min.js}"></script>
+    <title>Đăng ký</title>
   </head>
   <body>
     <div layout:fragment="body">
