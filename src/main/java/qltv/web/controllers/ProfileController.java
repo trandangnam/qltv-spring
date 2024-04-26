@@ -5,6 +5,7 @@
 package qltv.web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import qltv.web.dto.ThanhVienDTO;
@@ -15,6 +16,7 @@ import qltv.web.services.ThanhVienService;
  *
  * @author DELL
  */
+@Controller
 public class ProfileController {
     private ThanhVienService tvService;
 
