@@ -45,7 +45,7 @@ public class ThietBiServiceImpl implements ThietBiService {
 
         ThietBiResponse response = new ThietBiResponse();
         response.setContent(content);
-        response.setPageNo(pageNo);
+        response.setPageNo(pageNo + 1);
         response.setPageSize(pageSize);
         response.setTotalElements(result.getTotalElements());
         response.setTotalPages(result.getTotalPages());
