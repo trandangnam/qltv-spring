@@ -39,7 +39,7 @@ public class HomeController {
 
     @GetMapping("/search")
     public String getThietBiList(
-            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
             @RequestParam(value = "query", defaultValue = "", required = false) String query,
             Model model) {
@@ -50,8 +50,9 @@ public class HomeController {
             user = tvService.findMemberById(maTV);
         }
         model.addAttribute("user", user);
-        ThietBiResponse thietBiResponse = tbService.findThietBiMuonTrongNgay(pageNo, pageSize, query);
+        ThietBiResponse thietBiResponse = tbService.findThietBiMuonTrongNgay(pageNo - 1, pageSize, query);
         model.addAttribute("thietBiResponse", thietBiResponse);
+        model.addAttribute("query", query);
         return "index";
     }
 }
