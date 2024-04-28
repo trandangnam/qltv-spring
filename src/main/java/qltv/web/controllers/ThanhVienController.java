@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import qltv.web.security.SecurityUtil;
 import qltv.web.services.ThanhVienService;
 
@@ -125,5 +126,23 @@ public class ThanhVienController {
         return "thanh-vien-list";
     }
 
-    
+    // hàm này của tiến nha đừng có xóa
+    @GetMapping("/thanhvien/getbyid")
+    @ResponseBody
+    public ThanhVienDTO getThanhVienById(@RequestParam(value = "query") String query, Model model) {
+//        String username = SecurityUtil.getUserSession();
+//        if (username == null) {
+//            return null;
+//        }
+        try {
+            Long maTV = Long.parseLong(query);
+            ThanhVienDTO user = tvService.findMemberById(maTV);
+            return user;
+        }catch(Exception e){
+            return null;
+        }
+
+    }
+    //---------------------------------------------
+
 }
