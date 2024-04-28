@@ -121,6 +121,7 @@ public class ThanhVienController {
         model.addAttribute("user", user);
         List<ThanhVienDTO> listThanhVien = tvService.searchThanhVien(query);
         model.addAttribute("listThanhVien", listThanhVien);
+        model.addAttribute("query", query);
         return "thanh-vien-list";
     }
 

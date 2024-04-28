@@ -7,11 +7,13 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 @Entity
 @Table(name = "thietbi")
 public class ThietBi {
@@ -24,14 +26,15 @@ public class ThietBi {
     private String moTaTB;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "thietBi", cascade = CascadeType.ALL)
-    private Set<ThongTinSuDung> thongTinSuDung = new HashSet<>();
+    private List<ThongTinSuDung> thongTinSuDung = new ArrayList<>();
 
     public ThietBi() {
     }
 
-    public ThietBi(int maTB, String tenTB, String moTaTB) {
+    public ThietBi(int maTB, String tenTB, String moTaTB, List<ThongTinSuDung> thongTinSuDung) {
         this.maTB = maTB;
         this.tenTB = tenTB;
         this.moTaTB = moTaTB;
+        this.thongTinSuDung = thongTinSuDung;
     }
 }

@@ -7,8 +7,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Builder;
 import lombok.Data;
 
@@ -35,16 +35,16 @@ public class ThanhVien {
 
     @Builder.Default
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "thanhVien", cascade = CascadeType.ALL)
-    private Set<ThongTinSuDung> thongTinSuDung = new HashSet<>();
+    private List<ThongTinSuDung> thongTinSuDung = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "thanhVien", cascade = CascadeType.ALL)
-    private Set<XuLy> xuLy = new HashSet<>();
+    private List<XuLy> xuLy = new ArrayList<>();
 
     public ThanhVien() {
     }
 
-    public ThanhVien(int maTV, String hoTen, String khoa, String nganh, String sdt, String password, String email, Set<ThongTinSuDung> thongTinSuDung, Set<XuLy> xuLy) {
+    public ThanhVien(int maTV, String hoTen, String khoa, String nganh, String sdt, String password, String email, List<ThongTinSuDung> thongTinSuDung, List<XuLy> xuLy) {
         this.maTV = maTV;
         this.hoTen = hoTen;
         this.khoa = khoa;
