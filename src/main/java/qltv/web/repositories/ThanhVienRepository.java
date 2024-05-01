@@ -16,4 +16,8 @@ public interface ThanhVienRepository extends JpaRepository<ThanhVien, Long> {
 
     @Query("SELECT tv FROM ThanhVien tv WHERE tv.maTV = :username")
     ThanhVien findFirstByMaTV(String username);
+    
+    @Query("SELECT tv FROM ThanhVien tv WHERE tv.nganh = :nganh")
+    List<ThanhVien> findFirstByNganh(String nganh);
+    
 }
