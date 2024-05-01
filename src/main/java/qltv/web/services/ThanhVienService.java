@@ -17,4 +17,6 @@ public interface ThanhVienService {
     public void deleteThanhVien(long maTV);
 
     public List<ThanhVienDTO> searchThanhVien(String query);
+    
+    public List<ThanhVienDTO> findMemberByNganh(String nganh);
 }

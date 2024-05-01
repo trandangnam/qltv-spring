@@ -7,6 +7,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Thành viên</title>
+    <script defer th:src="@{/assets/js/pages/thanh-vien-list.js}"></script>
   </head>
   <body>
     <div layout:fragment="body">
@@ -17,6 +18,13 @@
             <a href="/thanhvien/new" class="btn btn-success">
               <i class="fa fa-fw fa-plus me-1"></i> Thêm thành viên
             </a>
+              <button id="btn-export" type="button" class="btn btn-success" title="Xuất toàn bộ thành viên ra file Excel">
+                 <i class="fa fa-fw fa-file-excel"></i> Xuất excel
+            </button>
+              <input type="file" id="file-input" style="display: none;">
+            <button id="btn-import" type="button" class="btn btn-success" title="Nhập thành viên từ file Excel">
+                 <i class="fa fa-fw fa-file-excel"></i> Nhập excel
+            </button>
           </div>
         </div>
         <div class="block-content">
