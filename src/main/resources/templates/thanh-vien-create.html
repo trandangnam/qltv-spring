@@ -7,6 +7,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Thêm thành viên</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script defer th:src="@{/assets/js/pages/thanh-vien-create.js}"></script>
   </head>
   <body>
@@ -19,6 +20,7 @@
           <form
             role="form"
             method="post"
+            id="form-themTV"
             th:action="@{/thanhvien/new}"
             th:object="${thanhVien}"
           >
@@ -34,6 +36,7 @@
                 name="val-matv"
                 th:field="*{maTV}"
                 placeholder="Nhập mã thành viên"
+                readonly
               />
               <div
                 th:if="${#fields.hasErrors('maTV')}"
@@ -72,6 +75,7 @@
                 name="val-khoa"
                 th:field="*{khoa}"
                 placeholder="Nhập khoa"
+                readonly
               />
               <div
                 th:if="${#fields.hasErrors('khoa')}"
@@ -79,7 +83,7 @@
                 th:errors="*{khoa}"
               ></div>
             </div>
-            <div class="mb-4">
+            <!--<div class="mb-4">
               <label class="form-label" for="val-nganh"
                 >Ngành <span class="text-danger">*</span></label
               >
@@ -97,7 +101,22 @@
                 class="invalid-feedback"
                 th:errors="*{nganh}"
               ></div>
-            </div>
+            </div>-->
+            <div class="mb-4">
+                    <label class="form-label" for="nganh">Ngành</label>
+                    <select id="val-nganh" name="nganh" class="form-control">
+                        <option value="Toán">Toán</option>
+                        <option value="Văn">Văn</option>
+                        <option value="Sử">Sử</option>
+                        <option value="CNTT">CNTT</option>
+                        <option value="Lí">Lí</option>
+                        <option value="Địa">Địa</option>
+                        <option value="Anh">Anh</option>
+                        <option value="NNA">NNA</option>
+                        <option value="QTKD">QTKD</option>
+                        <option value="TLH">TLH</option>
+                    </select>
+                </div>
             <div class="mb-4">
               <label class="form-label" for="val-sdt"
                 >Số điện thoại <span class="text-danger">*</span></label
@@ -156,7 +175,7 @@
               ></div>
             </div>
             <div class="mb-4">
-              <button type="submit" class="btn btn-alt-primary">Lưu</button>
+              <button type="submit" class="btn btn-alt-primary" id="btn-save">Lưu</button>
             </div>
           </form>
         </div>

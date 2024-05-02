@@ -67,4 +67,10 @@ public class ThanhVienServiceImpl implements ThanhVienService {
         List<ThanhVien> listThanhVien = tvRepository.searchThanhVien(query);
         return listThanhVien.stream().map(thanhVien -> ThanhVienMapper.mapToThanhVienDto(thanhVien)).collect(Collectors.toList());
     }
+
+    @Override
+    public List<ThanhVienDTO> findMemberByNganh(String nganh) {
+        List<ThanhVien> listThanhVien = tvRepository.findFirstByNganh(nganh);
+        return listThanhVien.stream().map(thanhVien -> ThanhVienMapper.mapToThanhVienDto(thanhVien)).collect(Collectors.toList());
+    }
 }

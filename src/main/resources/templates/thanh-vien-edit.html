@@ -7,6 +7,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sửa thông tin thành viên</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script defer th:src="@{/assets/js/pages/thanh-vien-edit.js}"></script>
   </head>
   <body>
@@ -71,6 +72,7 @@
                 name="val-khoa"
                 th:field="*{khoa}"
                 placeholder="Nhập khoa"
+                readonly
               />
               <div
                 th:if="${#fields.hasErrors('khoa')}"
@@ -90,6 +92,7 @@
                 name="val-nganh"
                 th:field="*{nganh}"
                 placeholder="Nhập ngành"
+                readonly
               />
               <div
                 th:if="${#fields.hasErrors('nganh')}"
