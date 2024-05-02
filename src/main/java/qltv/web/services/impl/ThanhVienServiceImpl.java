@@ -51,6 +51,13 @@ public class ThanhVienServiceImpl implements ThanhVienService {
     }
 
     @Override
+    public void updateProfile(ThanhVienDTO thanhVienDto) {
+//        thanhVienDto.setPassword(passwordEncoder.encode(thanhVienDto.getPassword()));
+        ThanhVien thanhVien = ThanhVienMapper.mapToThanhVien(thanhVienDto);
+        tvRepository.save(thanhVien);
+    }
+
+    @Override
     public void deleteThanhVien(long maTV) {
         tvRepository.deleteById(maTV);
     }

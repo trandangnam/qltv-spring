@@ -13,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import qltv.web.dto.ThanhVienDTO;
 import qltv.web.security.SecurityUtil;
 import qltv.web.services.ThanhVienService;
@@ -57,9 +59,10 @@ public class ProfileController {
     }
 
     @PostMapping("/profile/{maTV}")
+    @ResponseBody
     public String updateProfile(@PathVariable("maTV") long maTV,
             @Valid @ModelAttribute("thanhVien") ThanhVienDTO thanhVien,
-            BindingResult result, Model model) {
+            BindingResult result, Model model, String hoTen, String khoa, String nganh, String soDienThoai, String email, String password) {
 
         String username = SecurityUtil.getUserSession();
         if (username == null) {
@@ -68,12 +71,19 @@ public class ProfileController {
         int userId = Integer.parseInt(username);
         ThanhVienDTO user = tvService.findMemberById(userId);
         model.addAttribute("user", user);
+        thanhVien.setHoTen(hoTen);
+        thanhVien.setKhoa(khoa);
+        thanhVien.setNganh(nganh);
+        thanhVien.setSdt(soDienThoai);
+        thanhVien.setEmail(email);
+//        thanhVien = tvService.findMemberById(maTV);
+//        thanhVien.setHoTen(hoTen);
 
-        if (result.hasErrors()) {
-            return "profile";
-        }
-
-        tvService.updateThanhVien(thanhVien);
-        return "profile";
+//        if (result.hasErrors()) {
+//            return "profile";
+//        }
+        tvService.updateProfile(thanhVien);
+        return "Hello" + thanhVien; 
     }
+
 }
