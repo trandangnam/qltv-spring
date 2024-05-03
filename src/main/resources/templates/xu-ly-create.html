@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Thêm xử lý</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script defer th:src="@{/assets/js/pages/thanh-vien-create.js}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script defer th:src="@{/assets/js/pages/xu-ly-create.js}"></script>
 
   </head>
@@ -48,15 +48,15 @@
                 </div>
 
                 <div class="form-group py-2">
-                    <label for="daXuLy">Trạng thái:</label>
-                    <div>
-                        <input type="radio" id="daXuLy" name="trangThai" value="0" />
-                        <label for="daXuLy">Đã xử lý</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="dangXuLy" name="trangThai" value="1" checked="checked" />
-                        <label for="dangXuLy">Đang xử lý</label>
-                    </div>
+                  <label for="daXuLy">Trạng thái:</label>
+                  <div>
+                    <input type="radio" id="daXuLy" name="trangThai" value="0" />
+                    <label for="daXuLy">Đã xử lý</label>
+                  </div>
+                  <div>
+                    <input type="radio" id="dangXuLy" name="trangThai" value="1" checked="checked" />
+                    <label for="dangXuLy">Đang xử lý</label>
+                  </div>
                 </div>
                 <div class="form-group py-3">
                     <input type="button" id="btn-themXuLy" value="Thêm" class="btn btn-primary" />
