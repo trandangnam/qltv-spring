@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import qltv.web.dto.ThanhVienDTO;
@@ -75,54 +76,54 @@ public class XuLyController {
     }
 
     @PostMapping("/xuly/new")
-    public String saveXuLy(@RequestParam("maXuLy") String maXuLy,
-            @RequestParam("maThanhVien") String maThanhVien,
-            @RequestParam("hinhThucXuLy") String hinhThucXuLy,
-            @RequestParam("tienPhat") String tienPhat,
-            @RequestParam("trangThai") String trangThai,
+    @ResponseBody
+    public String saveXuLy(
+            @RequestBody XuLyDTO xuLy,
             Model model) {
+
         String username = SecurityUtil.getUserSession();
         if (username == null) {
             return "redirect:/login";
         }
 
-        String validate = xuLyService.validateXuLy(maThanhVien, hinhThucXuLy, tienPhat);
-        if (!validate.isEmpty()) {
-            model.addAttribute("error", validate);
-            return "xu-ly-create";
+        // String validate = xuLyService.validateXuLy(maThanhVien, hinhThucXuLy, tienPhat);
+        // if (!validate.isEmpty()) {
+        //     model.addAttribute("error", validate);
+        //     return "xu-ly-create";
+        // }
+        // switch (hinhThucXuLy) {
+        //     case "KhoaThe2Thang":
+        //         hinhThucXuLy = "Khóa thẻ 2 tháng";
+        //         break;
+        //     case "KhoaThe3Thang":
+        //         hinhThucXuLy = "Khóa thẻ 3 tháng";
+        //         break;
+        //     case "KhoaThe1ThangVaBoiThuong":
+        //         hinhThucXuLy = "Khóa thẻ 1 tháng và bồi thường";
+        //         break;
+        //     case "BoiThuong":
+        //         hinhThucXuLy = "Bồi thường";
+        //         break;
+        //     default:
+        //         hinhThucXuLy = "Khóa thẻ 1 tháng";
+        // }
+        // if (tienPhat.isEmpty()) {
+        //     tienPhat = "0";
+        // }
+        // XuLyDTO xuLy = new XuLyDTO();
+        // xuLy.setMaXL(Integer.parseInt(maXuLy));
+        // xuLy.setThanhVien(thanhVienService.findMemberById(Integer.parseInt(maThanhVien)));
+        // xuLy.setHinhThucXL(hinhThucXuLy);
+        // xuLy.setSoTien(Integer.parseInt(tienPhat));
+        // xuLy.setTrangThaiXL(Integer.parseInt(trangThai));
+        // xuLy.setNgayXL(new Date());
+        //System.out.println(xuLy.getThanhVien().getMaTV());
+        try {
+            xuLyService.saveXuLy(xuLy);
+            return "success";
+        } catch (Exception ex) {
+            return ex.getMessage();
         }
-
-        switch (hinhThucXuLy) {
-            case "KhoaThe2Thang":
-                hinhThucXuLy = "Khóa thẻ 2 tháng";
-                break;
-            case "KhoaThe3Thang":
-                hinhThucXuLy = "Khóa thẻ 3 tháng";
-                break;
-            case "KhoaThe1ThangVaBoiThuong":
-                hinhThucXuLy = "Khóa thẻ 1 tháng và bồi thường";
-                break;
-            case "BoiThuong":
-                hinhThucXuLy = "Bồi thường";
-                break;
-            default:
-                hinhThucXuLy = "Khóa thẻ 1 tháng";
-        }
-
-        if (tienPhat.isEmpty()) {
-            tienPhat = "0";
-        }
-
-        XuLyDTO xuLy = new XuLyDTO();
-        xuLy.setMaXL(Integer.parseInt(maXuLy));
-        xuLy.setThanhVien(thanhVienService.findMemberById(Integer.parseInt(maThanhVien)));
-        xuLy.setHinhThucXL(hinhThucXuLy);
-        xuLy.setSoTien(Integer.parseInt(tienPhat));
-        xuLy.setTrangThaiXL(Integer.parseInt(trangThai));
-        xuLy.setNgayXL(new Date());
-
-        xuLyService.saveXuLy(xuLy);
-        return "redirect:/xuly";
     }
 
     @GetMapping("/xuly/{maXL}/edit")
@@ -142,9 +143,9 @@ public class XuLyController {
     }
 
     @PostMapping("/xuly/{maXL}/edit")
+    @ResponseBody
     public String updateXuLy(@PathVariable("maXL") long maXL,
-            @Valid @ModelAttribute("xuLy") XuLyDTO xuLy,
-            BindingResult result, Model model) {
+           @RequestBody XuLyDTO xuLy, Model model) {
 
         String username = SecurityUtil.getUserSession();
         if (username == null) {
@@ -154,12 +155,12 @@ public class XuLyController {
         ThanhVienDTO user = thanhVienService.findMemberById(userId);
         model.addAttribute("user", user);
 
-        if (result.hasErrors()) {
-            return "xu-ly-edit";
+        try {
+            xuLyService.updateXuLy(xuLy);
+            return "success";
+        } catch (Exception ex) {
+            return ex.getMessage();
         }
-
-        xuLyService.updateXuLy(xuLy);
-        return "redirect:/xuly";
     }
 
     @GetMapping("/xuly/{maXL}/delete")
