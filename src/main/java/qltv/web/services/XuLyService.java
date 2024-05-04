@@ -22,4 +22,8 @@ public interface XuLyService {
     public Long getMaxMaXL();
 
     public String validateXuLy(String maTV, String hinhThucXL, String soTien);
+    
+    public void updateXuLyDuThoiGian();
+    
+    
 }

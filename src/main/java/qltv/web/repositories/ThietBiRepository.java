@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ThietBiRepository extends JpaRepository<ThietBi, Long> {
 
     Page<ThietBi> findByTenTBContaining(String tenTB, Pageable pageable);
+    
+    ThietBi findByMaTB(long maTB);
 }
