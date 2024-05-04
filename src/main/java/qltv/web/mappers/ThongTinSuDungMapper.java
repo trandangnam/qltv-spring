@@ -21,7 +21,7 @@ public class ThongTinSuDungMapper {
         return model;
     }
 
-    public static ThongTinSuDungDTO mapToThongTinSuDungDto(ThongTinSuDung ttsd) {
+    public static ThongTinSuDungDTO mapToThongTinSuDungDTO(ThongTinSuDung ttsd) {
         if (ttsd == null) {
             return new ThongTinSuDungDTO();
         }
