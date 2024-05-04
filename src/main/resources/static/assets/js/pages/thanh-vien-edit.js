@@ -40,6 +40,8 @@ document.addEventListener("DOMContentLoaded", function() {
         let specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?0-9]+/;
         // Biểu thức chính quy để kiểm tra định dạng email
         let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        // Biểu thức chính quy để kiểm tra định dạng số điện thoại
+        let phoneNumberRegex = /^0\\d{9}$/;
         error = "";
         flag = true;
         if (txtmatv === "") {
@@ -64,6 +66,9 @@ document.addEventListener("DOMContentLoaded", function() {
         if (txtsdt === "") {
             error += "Số điện thoại không được để trống\n";
             flag = false;
+        } else if (phoneNumberRegex.test(txtsdt)) {
+            error += "Số điện thoại không hợp lệ\n";
+            flag = false;
         }
         if (txtemail === "") {
             error += "Email không được để trống\n";
@@ -72,8 +77,8 @@ document.addEventListener("DOMContentLoaded", function() {
             error += "Email không đúng định dạng\n";
             flag = false;
         }
-        if(txtpassword.length < 8){
-            error += "Mật khẩu phải có ít nhất 8 kí tự\n";
+        if(txtpassword.length < 6){
+            error += "Mật khẩu phải có ít nhất 6 kí tự\n";
             flag = false;
         }
         if (error != "") {
