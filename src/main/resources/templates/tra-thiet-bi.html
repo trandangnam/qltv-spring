@@ -1,0 +1,61 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{dashboard-layout}">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer th:src="@{/assets/js/pages/tra-thiet-bi.js}"></script>
+    <title>Trả Thiết Bị</title>
+</head>
+
+<body>
+    <div layout:fragment="body">
+        <div class="block-content">
+            <h2 class="block-title text-xl-center py-2">Danh Sách Thiết Bị Đang Mượn</h2>
+            <!---Thanh tim kiem---->
+            <div class="input-group">
+                <input type="search" class="form-control" placeholder="Tìm kiếm theo mã thiết bị" name="query"
+                    id="input-search" />
+                <button class="btn btn-alt-primary" id="btn-search">
+                    <i class="fa fa-search me-1 opacity-50"></i>
+                </button>
+            </div>
+            <!---Ket thuc thanh tim kiem---->
+            <div class="block-content">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-vcenter">
+                        <thead>
+                            <tr>
+                                <th>Mã TT</th>
+                                <th>Mã TB</th>
+                                <th>Tên TB</th>
+                                <th>Ngày mượn</th>
+                                <th>Ngày trả</th>
+                                <th class="text-center">Trả thiết bị</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbl-ttsd">
+                            <tr th:each="ttsd : ${ttsds}">
+                                <td class="fs-sm" th:utext="${ttsd.getMaTT()}"></td>
+                                <td class="fs-sm" th:utext="${ttsd.getThietBi().getMaTB()}"></td>
+                                <td class="fs-sm" th:utext="${ttsd.getThietBi().getTenTB()}"></td>
+                                <td class="fs-sm" th:utext="${ttsd.getTgMuon()}"></td>
+                                <td class="fs-sm" th:utext="${ttsd.getTgTra()}"></td>
+                                <td class="text-center">
+                                    <a th:href="@{/thongtinsudung/{maTT}/tra(maTT=${ttsd.getMaTT()})}"
+                                        class="btn btn-sm btn-alt-secondary btn-TraThietBi" data-bs-toggle="tooltip" title="Trả">
+                                        <i class="fa fa-fw fa-rotate-left"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

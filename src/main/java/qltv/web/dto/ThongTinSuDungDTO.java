@@ -32,7 +32,7 @@ public class ThongTinSuDungDTO {
 
     public ThongTinSuDungDTO() {
     }
-
+    
     public ThongTinSuDungDTO(int maTT, Date tgVao, Date tgMuon, Date tgTra, Date tgDatCho, ThanhVienDTO thanhVien, ThietBiDTO thietBi) {
         this.maTT = maTT;
         this.tgVao = tgVao;
@@ -42,5 +42,6 @@ public class ThongTinSuDungDTO {
         this.thanhVien = thanhVien;
         this.thietBi = thietBi;
     }
-
+    
+    
 }

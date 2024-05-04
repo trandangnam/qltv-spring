@@ -5,9 +5,9 @@ import qltv.web.dto.ThongTinSuDungDTO;
 import qltv.web.models.ThongTinSuDung;
 
 public interface ThongTinSuDungService {
-    
+
     public List<ThongTinSuDungDTO> getAllThongTinSuDung();
-    
+
     public ThongTinSuDung saveThongTinSuDung(ThongTinSuDungDTO ttsdDTO);
 
     public void updateThongTinSuDung(ThongTinSuDungDTO ttsdDTO);
@@ -15,4 +15,24 @@ public interface ThongTinSuDungService {
     public void deleteThongTinSuDung(long maTTSD);
 
     public List<ThongTinSuDungDTO> searchThongTinSuDung(String query);
+
+    public List<ThongTinSuDungDTO> findTtsdSoHuuThietBiDangBan();
+
+    public List<ThongTinSuDungDTO> searchTtsdSoHuuThietBiDangBan(String query);
+
+    public Long getMaxMaTT();
+
+    public boolean thietBiDangDuocMuon(int maTB);
+
+    public boolean thietBiDangDuocDatCho(int maTB);
+
+    public void xoaDatChoQuaHan();
+
+    public List<ThongTinSuDungDTO> getAllThongTinSuDungChuaTra();
+    
+    public List<ThongTinSuDungDTO> searchTtsdSoHuuThietBiDangMuon(String query);
+    
+    public void traThietBi(long maTTSD);
+
+
 }

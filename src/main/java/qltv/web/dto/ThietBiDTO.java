@@ -1,6 +1,8 @@
 package qltv.web.dto;
 
 import java.util.List;
+
+import jakarta.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,6 +13,7 @@ public class ThietBiDTO {
     private int maTB;
     private String tenTB;
     private String moTaTB;
+    
     private List<ThongTinSuDungDTO> thongTinSuDung;
 
     public ThietBiDTO() {
