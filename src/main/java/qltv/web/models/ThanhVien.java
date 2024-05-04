@@ -28,7 +28,7 @@ public class ThanhVien {
     private String nganh;
     @Column
     private String sdt;
-    @Column
+    @Column (nullable = true)
     private String password;
     @Column
     private String email;

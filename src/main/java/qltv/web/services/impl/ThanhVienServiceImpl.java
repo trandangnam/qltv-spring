@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import qltv.web.models.ThanhVien;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import qltv.web.dto.ThanhVienInfoDTO;
 import qltv.web.mappers.ThanhVienMapper;
 import qltv.web.repositories.ThanhVienRepository;
 import qltv.web.services.ThanhVienService;
@@ -38,6 +40,15 @@ public class ThanhVienServiceImpl implements ThanhVienService {
     }
 
     @Override
+    public void updateInfoThanhVien(long maTV, String hoTen, String khoa, String nganh, String sdt, String email) {
+        tvRepository.updateInfoThanhVien(maTV, hoTen, khoa, nganh, sdt, email);
+    }
+    
+    public void updatePassword(long maTV, String newPassword) {
+        tvRepository.updatePassword(maTV, newPassword);
+    }
+
+    @Override
     public ThanhVienDTO findMemberById(long maTV) {
         ThanhVien thanhVien = tvRepository.findByMaTV(maTV);
         return ThanhVienMapper.mapToThanhVienDto(thanhVien);
@@ -49,7 +60,7 @@ public class ThanhVienServiceImpl implements ThanhVienService {
         ThanhVien thanhVien = ThanhVienMapper.mapToThanhVien(thanhVienDto);
         tvRepository.save(thanhVien);
     }
-
+    
     @Override
     public void deleteThanhVien(long maTV) {
         tvRepository.deleteById(maTV);
