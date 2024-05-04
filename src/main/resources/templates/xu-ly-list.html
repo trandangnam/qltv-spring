@@ -1,98 +1,98 @@
 <html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{dashboard-layout}"
->
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script defer th:src="@{/assets/js/pages/xu-ly-list.js}"></script>
-    <title>Xử lý vi phạm</title>
-  </head>
-  <body>
-    <div layout:fragment="body">
-      <div class="block block-rounded"></div>
-      <div class="block-header block-header-default">
-        <h3 class="block-title">Xử lý vi phạm</h3>
-        <div class="block-options">
-          <a href="/xuly/new" class="btn btn-success">
-            <i class="fa fa-fw fa-plus me-1"></i> Thêm xử lý
-          </a>
-        </div>
-      </div>
-      <div class="block-content">
-        <!---Thanh tim kiem---->
-        <div class="input-group">
-          <input
-            type="search"
-            class="form-control"
-            placeholder="Tìm kiếm theo mã thành viên"
-            name="query"
-            id="input-search"
-          />
-          <button class="btn btn-alt-primary" id="btn-search">
-            <i class="fa fa-search me-1 opacity-50"></i>
-          </button>
-        </div>
-        <!---Ket thuc thanh tim kiem---->
-        <div class="block-content">
-          <div class="table-responsive">
-            <table class="table table-bordered table-striped table-vcenter">
-              <thead>
-                <tr>
-                  <th>Mã XL</th>
-                  <th>Mã TV</th>
-                  <th>Họ Tên TV</th>
-                  <th>Hình thức xử lý</th>
-                  <th>Ngày xử lý</th>
-                  <th>Trạng thái</th>
-                  <th class="text-center" style="width: 100px">Hành động</th>
-                </tr>
-              </thead>
-              <tbody id="tbl-xuly">
-                <tr th:each="xl : ${xuLys}">
-                  <td class="fw-semibold fs-sm" th:utext="${xl.getMaXL()}"></td>
-                  <td
-                    class="fs-sm"
-                    th:utext="${xl.getThanhVien().getMaTV()}"
-                  ></td>
-                  <td
-                    class="fs-sm"
-                    th:utext="${xl.getThanhVien().getHoTen()}"
-                  ></td>
-                  <td class="fs-sm" th:utext="${xl.getHinhThucXL()}"></td>
-                  <td class="fs-sm" th:utext="${xl.getNgayXL()}"></td>
-                  <td
-                    class="fs-sm"
-                    th:utext="${xl.getTrangThaiXL() == 1 ? 'Đang xử lý' : 'Đã xử lý'}"
-                  ></td>
-                  <td class="text-center">
-                    <div class="btn-group">
-                      <a
-                        th:href="@{/xuly/{maXL}/edit(maXL=${xl.getMaXL()})}"
-                        class="btn btn-sm btn-alt-secondary"
-                        data-bs-toggle="tooltip"
-                        title="Sửa"
-                      >
-                        <i class="fa fa-fw fa-pencil-alt"></i>
-                      </a>
-                      <a
-                        th:href="@{/xuly/{maXL}/delete(maXL=${xl.getMaXL()})}"
-                        class="btn btn-sm btn-alt-secondary btn-xoaXuLy"
-                        data-bs-toggle="tooltip"
-                        title="Xoá"
-                      >
-                        <i class="fa fa-fw fa-times"></i>
-                      </a>
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{dashboard-layout}"
+    >
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script defer th:src="@{/assets/js/pages/xu-ly-list.js}"></script>
+        <title>Xử lý vi phạm</title>
+    </head>
+    <body>
+        <div layout:fragment="body">
+            <div class="block block-rounded"></div>
+            <div class="block-header block-header-default">
+                <h3 class="block-title">Xử lý vi phạm</h3>
+                <div class="block-options">
+                    <a href="/xuly/new" class="btn btn-success">
+                        <i class="fa fa-fw fa-plus me-1"></i> Thêm xử lý
+                    </a>
+                </div>
+            </div>
+            <div class="block-content">
+                <!---Thanh tim kiem---->
+                <div class="input-group">
+                    <input
+                        type="search"
+                        class="form-control"
+                        placeholder="Tìm kiếm theo mã thành viên"
+                        name="query"
+                        id="input-search"
+                        />
+                    <button class="btn btn-alt-primary" id="btn-search">
+                        <i class="fa fa-search me-1 opacity-50"></i>
+                    </button>
+                </div>
+                <!---Ket thuc thanh tim kiem---->
+                <div class="block-content">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-vcenter">
+                            <thead>
+                                <tr>
+                                    <th>Mã XL</th>
+                                    <th>Mã TV</th>
+                                    <th>Họ Tên TV</th>
+                                    <th>Hình thức xử lý</th>
+                                    <th>Ngày xử lý</th>
+                                    <th>Trạng thái</th>
+                                    <th class="text-center" style="width: 100px">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbl-xuly">
+                                <tr th:each="xl : ${xuLys}">
+                                    <td class="fw-semibold fs-sm" th:utext="${xl.getMaXL()}"></td>
+                                    <td
+                                        class="fs-sm"
+                                        th:utext="${xl.getThanhVien().getMaTV()}"
+                                        ></td>
+                                    <td
+                                        class="fs-sm"
+                                        th:utext="${xl.getThanhVien().getHoTen()}"
+                                        ></td>
+                                    <td class="fs-sm" th:utext="${xl.getHinhThucXL()}"></td>
+                                    <td class="fs-sm" th:utext="${xl.getNgayXL()}"></td>
+                                    <td
+                                        class="fs-sm"
+                                        th:utext="${xl.getTrangThaiXL() == 1 ? 'Đang xử lý' : 'Đã xử lý'}"
+                                        ></td>
+                                    <td class="text-center">
+                                        <div class="btn-group">
+                                            <a
+                                                th:href="@{/xuly/{maXL}/edit(maXL=${xl.getMaXL()})}"
+                                                class="btn btn-sm btn-alt-secondary"
+                                                data-bs-toggle="tooltip"
+                                                title="Sửa"
+                                                >
+                                                <i class="fa fa-fw fa-pencil-alt"></i>
+                                            </a>
+                                            <a
+                                                th:href="@{/xuly/{maXL}/delete(maXL=${xl.getMaXL()})}"
+                                                class="btn btn-sm btn-alt-secondary btn-xoaXuLy"
+                                                data-bs-toggle="tooltip"
+                                                title="Xoá"
+                                                >
+                                                <i class="fa fa-fw fa-times"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </body>
+    </body>
 </html>
