@@ -1,5 +1,18 @@
 package qltv.web.services;
 
-public interface ThongTinSuDungService {
+import java.util.List;
+import qltv.web.dto.ThongTinSuDungDTO;
+import qltv.web.models.ThongTinSuDung;
 
+public interface ThongTinSuDungService {
+    
+    public List<ThongTinSuDungDTO> getAllThongTinSuDung();
+    
+    public ThongTinSuDung saveThongTinSuDung(ThongTinSuDungDTO ttsdDTO);
+
+    public void updateThongTinSuDung(ThongTinSuDungDTO ttsdDTO);
+
+    public void deleteThongTinSuDung(long maTTSD);
+
+    public List<ThongTinSuDungDTO> searchThongTinSuDung(String query);
 }
