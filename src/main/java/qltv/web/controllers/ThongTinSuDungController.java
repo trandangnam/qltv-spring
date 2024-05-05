@@ -20,6 +20,7 @@ import qltv.web.security.SecurityUtil;
 import qltv.web.services.ThanhVienService;
 import qltv.web.services.ThietBiService;
 import qltv.web.services.ThongTinSuDungService;
+import qltv.web.services.XuLyService;
 
 /**
  *
@@ -30,12 +31,14 @@ public class ThongTinSuDungController {
 
     ThietBiService thietBiService;
     ThanhVienService thanhVienService;
+    XuLyService xuLyService;
     ThongTinSuDungService thongTinSuDungService;
 
     @Autowired
-    public ThongTinSuDungController(ThietBiService thietBiService, ThanhVienService thanhVienService, ThongTinSuDungService thongTinSuDungService) {
+    public ThongTinSuDungController(ThietBiService thietBiService, ThanhVienService thanhVienService, XuLyService xuLyService, ThongTinSuDungService thongTinSuDungService) {
         this.thietBiService = thietBiService;
         this.thanhVienService = thanhVienService;
+        this.xuLyService = xuLyService;
         this.thongTinSuDungService = thongTinSuDungService;
         this.thongTinSuDungService.xoaDatChoQuaHan();
     }
@@ -98,6 +101,9 @@ public class ThongTinSuDungController {
         }
         if (thongTinSuDungService.thietBiDangDuocDatCho(ttsdDTO.getThietBi().getMaTB())) {
             return "Thiết bị đã được đặt chổ trong hôm nay";
+        }
+        if(xuLyService.thanhVienDangBiXuLy(ttsdDTO.getThanhVien().getMaTV())){
+            return "Thành viên đang bị xử lý vi phạm";
         }
         try {
             thongTinSuDungService.saveThongTinSuDung(ttsdDTO);
