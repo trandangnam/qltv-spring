@@ -25,8 +25,6 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import org.springframework.stereotype.Controller;
-
 import qltv.web.dto.ThanhVienDTO;
 
 import qltv.web.dto.ThietBiDTO;
@@ -50,6 +48,7 @@ public class ThietBiController {
         this.thanhVienService = thanhVienService;
         this.ttsdService = ttsdService;
     }
+
     @GetMapping
     public String listThietBi(Model model) {
         List<ThietBiDTO> listThietBi = thietBiService.getAllThietBi();
@@ -66,7 +65,7 @@ public class ThietBiController {
 
     @PostMapping("/new")
     public String saveThietBi(@Valid @ModelAttribute("thietBi") ThietBiDTO thietBi, BindingResult result,
-                              Model model) {
+            Model model) {
         if (result.hasErrors()) {
             model.addAttribute("thietBi", thietBi);
             return "thiet-bi-create";
@@ -84,8 +83,8 @@ public class ThietBiController {
 
     @PostMapping("/{maTB}/edit")
     public String updateThietBi(@PathVariable("maTB") int maTB,
-                                @Valid @ModelAttribute("thietBi") ThietBiDTO thietBi,
-                                BindingResult result, Model model) {
+            @Valid @ModelAttribute("thietBi") ThietBiDTO thietBi,
+            BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "thiet-bi-edit";
         }
@@ -111,7 +110,7 @@ public class ThietBiController {
     public ResponseEntity<byte[]> exportExcel(HttpServletResponse response) throws IOException {
         // Tạo một workbook Excel mới
         Workbook workbook = new XSSFWorkbook();
-        XSSFSheet sheet =  (XSSFSheet) workbook.createSheet("Danh sách thiết bị");
+        XSSFSheet sheet = (XSSFSheet) workbook.createSheet("Danh sách thiết bị");
 
         // Tạo dòng header
         Row headerRow = sheet.createRow(0);
@@ -162,11 +161,11 @@ public class ThietBiController {
             if (rowIterator.hasNext()) {
                 rowIterator.next();
             }
-            while(rowIterator.hasNext()){
+            while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
                 int maTB = (int) row.getCell(0).getNumericCellValue();
                 ThietBiDTO thietBi = thietBiService.findThietBiById(maTB);
-                if(thietBi == null){
+                if (thietBi == null) {
                     thietBi = new ThietBiDTO();
                     thietBi.setMaTB((int) row.getCell(0).getNumericCellValue());
                     thietBi.setTenTB(row.getCell(1).getStringCellValue());
@@ -184,6 +183,7 @@ public class ThietBiController {
             e.printStackTrace();
             return "redirect:/thietbi";
         }
+    }
 
     @GetMapping("/datchothietbi")
     public String listThietBiDatCho(Model model) {
@@ -254,7 +254,6 @@ public class ThietBiController {
         return "redirect:/datchothietbi";
     }
 
-    
     // ---------------------------------hàm này của tiến nha đừng có xóa---------------------------------
     @GetMapping("/thietbi/getbyid")
     @ResponseBody
@@ -263,7 +262,7 @@ public class ThietBiController {
             Long maTB = Long.parseLong(query);
             ThietBiDTO thietBi = thietBiService.findThietBiById(maTB);
             return thietBi;
-        }catch(Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
