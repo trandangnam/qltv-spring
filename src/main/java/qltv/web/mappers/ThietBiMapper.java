@@ -14,11 +14,6 @@ public class ThietBiMapper {
                 .maTB(tb.getMaTB())
                 .tenTB(tb.getTenTB())
                 .moTaTB(tb.getMoTaTB())
-                .thongTinSuDung(tb
-                        .getThongTinSuDung()
-                        .stream()
-                        .map(ttsd -> ThongTinSuDungMapper.mapToThongTinSuDung(ttsd))
-                        .collect(Collectors.toList()))
                 .build();
         return model;
     }
@@ -31,11 +26,6 @@ public class ThietBiMapper {
                 .maTB(tb.getMaTB())
                 .tenTB(tb.getTenTB())
                 .moTaTB(tb.getMoTaTB())
-                .thongTinSuDung(tb
-                        .getThongTinSuDung()
-                        .stream()
-                        .map(ttsd -> ThongTinSuDungMapper.mapToThongTinSuDungDtoExceptForeignKeys(ttsd))
-                        .collect(Collectors.toList()))
                 .build();
         return dto;
     }

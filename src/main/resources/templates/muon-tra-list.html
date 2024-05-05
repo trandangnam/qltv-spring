@@ -1,0 +1,95 @@
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{dashboard-layout}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script defer th:src="@{/assets/js/pages/muon-tra-list.js}"></script>
+    <title>Mượn Trả Thiết Bị</title>
+  </head>
+  <body>
+    <div layout:fragment="body">
+      <div class="block block-rounded"></div>
+      <div class="block-header block-header-default">
+        <h3 class="block-title">Danh Sách Sử Dụng Thiết Bị</h3>
+        <div class="block-options">
+          <a href="/thongtinsudung/muon" class="btn btn-success">
+            <i class="fa fa-fw fa-plus me-1"></i> Mượn thiết bị
+          </a>
+        </div>
+        <div class="block-options">
+            <a href="/thongtinsudung/tra" class="btn btn-info">
+              <i class="fa fa-fw fa-plus me-1"></i> Trả thiết bị
+            </a>
+          </div>
+      </div>
+      <div class="block-content">
+        <!---Thanh tim kiem---->
+        <div class="input-group">
+          <input
+            type="search"
+            class="form-control"
+            placeholder="Tìm kiếm theo mã thành viên, mã thiết bị"
+            name="query"
+            id="input-search"
+          />
+          <button class="btn btn-alt-primary" id="btn-search">
+            <i class="fa fa-search me-1 opacity-50"></i>
+          </button>
+        </div>
+        <!---Ket thuc thanh tim kiem---->
+        <div class="block-content">
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-vcenter">
+              <thead>
+                <tr>
+                  <th>Mã</th>
+                  <th>Mã TV</th>
+                  <th>Tên TV</th>
+                  <th>Mã TB</th>
+                  <th>Tên TB</th>
+                  <th>Ngày mượn</th>
+                  <th>Ngày trả</th>
+                  <th>Ngày đặt chổ</th>
+                  <th class="text-center">Trạng thái</th>
+                </tr>
+              </thead>
+              <tbody id="tbl-ttsd">
+                <tr th:each="ttsd : ${ttsds}">
+                  <td class="fw-semibold fs-sm" th:utext="${ttsd.getMaTT()}"></td>
+                  <td
+                    class="fs-sm"
+                    th:utext="${ttsd.getThanhVien().getMaTV()}"
+                  ></td>
+                  <td
+                    class="fs-sm"
+                    th:utext="${ttsd.getThanhVien().getHoTen()}"
+                  ></td>
+                  <td
+                    class="fs-sm"
+                    th:utext="${ttsd.getThietBi().getMaTB()}"
+                  ></td>
+                  <td
+                    class="fs-sm"
+                    th:utext="${ttsd.getThietBi().getTenTB()}"
+                  ></td>
+                  <td class="fs-sm" th:utext="${ttsd.getTgMuon()}"></td>
+                  <td class="fs-sm" th:utext="${ttsd.getTgTra()}"></td>
+                  <td class="fs-sm" th:utext="${ttsd.getTgDatCho()}"></td>
+                  <!--nếu thời gian đặt chổ có thì là đang đặt chổ, nếu có tgmuon mà k có tgtra là đang mượn-->
+                  <td
+                    class="fs-sm"
+                    th:utext="${ttsd.getTgDatCho() != null ? 'Đang đặt chỗ' : (ttsd.getTgMuon() != null && ttsd.getTgTra() == null ? 'Đang mượn' : 'Đã trả')}"
+                  ></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

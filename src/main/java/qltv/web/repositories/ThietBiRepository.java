@@ -11,6 +11,7 @@ public interface ThietBiRepository extends JpaRepository<ThietBi, Long> {
 
     Page<ThietBi> findByTenTBContaining(String tenTB, Pageable pageable);
 
+
     @Query("SELECT tb FROM ThietBi tb WHERE tb.tenTB LIKE CONCAT('%', :query, '%')")
     List<ThietBi> searchThietBi(String query);
 
@@ -21,6 +22,6 @@ public interface ThietBiRepository extends JpaRepository<ThietBi, Long> {
 
     public void deleteThietBi(int maTB);
     
-    
+
 
 }

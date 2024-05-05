@@ -4,10 +4,44 @@ document.addEventListener("DOMContentLoaded", function (event) {
   const txtTienPhat = document.getElementById("tienPhat");
   const txtMaTV = document.getElementById("maThanhVien");
   const txtTenTV = document.getElementById("tenThanhVien");
-  const form = document.getElementById("form-themXuLy");
-  const btnThemXuLy = document.getElementById("btn-themXuLy");
+  const form = document.getElementById("form-suaXuLy");
+  const btnSuaXuLy = document.getElementById("btn-suaXuLy");
 
-  // xử lý thay đổi combobox hình thức xử lý thì bật tắt input tiền phạt
+
+  var hinhThucXuLy = document.getElementById("hinhThucXuLyHidden").value;
+  switch (hinhThucXuLy) {
+    case "Khóa thẻ 2 tháng":
+      hinhThucXuLy = "KhoaThe2Thang";
+      break;
+    case "Khóa thẻ 3 tháng":
+      hinhThucXuLy = "KhoaThe3Thang";
+      break;
+    case "Khóa thẻ 1 tháng và bồi thường":
+      hinhThucXuLy = "KhoaThe1ThangVaBoiThuong";
+      break;
+    case "Bồi thường":
+      hinhThucXuLy = "BoiThuong";
+      break;
+    default:
+      hinhThucXuLy = "KhoaThe1Thang";
+  }
+
+  for (var i = 0; i < cbbHinhThucXuLy.options.length; i++) {
+    if (cbbHinhThucXuLy.options[i].value == hinhThucXuLy) {
+      cbbHinhThucXuLy.options[i].selected = true;
+      break;
+    }
+  }
+
+  var trangThaiXL = document.getElementById("trangThaiHidden").value;
+  var rdDaXuLy = document.getElementById("daXuLy");
+  var rdDangXuLy = document.getElementById("dangXuLy");
+  if (trangThaiXL === "0") {
+    rdDaXuLy.checked = true;
+  } else if (trangThaiXL === "1") {
+    rdDangXuLy.checked = true;
+  }
+
   cbbHinhThucXuLy.addEventListener("change", function () {
     if (cbbHinhThucXuLy.value.includes("oiThuong")) {
       txtTienPhat.readOnly = false;
@@ -18,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
   });
   cbbHinhThucXuLy.dispatchEvent(new Event("change"));
 
-  // xử lý tự động hiện hiện tên thành viên khi chọn mã thành viên
   txtMaTV.addEventListener("focusout", async function () {
     try {
       const response = await fetch(`/thanhvien/getbyid?query=${txtMaTV.value}`);
@@ -31,8 +64,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     } catch (error) {}
   });
 
-  // xử lý kiểm tra dữ liệu xử lý
-  btnThemXuLy.addEventListener("click", function () {
+  btnSuaXuLy.addEventListener("click", function () {
     if (validate() === false) {
       return;
     }
@@ -73,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
       },
     };
 
-    const url = "/xuly/new";
+    const url = "/xuly/"+txtMaXuLy.value+"/edit";
     $.ajax({
       type: "POST",
       url: url,
@@ -83,23 +115,23 @@ document.addEventListener("DOMContentLoaded", function (event) {
         console.log(data);
         if (data =="success") {
           Swal.fire({
-            title: "Thêm xử lý thành công",
+            title: "Sửa xử lý thành công",
             icon: "success",
           }).then((result) => {
             if (result.isConfirmed) {
-              window.location.href = "/xuly/new";
+              window.location.href = "/xuly";
             }
           });
         } else {
           Swal.fire({
-            title: "Thêm xử lý thất bại",
+            title: "Sửa xử lý thất bại",
             icon: "error",
           });
         }
       },
       error: function (e) {
         Swal.fire({
-          title: "Thêm xử lý thất bại",
+          title: "Sửa xử lý thất bại",
           icon: "error",
         });
       },
@@ -147,4 +179,5 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     return flag;
   }
+  
 });

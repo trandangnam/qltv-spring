@@ -33,6 +33,7 @@ public class SecurityConfig {
                         .requestMatchers("/thanhvien/**").permitAll()
                         .requestMatchers("/xuly/**").permitAll()
                         .requestMatchers("/profile/**").permitAll()
+                        .requestMatchers("/thongtinsudung/**").permitAll()
                         .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
                 )

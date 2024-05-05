@@ -1,6 +1,7 @@
 package qltv.web.mappers;
 
 import qltv.web.dto.ThanhVienDTO;
+import qltv.web.dto.ThanhVienInfoDTO;
 import qltv.web.models.ThanhVien;
 
 public class ThanhVienMapper {

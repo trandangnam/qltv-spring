@@ -2,6 +2,8 @@ package qltv.web.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
+
+import jakarta.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,6 +16,7 @@ public class ThietBiDTO {
     private String tenTB;
     @NotEmpty(message = "Mô tả không được để trống")
     private String moTaTB;
+    
     private List<ThongTinSuDungDTO> thongTinSuDung;
 
     public ThietBiDTO() {

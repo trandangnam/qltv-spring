@@ -88,4 +88,11 @@ public class ThietBiServiceImpl implements ThietBiService {
         response.setTotalPages(result.getTotalPages());
         return response;
     }
+
+    //----------hàm này của tiến--------------
+    @Override
+    public ThietBiDTO findThietBiById(long maTB) {
+        ThietBi thietBi = tbRepository.findByMaTB(maTB);
+        return ThietBiMapper.mapToThietBiDto(thietBi);
+    }
 }
