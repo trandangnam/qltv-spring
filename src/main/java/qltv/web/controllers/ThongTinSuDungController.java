@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import qltv.web.dto.ThanhVienDTO;
 import qltv.web.dto.ThongTinSuDungDTO;
+import qltv.web.dto.ThongTinSuDungResponse;
 import qltv.web.security.SecurityUtil;
 import qltv.web.services.ThanhVienService;
 import qltv.web.services.ThietBiService;
@@ -161,5 +162,53 @@ public class ThongTinSuDungController {
         }
         thongTinSuDungService.traThietBi(maTT);
         return "redirect:/thongtinsudung/tra";
+    }
+
+    @GetMapping("/datchothietbi")
+    public String listThietBiDatChoUser(Model model) {
+        String username = SecurityUtil.getUserSession();
+        if (username == null) {
+            return "redirect:/login";
+        }
+        int maTV = Integer.parseInt(username);
+        ThanhVienDTO user = thanhVienService.findMemberById(maTV);
+        model.addAttribute("user", user);
+        ThongTinSuDungResponse ttsdResponse = thongTinSuDungService.findThietBiDatChoUser(0, 10, maTV, "");
+        model.addAttribute("ttsdResponse", ttsdResponse);
+        return "list-thiet-bi-dat-cho";
+    }
+
+    @GetMapping("/datchothietbi/search")
+    public String searchThietBiDatChoUser(
+            @RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+            @RequestParam(value = "query", defaultValue = "", required = false) String query,
+            Model model) {
+        String username = SecurityUtil.getUserSession();
+        if (username == null) {
+            return "redirect:/login";
+        }
+        int maTV = Integer.parseInt(username);
+        ThanhVienDTO user = thanhVienService.findMemberById(maTV);
+        model.addAttribute("user", user);
+        ThongTinSuDungResponse ttsdResponse = thongTinSuDungService.findThietBiDatChoUser(pageNo - 1, pageSize, maTV, query);
+        model.addAttribute("ttsdResponse", ttsdResponse);
+        model.addAttribute("query", query);
+        return "list-thiet-bi-dat-cho";
+    }
+
+    @PostMapping("/datchothietbi/delete")
+    public String deleteDatCho(@RequestParam(value = "maTT", required = true) int maTT,
+            @RequestParam(value = "maTV", required = true) int maTV) {
+        String username = SecurityUtil.getUserSession();
+        if (username == null) {
+            return "redirect:/login";
+        }
+        int userId = Integer.parseInt(username);
+        if (userId != maTV) {
+            return "redirect:/";
+        }
+        thongTinSuDungService.deleteThongTinSuDung(maTT);
+        return "redirect:/datchothietbi";
     }
 }

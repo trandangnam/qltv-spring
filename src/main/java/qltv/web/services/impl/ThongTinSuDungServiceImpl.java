@@ -7,8 +7,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import qltv.web.dto.ThongTinSuDungDTO;
+import qltv.web.dto.ThongTinSuDungResponse;
 import qltv.web.mappers.ThongTinSuDungMapper;
 import qltv.web.models.ThongTinSuDung;
 import qltv.web.repositories.ThanhVienRepository;
@@ -136,6 +140,22 @@ public class ThongTinSuDungServiceImpl implements ThongTinSuDungService {
     }
 
     @Override
+    public ThongTinSuDungResponse findThietBiDatChoUser(int pageNo, int pageSize, long maTV, String query) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<ThongTinSuDung> result = thongTinSuDungRepository.findThietBiDatChoUser(maTV, query, pageable);
+        List<ThongTinSuDung> listTTSD = result.getContent();
+        List<ThongTinSuDungDTO> content = listTTSD.stream()
+                .map(ttsd -> ThongTinSuDungMapper.mapToThongTinSuDungDTO(ttsd))
+                .collect(Collectors.toList());
+
+        ThongTinSuDungResponse response = new ThongTinSuDungResponse();
+        response.setContent(content);
+        response.setPageNo(pageNo + 1);
+        response.setPageSize(pageSize);
+        response.setTotalElements(result.getTotalElements());
+        response.setTotalPages(result.getTotalPages());
+        return response;
+
     public List<ThongTinSuDungDTO> getThongTinSuDungChuaTraTheoMaTV(long maTV) {
         List<ThongTinSuDung> thongTinSuDungs = (ArrayList) thongTinSuDungRepository.findAllttsdChuaTraTheoMaTV(maTV);
         return thongTinSuDungs.stream().map(thongTinSuDung -> ThongTinSuDungMapper.mapToThongTinSuDungDTO(thongTinSuDung)).collect(Collectors.toList());
