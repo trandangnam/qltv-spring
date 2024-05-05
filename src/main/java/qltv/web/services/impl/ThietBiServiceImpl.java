@@ -60,7 +60,7 @@ public class ThietBiServiceImpl implements ThietBiService {
   
     @Override
     public void deleteThietBi(int maTB) {
-        tbRepository.deleteThietBi(maTB);
+        tbRepository.deleteById((long)maTB);
     }
 
     @Override
