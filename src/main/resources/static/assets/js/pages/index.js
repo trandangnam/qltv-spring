@@ -12,3 +12,7 @@ const section1 = document.getElementById("section--1");
 btnScrollTo.addEventListener("click", function () {
   section1.scrollIntoView({ behavior: "smooth" });
 });
+
+if (window.location.search !== "") {
+  section1.scrollIntoView({ behavior: "instant" });
+}
