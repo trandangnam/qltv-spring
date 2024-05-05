@@ -155,7 +155,9 @@ public class ThongTinSuDungServiceImpl implements ThongTinSuDungService {
         response.setTotalElements(result.getTotalElements());
         response.setTotalPages(result.getTotalPages());
         return response;
+    }
 
+    @Override
     public List<ThongTinSuDungDTO> getThongTinSuDungChuaTraTheoMaTV(long maTV) {
         List<ThongTinSuDung> thongTinSuDungs = (ArrayList) thongTinSuDungRepository.findAllttsdChuaTraTheoMaTV(maTV);
         return thongTinSuDungs.stream().map(thongTinSuDung -> ThongTinSuDungMapper.mapToThongTinSuDungDTO(thongTinSuDung)).collect(Collectors.toList());
