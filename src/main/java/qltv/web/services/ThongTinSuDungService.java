@@ -15,4 +15,8 @@ public interface ThongTinSuDungService {
     public void deleteThongTinSuDung(long maTTSD);
 
     public List<ThongTinSuDungDTO> searchThongTinSuDung(String query);
+    
+    public List<ThongTinSuDungDTO> getTtsdByMaTB(long maTB);
+    
+    public int getMaxIdFlusOne();
 }

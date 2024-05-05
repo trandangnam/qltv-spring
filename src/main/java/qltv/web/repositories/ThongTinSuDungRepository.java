@@ -17,4 +17,10 @@ public interface ThongTinSuDungRepository extends JpaRepository<ThongTinSuDung, 
 
     @Query("SELECT ttsd FROM ThongTinSuDung ttsd WHERE ttsd.tgVao IS NULL")
     List<ThongTinSuDung> findAllttsdMuonTra();
+    
+    @Query("SELECT ttsd FROM ThongTinSuDung ttsd RIGHT JOIN ttsd.thietBi tb WHERE tb.maTB = :maTB")
+    List<ThongTinSuDung> getTtsdByMaTB(long maTB);
+    
+    @Query("SELECT COUNT(*) + 1 FROM ThongTinSuDung ttsd")
+    int getMaxIdFlusOne();
 }

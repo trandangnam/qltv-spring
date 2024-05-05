@@ -53,5 +53,13 @@ public class ThongTinSuDungServiceImpl implements ThongTinSuDungService {
         List<ThongTinSuDung> thongTinSuDungs = (ArrayList) thongTinSuDungRepository.searchThongTinSuDung(query);
         return thongTinSuDungs.stream().map(thongTinSuDung -> ThongTinSuDungMapper.mapToThongTinSuDungDTO(thongTinSuDung)).collect(Collectors.toList());
     }
-
+    @Override
+    public List<ThongTinSuDungDTO> getTtsdByMaTB(long maTB){
+        List<ThongTinSuDung> ttsds = thongTinSuDungRepository.getTtsdByMaTB(maTB);
+        return ttsds.stream().map(ttsd -> ThongTinSuDungMapper.mapToThongTinSuDungDTO(ttsd)).collect(Collectors.toList());
+    }
+    @Override
+    public int getMaxIdFlusOne(){
+        return thongTinSuDungRepository.getMaxIdFlusOne();
+    }
 }
