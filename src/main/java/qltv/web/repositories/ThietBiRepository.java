@@ -24,6 +24,6 @@ public interface ThietBiRepository extends JpaRepository<ThietBi, Long> {
     @Query("SELECT tb FROM ThietBi tb WHERE tb.maTB = :username")
     ThietBi findFirstByMaTB(String username);
 
-    public void deleteThietBi(int maTB);
+    //public void deleteThietBi(int maTB);
 
 }
