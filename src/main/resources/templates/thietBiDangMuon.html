@@ -1,7 +1,9 @@
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{dashboard-layout}">
-
-<head>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{main-layout}"
+>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hồ sơ</title>
@@ -10,111 +12,160 @@
     <!--<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>-->
     <script src="/assets/js/plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <script defer th:src="@{/assets/js/pages/profile.js}"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div layout:fragment="body">
-        <div class="content content-full content-boxed account_ID" th:attr="data-id=${user.maTV}">
-            <!-- Hero -->
-            <div class="rounded border overflow-hidden push">
-                <div class="bg-image pt-9" style="background-image: url('/assets/media/photos/photo36@2x.jpg');"></div>
-                <div class="px-4 py-3 bg-body-extra-light d-flex flex-column flex-md-row align-items-center">
-                    <a class="d-block img-link mt-n5" href="be_pages_generic_profile_v2.html">
-                        <img class="img-avatar img-avatar128 img-avatar-thumb" src="/assets/media/avatars/TienCute.jpg"
-                            alt="">
-                    </a>
-                    <div class="ms-3 flex-grow-1 text-center text-md-start my-3 my-md-0">
-                        <h1 class="fs-4 fw-bold mb-1" th:text="${user.hoTen}">Phan Huỳnh Minh Tiến</h1>
-                        <h2 class="fs-sm fw-medium text-muted mb-0">
-                            Chỉnh sửa hồ sơ
-                        </h2>
-                    </div>
-                    <!--                    <div class="space-x-1">
+      <div
+        class="content content-full content-boxed account_ID"
+        th:attr="data-id=${user.maTV}"
+      >
+        <!-- Hero -->
+        <div class="rounded border overflow-hidden push">
+          <div
+            class="bg-image pt-9"
+            style="background-image: url('/assets/media/photos/photo36@2x.jpg')"
+          ></div>
+          <div
+            class="px-4 py-3 bg-body-extra-light d-flex flex-column flex-md-row align-items-center"
+          >
+            <a
+              class="d-block img-link mt-n5"
+              href="be_pages_generic_profile_v2.html"
+            >
+              <img
+                class="img-avatar img-avatar128 img-avatar-thumb"
+                src="/assets/media/avatars/avatar10.jpg"
+                alt=""
+              />
+            </a>
+            <div
+              class="ms-3 flex-grow-1 text-center text-md-start my-3 my-md-0"
+            >
+              <h1 class="fs-4 fw-bold mb-1" th:text="${user.hoTen}">
+                Phan Huỳnh Minh Tiến
+              </h1>
+              <h2 class="fs-sm fw-medium text-muted mb-0">Chỉnh sửa hồ sơ</h2>
+            </div>
+            <!--                    <div class="space-x-1">
                                                 <a href="be_pages_generic_profile_v2.html" class="btn btn-sm btn-alt-secondary space-x-1">
                                                     <i class="fa fa-arrow-left opacity-50"></i>
                                                     <span>Back to Profile</span>
                                                 </a>
                                             </div>-->
-                </div>
-            </div>
-            <!-- END Hero -->
-
-            <!-- Edit Account -->
-            <div class="block block-bordered block-rounded">
-                <ul class="nav nav-tabs nav-tabs-alt" role="tablist">
-                    <li class="nav-item">
-                        <a th:href="@{/profile/{maTV}(maTV=${user.maTV})}">
-
-                            <button class="nav-link space-x-1" id="account-profile-tab" data-bs-toggle="tab"
-                                data-bs-target="#account-profile" role="tab" aria-controls="account-profile">
-                                <i class="fa fa-user-circle d-sm-none"></i>
-                                <span class="d-none d-sm-inline">Hồ sơ</span>
-                            </button>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="@{/profile/updatePassword/{maTV}(maTV=${user.maTV})}">
-                            <button class="nav-link space-x-1" id="account-password-tab" data-bs-toggle="tab"
-                                data-bs-target="#account-password" role="tab" aria-controls="account-password">
-                                <i class="fa fa-asterisk d-sm-none"></i>
-                                <span class="d-none d-sm-inline">Mật khẩu</span>
-                            </button>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="@{/profile/vipham/{maTV}(maTV=${user.maTV})}">
-                            <button class="nav-link space-x-1" id="account-password-tab" data-bs-toggle="tab"
-                                    data-bs-target="#account-password" role="tab" aria-controls="account-password"
-                                    >
-                                    <i class="fa fa-asterisk d-sm-none"></i>
-                                    <span class="d-none d-sm-inline">Vi Phạm</span>
-                            </button>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="@{/profile/datcho/{maTV}(maTV=${user.maTV})}">
-                            <button class="nav-link space-x-1" id="account-password-tab" data-bs-toggle="tab"
-                                data-bs-target="#account-password" role="tab" aria-controls="account-password">
-                                <i class="fa fa-asterisk d-sm-none"></i>
-                                <span class="d-none d-sm-inline">Đặt chổ</span>
-                            </button>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link space-x-1 active" id="account-password-tab" data-bs-toggle="tab"
-                            data-bs-target="#account-password" role="tab" aria-controls="account-password">
-                            <i class="fa fa-asterisk d-sm-none"></i>
-                            <span class="d-none d-sm-inline">Thiết bị đang mượn</span>
-                        </button>
-                    </li>
-                </ul>
-                <div class="block-content">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-vcenter">
-                            <thead>
-                                <tr>
-                                    <th>Mã TT</th>
-                                    <th>Mã TB</th>
-                                    <th>Tên TB</th>
-                                    <th>Ngày mượn</th>
-                                    <th>Ngày trả</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbl-ttsd">
-                                <tr th:each="ttsd : ${ttsds}">
-                                    <td class="fs-sm" th:utext="${ttsd.getMaTT()}"></td>
-                                    <td class="fs-sm" th:utext="${ttsd.getThietBi().getMaTB()}"></td>
-                                    <td class="fs-sm" th:utext="${ttsd.getThietBi().getTenTB()}"></td>
-                                    <td class="fs-sm" th:utext="${ttsd.getTgMuon()}"></td>
-                                    <td class="fs-sm" th:utext="${ttsd.getTgTra()}"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    </div>
-</body>
+        <!-- END Hero -->
 
+        <!-- Edit Account -->
+        <div class="block block-bordered block-rounded">
+          <ul class="nav nav-tabs nav-tabs-alt" role="tablist">
+            <li class="nav-item">
+              <a th:href="@{/profile/{maTV}(maTV=${user.maTV})}">
+                <button
+                  class="nav-link space-x-1"
+                  id="account-profile-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#account-profile"
+                  role="tab"
+                  aria-controls="account-profile"
+                >
+                  <i class="fa fa-user-circle d-sm-none"></i>
+                  <span class="d-none d-sm-inline">Hồ sơ</span>
+                </button>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a th:href="@{/profile/updatePassword/{maTV}(maTV=${user.maTV})}">
+                <button
+                  class="nav-link space-x-1"
+                  id="account-password-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#account-password"
+                  role="tab"
+                  aria-controls="account-password"
+                >
+                  <i class="fa fa-asterisk d-sm-none"></i>
+                  <span class="d-none d-sm-inline">Mật khẩu</span>
+                </button>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a th:href="@{/profile/vipham/{maTV}(maTV=${user.maTV})}">
+                <button
+                  class="nav-link space-x-1"
+                  id="account-password-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#account-password"
+                  role="tab"
+                  aria-controls="account-password"
+                >
+                  <i class="fa fa-asterisk d-sm-none"></i>
+                  <span class="d-none d-sm-inline">Vi Phạm</span>
+                </button>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a th:href="@{/profile/datcho/{maTV}(maTV=${user.maTV})}">
+                <button
+                  class="nav-link space-x-1"
+                  id="account-password-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#account-password"
+                  role="tab"
+                  aria-controls="account-password"
+                >
+                  <i class="fa fa-asterisk d-sm-none"></i>
+                  <span class="d-none d-sm-inline">Đặt chổ</span>
+                </button>
+              </a>
+            </li>
+            <li class="nav-item">
+              <button
+                class="nav-link space-x-1 active"
+                id="account-password-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#account-password"
+                role="tab"
+                aria-controls="account-password"
+              >
+                <i class="fa fa-asterisk d-sm-none"></i>
+                <span class="d-none d-sm-inline">Thiết bị đang mượn</span>
+              </button>
+            </li>
+          </ul>
+          <div class="block-content">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-vcenter">
+                <thead>
+                  <tr>
+                    <th>Mã TT</th>
+                    <th>Mã TB</th>
+                    <th>Tên TB</th>
+                    <th>Ngày mượn</th>
+                    <th>Ngày trả</th>
+                  </tr>
+                </thead>
+                <tbody id="tbl-ttsd">
+                  <tr th:each="ttsd : ${ttsds}">
+                    <td class="fs-sm" th:utext="${ttsd.getMaTT()}"></td>
+                    <td
+                      class="fs-sm"
+                      th:utext="${ttsd.getThietBi().getMaTB()}"
+                    ></td>
+                    <td
+                      class="fs-sm"
+                      th:utext="${ttsd.getThietBi().getTenTB()}"
+                    ></td>
+                    <td class="fs-sm" th:utext="${ttsd.getTgMuon()}"></td>
+                    <td class="fs-sm" th:utext="${ttsd.getTgTra()}"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

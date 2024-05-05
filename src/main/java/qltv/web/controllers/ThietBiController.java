@@ -24,6 +24,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Controller;
 
 import qltv.web.dto.ThanhVienDTO;
 
@@ -34,8 +35,9 @@ import qltv.web.services.ThanhVienService;
 import qltv.web.services.ThietBiService;
 import qltv.web.services.ThongTinSuDungService;
 
-@RestController
-@RequestMapping("/thietbi")
+//@RestController
+//@RequestMapping("/thietbi")
+@Controller
 public class ThietBiController {
 
     private ThietBiService thietBiService;
@@ -49,23 +51,53 @@ public class ThietBiController {
         this.ttsdService = ttsdService;
     }
 
-    @GetMapping
+    @GetMapping("/thietbi")
     public String listThietBi(Model model) {
+        String username = SecurityUtil.getUserSession();
+        if (username == null) {
+            return "redirect:/login";
+        }
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
+        ThanhVienDTO user = thanhVienService.findMemberById(maTV);
+        model.addAttribute("user", user);
         List<ThietBiDTO> listThietBi = thietBiService.getAllThietBi();
         model.addAttribute("listThietBi", listThietBi);
         return "thiet-bi-list";
     }
 
-    @GetMapping("/new")
+    @GetMapping("/thietbi/new")
     public String createThietBiForm(Model model) {
+        String username = SecurityUtil.getUserSession();
+        if (username == null) {
+            return "redirect:/login";
+        }
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
+        ThanhVienDTO user = thanhVienService.findMemberById(maTV);
+        model.addAttribute("user", user);
         ThietBiDTO thietBi = new ThietBiDTO();
         model.addAttribute("thietBi", thietBi);
         return "thiet-bi-create";
     }
 
-    @PostMapping("/new")
+    @PostMapping("/thietbi/new")
     public String saveThietBi(@Valid @ModelAttribute("thietBi") ThietBiDTO thietBi, BindingResult result,
             Model model) {
+        String username = SecurityUtil.getUserSession();
+        if (username == null) {
+            return "redirect:/login";
+        }
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
+        ThanhVienDTO user = thanhVienService.findMemberById(maTV);
+        model.addAttribute("user", user);
         if (result.hasErrors()) {
             model.addAttribute("thietBi", thietBi);
             return "thiet-bi-create";
@@ -74,17 +106,38 @@ public class ThietBiController {
         return "redirect:/thietbi";
     }
 
-    @GetMapping("/{maTB}/edit")
+    @GetMapping("/thietbi/{maTB}/edit")
     public String editThietBiForm(@PathVariable("maTB") int maTB, Model model) {
+        String username = SecurityUtil.getUserSession();
+        if (username == null) {
+            return "redirect:/login";
+        }
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
+        ThanhVienDTO user = thanhVienService.findMemberById(maTV);
+        model.addAttribute("user", user);
         ThietBiDTO thietBi = thietBiService.findThietBiById(maTB);
         model.addAttribute("thietBi", thietBi);
         return "thiet-bi-edit";
     }
 
-    @PostMapping("/{maTB}/edit")
+    @PostMapping("/thietbi/{maTB}/edit")
     public String updateThietBi(@PathVariable("maTB") int maTB,
             @Valid @ModelAttribute("thietBi") ThietBiDTO thietBi,
             BindingResult result, Model model) {
+        String username = SecurityUtil.getUserSession();
+        if (username == null) {
+            return "redirect:/login";
+        }
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
+        ThanhVienDTO user = thanhVienService.findMemberById(maTV);
+        model.addAttribute("user", user);
+        
         if (result.hasErrors()) {
             return "thiet-bi-edit";
         }
@@ -92,21 +145,41 @@ public class ThietBiController {
         return "redirect:/thietbi";
     }
 
-    @GetMapping("/{maTB}/delete")
-    public String deleteThietBi(@PathVariable("maTB") int maTB) {
+    @GetMapping("/thietbi/{maTB}/delete")
+    public String deleteThietBi(@PathVariable("maTB") int maTB, Model model) {
+        String username = SecurityUtil.getUserSession();
+        if (username == null) {
+            return "redirect:/login";
+        }
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
+        ThanhVienDTO user = thanhVienService.findMemberById(maTV);
+        model.addAttribute("user", user);
         thietBiService.deleteThietBi(maTB);
         return "redirect:/thietbi";
     }
 
-    @GetMapping("/search")
+    @GetMapping("/thietbi/search")
     public String searchThietBi(@RequestParam(value = "query") String query, Model model) {
+        String username = SecurityUtil.getUserSession();
+        if (username == null) {
+            return "redirect:/login";
+        }
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
+        ThanhVienDTO user = thanhVienService.findMemberById(maTV);
+        model.addAttribute("user", user);
         List<ThietBiDTO> listThietBi = thietBiService.searchThietBi(query);
         model.addAttribute("listThietBi", listThietBi);
         model.addAttribute("query", query);
         return "thiet-bi-list";
     }
 
-    @GetMapping("/export-excel")
+    @GetMapping("/thietbi/export-excel")
     public ResponseEntity<byte[]> exportExcel(HttpServletResponse response) throws IOException {
         // Tạo một workbook Excel mới
         Workbook workbook = new XSSFWorkbook();
@@ -149,7 +222,7 @@ public class ThietBiController {
                 .body(excelBytes);
     }
 
-    @PostMapping("/import-excel")
+    @PostMapping("/thietbi/import-excel")
     public String importExcel(@RequestParam("file") MultipartFile file) {
         try {
             // Đọc file Excel
@@ -185,13 +258,16 @@ public class ThietBiController {
         }
     }
 
-    @GetMapping("/datchothietbi")
+    @GetMapping("/thietbi/datchothietbi")
     public String listThietBiDatCho(Model model) {
         String username = SecurityUtil.getUserSession();
-        if (username == null) { // kiểm tra đăng nhập
+        if (username == null) {
             return "redirect:/login";
         }
-        Long maTV = Long.parseLong(username);
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
         ThanhVienDTO user = thanhVienService.findMemberById(maTV);
         List<ThietBiDTO> tblist = thietBiService.getAllThietBi();
         model.addAttribute("user", user);
@@ -199,13 +275,16 @@ public class ThietBiController {
         return "datchothietbi";
     }
 
-    @GetMapping("/datchothietbi/search")
+    @GetMapping("/thietbi/datchothietbi/search")
     public String searchThietBiDatCho(@RequestParam(value = "query") String query, Model model) {
         String username = SecurityUtil.getUserSession();
         if (username == null) {
             return "redirect:/login";
         }
-        Long maTV = Long.parseLong(username);
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
         ThanhVienDTO user = thanhVienService.findMemberById(maTV);
         model.addAttribute("user", user);
         List<ThietBiDTO> tblist = thietBiService.searchThietBi(query);
@@ -215,13 +294,16 @@ public class ThietBiController {
 
     }
 
-    @GetMapping("/datchothietbi/{maTB}/datcho")
+    @GetMapping("/thietbi/datchothietbi/{maTB}/datcho")
     public String DatchoThietBi(@PathVariable("maTB") long maTB, Model model) {
         String username = SecurityUtil.getUserSession();
         if (username == null) {
             return "redirect:/login";
         }
-        Long maTV = Long.parseLong(username);
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
         ThanhVienDTO user = thanhVienService.findMemberById(maTV);
         model.addAttribute("user", user);
         ThietBiDTO thietbi = thietBiService.findByMaTB(maTB);
@@ -231,7 +313,7 @@ public class ThietBiController {
         return "datcho";
     }
 
-    @PostMapping("/datchothietbi/save")
+    @PostMapping("/thietbi/datchothietbi/save")
     public String saveDatCho(@RequestParam("maTV") String maTV, @RequestParam("tenTV") String tenTV, @RequestParam("maTB") String maTB, @RequestParam("tenTB") String tenTB, @RequestParam("thoiGian") String thoiGian) {
         ThongTinSuDungDTO ttsdDTO = new ThongTinSuDungDTO();
         long maTVLong = Long.parseLong(maTV);
@@ -251,7 +333,7 @@ public class ThietBiController {
         ttsdDTO.setThietBi(tb);
         ttsdDTO.setTgDatCho(tgDatCho);
         ttsdService.saveThongTinSuDung(ttsdDTO);
-        return "redirect:/datchothietbi";
+        return "redirect:/thietbi/datchothietbi";
     }
 
     // ---------------------------------hàm này của tiến nha đừng có xóa---------------------------------

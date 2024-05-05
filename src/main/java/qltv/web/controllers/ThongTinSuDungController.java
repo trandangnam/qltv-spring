@@ -47,10 +47,13 @@ public class ThongTinSuDungController {
     @GetMapping("/thongtinsudung")
     public String listThongTinSuDung(Model model) {
         String username = SecurityUtil.getUserSession();
-        if (username == null) { // kiểm tra đăng nhập
+        if (username == null) {
             return "redirect:/login";
         }
-        Long maTV = Long.parseLong(username);
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
         ThanhVienDTO user = thanhVienService.findMemberById(maTV);
         List<ThongTinSuDungDTO> ttsds = thongTinSuDungService.getAllThongTinSuDung();
         model.addAttribute("user", user);
@@ -74,10 +77,13 @@ public class ThongTinSuDungController {
     @GetMapping("/thongtinsudung/muon")
     public String loadMuonThietBiPage(Model model) {
         String username = SecurityUtil.getUserSession();
-        if (username == null) { // kiểm tra đăng nhập
+        if (username == null) {
             return "redirect:/login";
         }
-        Long maTV = Long.parseLong(username);
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
         ThanhVienDTO user = thanhVienService.findMemberById(maTV);
         List<ThongTinSuDungDTO> ttsds = thongTinSuDungService.findTtsdSoHuuThietBiDangBan();
         Long nextMaTT = thongTinSuDungService.getMaxMaTT() + 1;
@@ -134,7 +140,7 @@ public class ThongTinSuDungController {
             return "redirect:/login";
         }
         Long maTV = Long.parseLong(username);
-        ThanhVienDTO user = thanhVienService.findMemberById(maTV);
+        ThanhVienDTO user = thanhVienService.findMemberById(maTV); 
         List<ThongTinSuDungDTO> ttsds = thongTinSuDungService.getAllThongTinSuDungChuaTra();
         model.addAttribute("user", user);
         model.addAttribute("ttsds", ttsds);
@@ -160,55 +166,11 @@ public class ThongTinSuDungController {
         if (username == null) {
             return "redirect:/login";
         }
-        thongTinSuDungService.traThietBi(maTT);
-        return "redirect:/thongtinsudung/tra";
-    }
-
-    @GetMapping("/datchothietbi")
-    public String listThietBiDatChoUser(Model model) {
-        String username = SecurityUtil.getUserSession();
-        if (username == null) {
-            return "redirect:/login";
-        }
         int maTV = Integer.parseInt(username);
-        ThanhVienDTO user = thanhVienService.findMemberById(maTV);
-        model.addAttribute("user", user);
-        ThongTinSuDungResponse ttsdResponse = thongTinSuDungService.findThietBiDatChoUser(0, 10, maTV, "");
-        model.addAttribute("ttsdResponse", ttsdResponse);
-        return "list-thiet-bi-dat-cho";
-    }
-
-    @GetMapping("/datchothietbi/search")
-    public String searchThietBiDatChoUser(
-            @RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNo,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
-            @RequestParam(value = "query", defaultValue = "", required = false) String query,
-            Model model) {
-        String username = SecurityUtil.getUserSession();
-        if (username == null) {
-            return "redirect:/login";
-        }
-        int maTV = Integer.parseInt(username);
-        ThanhVienDTO user = thanhVienService.findMemberById(maTV);
-        model.addAttribute("user", user);
-        ThongTinSuDungResponse ttsdResponse = thongTinSuDungService.findThietBiDatChoUser(pageNo - 1, pageSize, maTV, query);
-        model.addAttribute("ttsdResponse", ttsdResponse);
-        model.addAttribute("query", query);
-        return "list-thiet-bi-dat-cho";
-    }
-
-    @PostMapping("/datchothietbi/delete")
-    public String deleteDatCho(@RequestParam(value = "maTT", required = true) int maTT,
-            @RequestParam(value = "maTV", required = true) int maTV) {
-        String username = SecurityUtil.getUserSession();
-        if (username == null) {
-            return "redirect:/login";
-        }
-        int userId = Integer.parseInt(username);
-        if (userId != maTV) {
+        if (maTV > 10) {
             return "redirect:/";
         }
-        thongTinSuDungService.deleteThongTinSuDung(maTT);
-        return "redirect:/datchothietbi";
+        thongTinSuDungService.traThietBi(maTT);
+        return "redirect:/thongtinsudung/tra";
     }
 }
