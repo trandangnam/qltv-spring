@@ -1,5 +1,6 @@
 package qltv.web.dto;
 
+import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +10,9 @@ import lombok.Data;
 public class ThietBiDTO {
 
     private int maTB;
+    @NotEmpty(message = "Tên thiết bị không được để trống")
     private String tenTB;
+    @NotEmpty(message = "Mô tả không được để trống")
     private String moTaTB;
     private List<ThongTinSuDungDTO> thongTinSuDung;
 
@@ -22,4 +25,5 @@ public class ThietBiDTO {
         this.moTaTB = moTaTB;
         this.thongTinSuDung = thongTinSuDung;
     }
+
 }
