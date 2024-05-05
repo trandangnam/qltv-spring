@@ -1,0 +1,57 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboard-layout}">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Đặt chỗ thiết bị</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script defer th:src="@{/assets/js/pages/thiet-bi-dat-cho.js}"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var ttsds = /*[[${ttsds}]]*/ [];
+        /*]]>*/
+    </script>
+    
+</head>
+
+<body>  
+<div layout:fragment="body">
+    <div class="content content-full">
+        <div class="block-header block-header-default">
+            <h3 class="block-title">Đặt chỗ thiết bị</h3>
+        </div>
+        <div class="block block-content">
+            <form role="form" method="post" id="form-datChoThietBi" th:action="@{/datchothietbi/save}">
+                <div class="mb-4">
+                    <label class="form-label" for="val-maTV">Mã thành viên</label>
+                    <input type="text" class="form-control" id="val-maTV" name="maTV" th:value="${user.maTV}" readonly/>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label" for="val-tenTV">Tên thành viên</label>
+                    <input type="text" class="form-control" id="val-tenTV" name="tenTV" th:value="${user.hoTen}" readonly/>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label" for="val-maTB">Mã thiết bị</label>
+                    <input type="text" class="form-control" id="val-maTB" name="maTB" th:value="${thietbi.maTB}" readonly/>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label" for="val-tenTB">Tên thiết bị</label>
+                    <input type="text" class="form-control" id="val-tenTB" name="tenTB" th:value="${thietbi.tenTB}" readonly/>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label" for="val-thoiGian">Thời gian</label>
+                    <input type="datetime-local" class="form-control" id="val-thoiGian" name="thoiGian" required/>
+                </div>
+                <div class="mb-4 d-flex justify-content-between">
+                    <button type="submit" class="btn btn-alt-primary">Lưu</button>
+                    <button id="reset-thoiGian" type="button" class="btn btn-alt-secondary">Đặt lại</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

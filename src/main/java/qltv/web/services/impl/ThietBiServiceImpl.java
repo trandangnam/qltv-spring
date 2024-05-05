@@ -14,6 +14,7 @@ import qltv.web.dto.ThietBiResponse;
 import qltv.web.mappers.ThietBiMapper;
 import qltv.web.models.ThietBi;
 import qltv.web.models.ThongTinSuDung;
+import qltv.web.repositories.ThanhVienRepository;
 import qltv.web.repositories.ThietBiRepository;
 import qltv.web.repositories.ThongTinSuDungRepository;
 import qltv.web.services.ThietBiService;
@@ -23,11 +24,13 @@ public class ThietBiServiceImpl implements ThietBiService {
 
     private ThietBiRepository tbRepository;
     private ThongTinSuDungRepository ttsdRepository;
+    private ThanhVienRepository thanhVienReponsitory;
 
     @Autowired
-    public ThietBiServiceImpl(ThietBiRepository tbRepository, ThongTinSuDungRepository ttsdRepository) {
+    public ThietBiServiceImpl(ThietBiRepository tbRepository, ThongTinSuDungRepository ttsdRepository,ThanhVienRepository thanhVienRepository) {
         this.tbRepository = tbRepository;
         this.ttsdRepository = ttsdRepository;
+        this.thanhVienReponsitory = thanhVienRepository;
     }
     
     @Override
@@ -87,6 +90,27 @@ public class ThietBiServiceImpl implements ThietBiService {
         response.setTotalElements(result.getTotalElements());
         response.setTotalPages(result.getTotalPages());
         return response;
+    }
+
+    @Override
+    public List<ThietBiDTO> getAllThietBi() {
+        List<ThietBi> allThietBi = tbRepository.listThietBi();
+        return allThietBi.stream()
+                .map(tb -> ThietBiMapper.mapToThietBiDto(tb))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ThietBiDTO> searchThietBi(String tenTB) {
+        List<ThietBi> result =  tbRepository.findByTenTB(tenTB);
+        return result.stream()
+                .map(tb -> ThietBiMapper.mapToThietBiDto(tb))
+                .collect(Collectors.toList());
+    }
+    @Override
+    public ThietBiDTO findByMaTB(long maTB){
+        ThietBi thietBi = tbRepository.findByMaTB(maTB);
+        return ThietBiMapper.mapToThietBiDto(thietBi);
     }
 
     //----------hàm này của tiến--------------

@@ -11,20 +11,19 @@ public interface ThietBiRepository extends JpaRepository<ThietBi, Long> {
 
     Page<ThietBi> findByTenTBContaining(String tenTB, Pageable pageable);
 
-
+    @Query("SELECT tb FROM ThietBi tb")
+    List<ThietBi> listThietBi();
+    @Query("SELECT tb FROM ThietBi tb WHERE LOWER(tb.tenTB) LIKE LOWER(CONCAT('%', :tenTB, '%'))")
+    List<ThietBi> findByTenTB(String tenTB);//Không phân biệt hoa thường
+    
+    ThietBi findByMaTB(long maTB);
 
     @Query("SELECT tb FROM ThietBi tb WHERE tb.tenTB LIKE CONCAT('%', :query, '%')")
     List<ThietBi> searchThietBi(String query);
-
-    ThietBi findByMaTB(int maTB);
 
     @Query("SELECT tb FROM ThietBi tb WHERE tb.maTB = :username")
     ThietBi findFirstByMaTB(String username);
 
     public void deleteThietBi(int maTB);
-    
 
-
-    
-    ThietBi findByMaTB(long maTB);
 }
