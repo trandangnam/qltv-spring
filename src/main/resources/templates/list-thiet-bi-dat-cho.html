@@ -1,0 +1,157 @@
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{dashboard-layout}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đặt chỗ thiết bị</title>
+    <script defer th:src="@{/assets/js/pagination.js}"></script>
+    <script
+      defer
+      th:src="@{/assets/js/pages/list-thiet-bi-dat-cho.js}"
+    ></script>
+  </head>
+  <body>
+    <div layout:fragment="body">
+      <div class="block block-rounded">
+        <div class="block-header block-header-default">
+          <h3 class="block-title">Lịch sử đặt chỗ thiết bị</h3>
+        </div>
+        <div class="block-content">
+          <div class="col-md-6">
+            <form th:action="@{/datchothietbi/search}" method="GET">
+              <div class="input-group">
+                <input
+                  type="search"
+                  class="form-control"
+                  placeholder="Tìm kiếm theo tên..."
+                  name="query"
+                  th:value="${query}"
+                />
+                <input type="hidden" name="pageNo" th:value="1" />
+                <button type="submit" class="btn btn-alt-primary">
+                  <i class="fa fa-search me-1 opacity-50"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="block-content">
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-vcenter">
+              <thead>
+                <tr>
+                  <th>Mã thiết bị</th>
+                  <th>Tên thiết bị</th>
+                  <th>Thời gian đặt chỗ</th>
+                  <th>Thời gian mượn</th>
+                  <th>Thời gian trả</th>
+                  <th class="text-center" style="width: 150px">Hành động</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="ttsd : ${ttsdResponse.content}">
+                  <td
+                    class="fw-semibold fs-sm"
+                    th:utext="${ttsd.thietBi.maTB}"
+                  ></td>
+                  <td class="fs-sm" th:utext="${ttsd.thietBi.tenTB}"></td>
+                  <td class="fs-sm" th:unless="${ttsd.tgDatCho}">Chưa có</td>
+                  <td
+                    class="fs-sm"
+                    th:if="${ttsd.tgDatCho}"
+                    th:utext="${#dates.format(ttsd.tgDatCho, 'dd/MM/yyyy HH:mm')}"
+                  ></td>
+                  <td class="fs-sm" th:unless="${ttsd.tgMuon}">Chưa có</td>
+                  <td
+                    class="fs-sm"
+                    th:if="${ttsd.tgMuon}"
+                    th:utext="${#dates.format(ttsd.tgMuon, 'dd/MM/yyyy HH:mm')}"
+                  ></td>
+                  <td class="fs-sm" th:unless="${ttsd.tgTra}">Chưa có</td>
+                  <td
+                    class="fs-sm"
+                    th:if="${ttsd.tgTra}"
+                    th:utext="${#dates.format(ttsd.tgTra, 'dd/MM/yyyy HH:mm')}"
+                  ></td>
+                  <td class="text-center">
+                    <form
+                      th:if="${ttsd.tgMuon != null && ttsd.tgMuon.after(#dates.createNow())}"
+                      th:action="@{/datchothietbi/delete}"
+                      method="POST"
+                    >
+                      <input
+                        type="hidden"
+                        name="maTT"
+                        th:attr="value=${ttsd.maTT}"
+                      />
+                      <input
+                        type="hidden"
+                        name="maTV"
+                        th:attr="value=${ttsd.thanhVien.maTV}"
+                      />
+                      <button type="submit" class="btn btn-alt-primary">
+                        Hủy
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <nav
+            class="pagination-container"
+            th:attr="data-page-no=${ttsdResponse.pageNo},data-total-pages=${ttsdResponse.totalPages},data-query=${query}"
+          >
+            <ul class="pagination justify-content-end mt-2">
+              <li class="page-item">
+                <a
+                  class="page-link first-page disabled"
+                  href="javascript:void(0)"
+                  tabindex="-1"
+                  aria-label="First"
+                  data-page="1"
+                >
+                  <i class="fas fa-angle-double-left"></i>
+                </a>
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link prev-page disabled"
+                  href="javascript:void(0)"
+                  tabindex="-1"
+                  aria-label="Previous"
+                >
+                  <i class="fas fa-angle-left"></i>
+                </a>
+              </li>
+              <div class="d-flex list-page"></div>
+              <li class="page-item">
+                <a
+                  class="page-link next-page disabled"
+                  href="javascript:void(0)"
+                  tabindex="-1"
+                  aria-label="Next"
+                >
+                  <i class="fas fa-angle-right"></i>
+                </a>
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link last-page disabled"
+                  href="javascript:void(0)"
+                  tabindex="-1"
+                  aria-label="Last"
+                >
+                  <i class="fas fa-angle-double-right"></i>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -2,6 +2,8 @@ package qltv.web.repositories;
 
 import java.util.Date;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import qltv.web.models.ThongTinSuDung;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -44,4 +46,16 @@ public interface ThongTinSuDungRepository extends JpaRepository<ThongTinSuDung, 
     List<ThongTinSuDung> SearchTtsdSoHuuThietBiDangMuon(@Param("query") String query);
     
     ThongTinSuDung findByMaTT(long maTT);
+    
+    @Query(value = 
+            """
+            SELECT ttsd
+            FROM ThongTinSuDung ttsd
+                JOIN ttsd.thietBi tb
+            WHERE ttsd.thanhVien.maTV = :maTV
+                AND ttsd.tgDatCho IS NOT NULL
+                AND tb.tenTB LIKE CONCAT('%', :tenTB, '%')
+            ORDER BY ttsd.tgDatCho DESC
+            """)
+    Page<ThongTinSuDung> findThietBiDatChoUser(long maTV, String tenTB, Pageable pageable);
 }

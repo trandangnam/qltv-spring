@@ -2,6 +2,7 @@ package qltv.web.services;
 
 import java.util.List;
 import qltv.web.dto.ThongTinSuDungDTO;
+import qltv.web.dto.ThongTinSuDungResponse;
 import qltv.web.models.ThongTinSuDung;
 
 public interface ThongTinSuDungService {
@@ -34,5 +35,5 @@ public interface ThongTinSuDungService {
     
     public void traThietBi(long maTTSD);
 
-
+    public ThongTinSuDungResponse findThietBiDatChoUser(int pageNo, int pageSize, long maTV, String query);
 }
