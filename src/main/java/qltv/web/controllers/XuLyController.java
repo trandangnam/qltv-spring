@@ -38,6 +38,7 @@ public class XuLyController {
     public XuLyController(XuLyService xuLyService, ThanhVienService thanhVienService) {
         this.xuLyService = xuLyService;
         this.thanhVienService = thanhVienService;
+        this.xuLyService.updateXuLyDuThoiGian();
     }
 
     @GetMapping("/xuly")

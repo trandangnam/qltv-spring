@@ -10,4 +10,6 @@ public interface ThietBiService {
     public List<ThietBiDTO> getAllThietBi();
     public List<ThietBiDTO> searchThietBi(String tenTB);
     public ThietBiDTO findByMaTB(long maTB);
+    
+    public ThietBiDTO findThietBiById(long maTB);
 }

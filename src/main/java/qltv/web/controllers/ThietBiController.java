@@ -101,4 +101,18 @@ public class ThietBiController {
         return "redirect:/datchothietbi";
     }
 
+    
+    // ---------------------------------hàm này của tiến nha đừng có xóa---------------------------------
+    @GetMapping("/thietbi/getbyid")
+    @ResponseBody
+    public ThietBiDTO getThanhVienById(@RequestParam(value = "query") String query, Model model) {
+        try {
+            Long maTB = Long.parseLong(query);
+            ThietBiDTO thietBi = tbService.findThietBiById(maTB);
+            return thietBi;
+        }catch(Exception e){
+            return null;
+        }
+    }
+    //--------------------------------------------------------------
 }

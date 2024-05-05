@@ -17,6 +17,33 @@ public interface ThongTinSuDungRepository extends JpaRepository<ThongTinSuDung, 
 
     @Query("SELECT ttsd FROM ThongTinSuDung ttsd WHERE ttsd.tgVao IS NULL")
     List<ThongTinSuDung> findAllttsdMuonTra();
+
+    @Query("SELECT ttsd FROM ThongTinSuDung ttsd WHERE (DATE(ttsd.tgDatCho) = CURRENT_DATE OR (ttsd.tgMuon IS NOT NULL AND ttsd.tgTra IS NULL)) AND ttsd.thietBi.maTB IS NOT NULL")
+    List<ThongTinSuDung> findTtsdSoHuuThietBiDangBan();
+
+    @Query("SELECT ttsd FROM ThongTinSuDung ttsd WHERE (DATE(ttsd.tgDatCho) = CURRENT_DATE OR (ttsd.tgMuon IS NOT NULL AND ttsd.tgTra IS NULL)) AND ttsd.thietBi.maTB IS NOT NULL AND CAST(ttsd.thietBi.maTB AS string) LIKE %:query%")
+    List<ThongTinSuDung> SearchTtsdSoHuuThietBiDangBan(@Param("query") String query);
+
+    @Query("SELECT MAX(ttsd.maTT) FROM ThongTinSuDung ttsd")
+    Long getMaxMaTT();
+
+    @Query("SELECT COUNT(ttsd) FROM ThongTinSuDung ttsd WHERE ttsd.thietBi.maTB = :maTB AND ttsd.tgMuon IS NOT NULL AND ttsd.tgTra IS NULL")
+    int thietBiDangDuocMuon(@Param("maTB") int maTB);
+
+    @Query("SELECT COUNT(ttsd) FROM ThongTinSuDung ttsd WHERE ttsd.thietBi.maTB = :maTB AND DATE(ttsd.tgDatCho) = CURRENT_DATE")
+    int thietBiDuocDatChoTrongNgay(@Param("maTB") int maTB);
+
+    // hàm này lấy tất cả các thông tin sử dụng có tgDatCho < hiện tại
+    @Query("SELECT ttsd FROM ThongTinSuDung ttsd WHERE ttsd.tgDatCho < CURRENT_TIMESTAMP")
+    List<ThongTinSuDung> findAllttsdDatChoQuaHan();
+
+    @Query("SELECT ttsd FROM ThongTinSuDung ttsd WHERE ttsd.tgMuon IS NOT NULL AND ttsd.tgTra IS NULL")
+    List<ThongTinSuDung> findAllttsdChuaTra();
+    
+    @Query("SELECT ttsd FROM ThongTinSuDung ttsd WHERE ttsd.tgMuon IS NOT NULL AND ttsd.tgTra IS NULL AND CAST(ttsd.thietBi.maTB AS string) LIKE %:query%")
+    List<ThongTinSuDung> SearchTtsdSoHuuThietBiDangMuon(@Param("query") String query);
+    
+    ThongTinSuDung findByMaTT(long maTT);
     
     @Query("SELECT ttsd FROM ThongTinSuDung ttsd RIGHT JOIN ttsd.thietBi tb WHERE tb.maTB = :maTB")
     List<ThongTinSuDung> getTtsdByMaTB(long maTB);

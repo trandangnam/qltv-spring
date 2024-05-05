@@ -75,4 +75,11 @@ public class ThietBiServiceImpl implements ThietBiService {
         ThietBi thietBi = tbRepository.findByMaTB(maTB);
         return ThietBiMapper.mapToThietBiDto(thietBi);
     }
+
+    //----------hàm này của tiến--------------
+    @Override
+    public ThietBiDTO findThietBiById(long maTB) {
+        ThietBi thietBi = tbRepository.findByMaTB(maTB);
+        return ThietBiMapper.mapToThietBiDto(thietBi);
+    }
 }
