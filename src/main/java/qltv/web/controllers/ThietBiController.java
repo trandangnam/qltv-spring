@@ -333,7 +333,7 @@ public class ThietBiController {
         ttsdDTO.setThietBi(tb);
         ttsdDTO.setTgDatCho(tgDatCho);
         ttsdService.saveThongTinSuDung(ttsdDTO);
-        return "redirect:/datchothietbi";
+        return "redirect:/thietbi/datchothietbi";
     }
 
     // ---------------------------------hàm này của tiến nha đừng có xóa---------------------------------

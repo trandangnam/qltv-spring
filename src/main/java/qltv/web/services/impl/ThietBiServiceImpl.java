@@ -80,7 +80,7 @@ public class ThietBiServiceImpl implements ThietBiService {
             tb.setThongTinSuDung(listTTSD);
         }
         List<ThietBiDTO> content = listThietBi.stream()
-                .map(tb -> ThietBiMapper.mapToThietBiDto(tb))
+                .map(tb -> ThietBiMapper.mapToThietBiDtoWithForeignKeys(tb))
                 .collect(Collectors.toList());
 
         ThietBiResponse response = new ThietBiResponse();
