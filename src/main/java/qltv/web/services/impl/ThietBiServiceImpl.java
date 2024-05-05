@@ -1,5 +1,6 @@
 package qltv.web.services.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +31,42 @@ public class ThietBiServiceImpl implements ThietBiService {
         this.tbRepository = tbRepository;
         this.ttsdRepository = ttsdRepository;
         this.thanhVienReponsitory = thanhVienRepository;
+    }
+    
+    @Override
+    public List<ThietBiDTO> getAllThietBi() {
+        List<ThietBi> members = (ArrayList) tbRepository.findAll();
+        return members.stream().map(member -> ThietBiMapper.mapToThietBiDto(member)).collect(Collectors.toList());
+    }
+
+    @Override
+    public ThietBi saveThietBi(ThietBiDTO tb) {
+        ThietBi thietBi = ThietBiMapper.mapToThietBi(tb);
+        return tbRepository.save(thietBi);
+    }
+
+    @Override
+    public ThietBiDTO findThietBiById(int maTB) {
+        ThietBi thietBi = tbRepository.findByMaTB(maTB);
+        return ThietBiMapper.mapToThietBiDto(thietBi);
+    }
+
+    @Override
+    public void updateThietBi(ThietBiDTO thietBiDto) {
+        ThietBi thietBi = ThietBiMapper.mapToThietBi(thietBiDto);
+        tbRepository.save(thietBi);
+    }
+
+  
+    @Override
+    public void deleteThietBi(int maTB) {
+        tbRepository.deleteThietBi(maTB);
+    }
+
+    @Override
+    public List<ThietBiDTO> searchThietBi(String query) {
+        List<ThietBi> listThietBi = tbRepository.searchThietBi(query);
+        return listThietBi.stream().map(thietBi -> ThietBiMapper.mapToThietBiDto(thietBi)).collect(Collectors.toList());
     }
 
     @Override

@@ -30,13 +30,15 @@ public interface ThongTinSuDungService {
 
     public boolean thietBiDangDuocDatCho(int maTB);
 
+
     public void xoaDatChoQuaHan();
 
     public List<ThongTinSuDungDTO> getAllThongTinSuDungChuaTra();
-    
+
     public List<ThongTinSuDungDTO> searchTtsdSoHuuThietBiDangMuon(String query);
-    
+
     public void traThietBi(long maTTSD);
 
+    public List<ThongTinSuDungDTO> getThongTinSuDungChuaTraTheoMaTV(long maTV);
 
 }

@@ -18,7 +18,12 @@ public interface ThietBiRepository extends JpaRepository<ThietBi, Long> {
     
     ThietBi findByMaTB(long maTB);
 
+    @Query("SELECT tb FROM ThietBi tb WHERE tb.tenTB LIKE CONCAT('%', :query, '%')")
+    List<ThietBi> searchThietBi(String query);
 
-    
-    ThietBi findByMaTB(long maTB);
+    @Query("SELECT tb FROM ThietBi tb WHERE tb.maTB = :username")
+    ThietBi findFirstByMaTB(String username);
+
+    public void deleteThietBi(int maTB);
+
 }
