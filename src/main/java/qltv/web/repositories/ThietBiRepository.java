@@ -23,4 +23,6 @@ public interface ThietBiRepository extends JpaRepository<ThietBi, Long> {
     
     
 
+    
+    ThietBi findByMaTB(long maTB);
 }

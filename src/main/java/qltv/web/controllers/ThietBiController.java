@@ -1,5 +1,6 @@
 package qltv.web.controllers;
 
+
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,13 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import qltv.web.dto.ThietBiDTO;
 import qltv.web.services.ThietBiService;
 
@@ -171,4 +179,18 @@ public class ThietBiController {
             return "redirect:/thietbi";
         }
     }
+    
+    // ---------------------------------hàm này của tiến nha đừng có xóa---------------------------------
+    @GetMapping("/thietbi/getbyid")
+    @ResponseBody
+    public ThietBiDTO getThanhVienById(@RequestParam(value = "query") String query, Model model) {
+        try {
+            Long maTB = Long.parseLong(query);
+            ThietBiDTO thietBi = tbService.findThietBiById(maTB);
+            return thietBi;
+        }catch(Exception e){
+            return null;
+        }
+    }
+    //--------------------------------------------------------------
 }

@@ -1,15 +1,79 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>Sửa xử lý</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Sửa xử lý</div>
-    </body>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{dashboard-layout}">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sửa xử lý</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer th:src="@{/assets/js/pages/xu-ly-edit.js}"></script>
+</head>
+
+<body>
+    <div layout:fragment="body">
+        <div class="content content-full">
+            <div class="block-header block-header-default">
+                <h3 class="block-title text-lg-center">Sửa xử lý vi phạm</h3>
+            </div>
+            <div class="block block-content">
+                <form action="/xuly/edit" id="form-themXuLy" method="POST" th:object="${xuly}"></form>
+                <div class="form-group py-2">
+                    <label for="maXuLy">Mã xử lý:</label>
+                    <input type="text" id="maXuLy" name="maXuLy" th:attr="value=${xuLy.getMaXL()}" readonly
+                        class="form-control" />
+                </div>
+                <div class="form-group py-2">
+                    <label for="tenXuLy">Mã thành viên:</label>
+                    <input type="text" id="maThanhVien" name="maThanhVien"
+                        th:attr="value=${xuLy.getThanhVien().getMaTV()}" class="form-control" />
+                </div>
+                <div class="form-group py-2">
+                    <label for="tenThanhVien">Tên thành viên:</label>
+                    <input type="text" id="tenThanhVien" name="tenThanhVien"
+                        th:attr="value=${xuLy.getThanhVien().getHoTen()}" disabled class="form-control" />
+                </div>
+                <div class="form-group py-2">
+                    <label for="hinhThucXuLy">Hình thức xử lý:</label>
+                    <input type="hidden" id="hinhThucXuLyHidden" name="hinhThucXuLyHidden"
+                        th:attr="value=${xuLy.getHinhThucXL()}" />
+                    <select id="hinhThucXuLy" name="hinhThucXuLy" class="form-control">
+                        <option value="KhoaThe1Thang">Khóa thẻ 1 tháng</option>
+                        <option value="KhoaThe2Thang">Khóa thẻ 2 tháng</option>
+                        <option value="KhoaThe3Thang">Khóa thẻ 3 tháng</option>
+                        <option value="KhoaThe1ThangVaBoiThuong">Khóa thẻ 1 tháng và bồi thường</option>
+                        <option value="BoiThuong">Bồi thường</option>
+                    </select>
+
+                    <div class="form-group py-2">
+                        <label for="tienPhat">Tiền phạt:</label>
+                        <input type="text" id="tienPhat" name="tienPhat" th:attr="value=${xuLy.getSoTien()}"
+                            class="form-control" />
+                    </div>
+
+                    <div class="form-group py-2">
+                        <label for="daXuLy">Trạng thái:</label>
+                        <input type="hidden" id="trangThaiHidden" name="trangThaiHidden"
+                            th:attr="value=${xuLy.getTrangThaiXL()}" />
+                        <div>
+                            <input type="radio" id="daXuLy" name="trangThai" value="0" />
+                            <label for="daXuLy">Đã xử lý</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="dangXuLy" name="trangThai" value="1" checked="checked" />
+                            <label for="dangXuLy">Đang xử lý</label>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group py-3">
+                        <input type="button" id="btn-suaXuLy" value="Sửa" class="btn btn-primary" />
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
 </html>

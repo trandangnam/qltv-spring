@@ -148,14 +148,10 @@ public class ThanhVienController {
         return "thanh-vien-list";
     }
 
-    // hàm này của tiến nha đừng có xóa
+    // ---------------------------------hàm này của tiến nha đừng có xóa---------------------------------
     @GetMapping("/thanhvien/getbyid")
     @ResponseBody
     public ThanhVienDTO getThanhVienById(@RequestParam(value = "query") String query, Model model) {
-//        String username = SecurityUtil.getUserSession();
-//        if (username == null) {
-//            return null;
-//        }
         try {
             Long maTV = Long.parseLong(query);
             ThanhVienDTO user = tvService.findMemberById(maTV);
@@ -163,9 +159,8 @@ public class ThanhVienController {
         }catch(Exception e){
             return null;
         }
-
     }
-    //---------------------------------------------
+    //--------------------------------------------------------------
     @GetMapping("/thanhvien/getbynganh")
     @ResponseBody
     public String getThanhVienByNganh(@RequestParam(value = "query") String query, Model model) {
