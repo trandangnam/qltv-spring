@@ -17,4 +17,7 @@ public interface XuLyRepository extends JpaRepository<XuLy, Long> { // trong đ�
 
     @Query("SELECT xuLy FROM XuLy xuLy WHERE xuLy.hinhThucXL LIKE '%tháng%'")
     List<XuLy> findXuLyCoKhoaThe();
+
+    @Query("SELECT COUNT(xuLy) FROM XuLy xuLy WHERE xuLy.thanhVien.maTV = :maTV AND xuLy.trangThaiXL = 1")
+    int thanhVienDangBiXuLy(@Param("maTV") long maTV);
 }
