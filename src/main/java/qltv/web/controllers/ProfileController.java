@@ -22,6 +22,7 @@ import qltv.web.dto.ThanhVienDTO;
 import qltv.web.dto.ThanhVienInfoDTO;
 import qltv.web.dto.ThanhVienPasswordDTO;
 import qltv.web.dto.ThongTinSuDungDTO;
+import qltv.web.dto.ThongTinSuDungResponse;
 import qltv.web.dto.XuLyDTO;
 import qltv.web.repositories.ThanhVienRepository;
 import qltv.web.security.SecurityUtil;
@@ -147,5 +148,60 @@ public class ProfileController {
         List<ThongTinSuDungDTO> ttsds = thongTinSuDungService.getThongTinSuDungChuaTraTheoMaTV(maTV);
         model.addAttribute("ttsds", ttsds);
         return "thietBiDangMuon";
+    }
+    
+    @GetMapping("/profile/datcho/{maTV}")
+    public String listThietBiDatChoUser(@PathVariable("maTV") long maTV, Model model) {
+        String username = SecurityUtil.getUserSession();
+        if (username == null) {
+            return "redirect:/login";
+        }
+        int userId = Integer.parseInt(username);
+        if (userId != maTV) {
+            return "redirect:/";
+        }
+        ThanhVienDTO user = tvService.findMemberById(userId);
+        model.addAttribute("user", user);
+        
+        ThongTinSuDungResponse ttsdResponse = thongTinSuDungService.findThietBiDatChoUser(0, 10, maTV, "");
+        model.addAttribute("ttsdResponse", ttsdResponse);
+        return "list-thiet-bi-dat-cho";
+    }
+
+    @GetMapping("/profile/datcho/{maTV}/search")
+    public String searchThietBiDatChoUser(@PathVariable("maTV") long maTV,
+            @RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+            @RequestParam(value = "query", defaultValue = "", required = false) String query,
+            Model model) {
+        String username = SecurityUtil.getUserSession();
+        if (username == null) {
+            return "redirect:/login";
+        }
+        int userId = Integer.parseInt(username);
+        if (userId != maTV) {
+            return "redirect:/";
+        }
+        ThanhVienDTO user = tvService.findMemberById(userId);
+        model.addAttribute("user", user);
+        ThongTinSuDungResponse ttsdResponse = thongTinSuDungService.findThietBiDatChoUser(pageNo - 1, pageSize, maTV, query);
+        model.addAttribute("ttsdResponse", ttsdResponse);
+        model.addAttribute("query", query);
+        return "list-thiet-bi-dat-cho";
+    }
+
+    @PostMapping("/profile/datcho/{maTV}/delete")
+    public String deleteDatCho(@PathVariable("maTV") long maTV,
+            @RequestParam(value = "maTT", required = true) int maTT) {
+        String username = SecurityUtil.getUserSession();
+        if (username == null) {
+            return "redirect:/login";
+        }
+        int userId = Integer.parseInt(username);
+        if (userId != maTV) {
+            return "redirect:/";
+        }
+        thongTinSuDungService.deleteThongTinSuDung(maTT);
+        return "redirect:/profile/datcho/" + userId;
     }
 }
