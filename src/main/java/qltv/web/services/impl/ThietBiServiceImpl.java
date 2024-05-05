@@ -92,21 +92,21 @@ public class ThietBiServiceImpl implements ThietBiService {
         return response;
     }
 
-    @Override
-    public List<ThietBiDTO> getAllThietBi() {
-        List<ThietBi> allThietBi = tbRepository.listThietBi();
-        return allThietBi.stream()
-                .map(tb -> ThietBiMapper.mapToThietBiDto(tb))
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public List<ThietBiDTO> getAllThietBi() {
+//        List<ThietBi> allThietBi = tbRepository.listThietBi();
+//        return allThietBi.stream()
+//                .map(tb -> ThietBiMapper.mapToThietBiDto(tb))
+//                .collect(Collectors.toList());
+//    }
 
-    @Override
-    public List<ThietBiDTO> searchThietBi(String tenTB) {
-        List<ThietBi> result =  tbRepository.findByTenTB(tenTB);
-        return result.stream()
-                .map(tb -> ThietBiMapper.mapToThietBiDto(tb))
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public List<ThietBiDTO> searchThietBi(String tenTB) {
+//        List<ThietBi> result =  tbRepository.findByTenTB(tenTB);
+//        return result.stream()
+//                .map(tb -> ThietBiMapper.mapToThietBiDto(tb))
+//                .collect(Collectors.toList());
+//    }
     @Override
     public ThietBiDTO findByMaTB(long maTB){
         ThietBi thietBi = tbRepository.findByMaTB(maTB);
