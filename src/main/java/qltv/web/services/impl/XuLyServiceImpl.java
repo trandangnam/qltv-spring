@@ -119,6 +119,11 @@ public class XuLyServiceImpl implements XuLyService {
             }
         }
     }
+
+    @Override
+    public boolean thanhVienDangBiXuLy(long maTV) {
+        return xuLyRepository.thanhVienDangBiXuLy(maTV)>0;
+    }
 }
 
 

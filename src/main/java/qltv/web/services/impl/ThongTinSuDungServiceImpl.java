@@ -127,4 +127,10 @@ public class ThongTinSuDungServiceImpl implements ThongTinSuDungService {
         updateThongTinSuDung(ttsdDTO);
     }
 
+    @Override
+    public List<ThongTinSuDungDTO> getThongTinSuDungChuaTraTheoMaTV(long maTV) {
+        List<ThongTinSuDung> thongTinSuDungs = (ArrayList) thongTinSuDungRepository.findAllttsdChuaTraTheoMaTV(maTV);
+        return thongTinSuDungs.stream().map(thongTinSuDung -> ThongTinSuDungMapper.mapToThongTinSuDungDTO(thongTinSuDung)).collect(Collectors.toList());
+    }
+
 }

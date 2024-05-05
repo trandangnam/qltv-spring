@@ -5,6 +5,7 @@
 package qltv.web.controllers;
 
 import jakarta.validation.Valid;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -20,9 +21,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import qltv.web.dto.ThanhVienDTO;
 import qltv.web.dto.ThanhVienInfoDTO;
 import qltv.web.dto.ThanhVienPasswordDTO;
+import qltv.web.dto.ThongTinSuDungDTO;
+import qltv.web.dto.XuLyDTO;
 import qltv.web.repositories.ThanhVienRepository;
 import qltv.web.security.SecurityUtil;
 import qltv.web.services.ThanhVienService;
+import qltv.web.services.ThongTinSuDungService;
+import qltv.web.services.XuLyService;
 
 /**
  *
@@ -33,11 +38,15 @@ public class ProfileController {
 
     private ThanhVienService tvService;
     private ThanhVienRepository tvRepository;
+    private XuLyService xuLyService;
+    private ThongTinSuDungService thongTinSuDungService;
 
     @Autowired
-    public ProfileController(ThanhVienService tvService, ThanhVienRepository tvRepository) {
+    public ProfileController(ThanhVienService tvService, ThanhVienRepository tvRepository, XuLyService xuLyService, ThongTinSuDungService thongTinSuDungService) {
         this.tvService = tvService;
         this.tvRepository = tvRepository;
+        this.xuLyService = xuLyService;
+        this.thongTinSuDungService = thongTinSuDungService;
     }
     @GetMapping("/profile/{maTV}")
     public String editProfileForm(@PathVariable("maTV") long maTV, Model model) {
@@ -108,5 +117,35 @@ public class ProfileController {
         } else {
             return "false";
         }
+    }
+    
+    @GetMapping("/profile/vipham/{maTV}")
+    public String xemTrangThaiViPham(@PathVariable("maTV") long maTV, Model model) {
+        String username = SecurityUtil.getUserSession();
+        if (username == null) {
+            return "redirect:/login";
+        }
+        int userId = Integer.parseInt(username);
+        ThanhVienDTO user = tvService.findMemberById(userId);
+        model.addAttribute("user", user);
+        
+        List<XuLyDTO> xuLys = xuLyService.searchXuLy(maTV+"");
+        model.addAttribute("xuLys", xuLys);
+        return "viPham";
+    }
+    
+    @GetMapping("/profile/danhsachmuon/{maTV}")
+    public String xemThietBiDangMuon(@PathVariable("maTV") long maTV, Model model) {
+        String username = SecurityUtil.getUserSession();
+        if (username == null) {
+            return "redirect:/login";
+        }
+        int userId = Integer.parseInt(username);
+        ThanhVienDTO user = tvService.findMemberById(userId);
+        model.addAttribute("user", user);
+        
+        List<ThongTinSuDungDTO> ttsds = thongTinSuDungService.getThongTinSuDungChuaTraTheoMaTV(maTV);
+        model.addAttribute("ttsds", ttsds);
+        return "thietBiDangMuon";
     }
 }
