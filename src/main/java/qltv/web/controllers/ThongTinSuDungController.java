@@ -41,7 +41,7 @@ public class ThongTinSuDungController {
         this.thanhVienService = thanhVienService;
         this.xuLyService = xuLyService;
         this.thongTinSuDungService = thongTinSuDungService;
-        this.thongTinSuDungService.xoaDatChoQuaHan();
+        // this.thongTinSuDungService.xoaDatChoQuaHan();
     }
 
     @GetMapping("/thongtinsudung")
