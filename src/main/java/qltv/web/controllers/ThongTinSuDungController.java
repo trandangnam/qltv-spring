@@ -55,23 +55,30 @@ public class ThongTinSuDungController {
             return "redirect:/";
         }
         ThanhVienDTO user = thanhVienService.findMemberById(maTV);
-        List<ThongTinSuDungDTO> ttsds = thongTinSuDungService.getAllThongTinSuDung();
+        ThongTinSuDungResponse ttsdResponse = thongTinSuDungService.getTTSDMuonTra(0, 10, "");
         model.addAttribute("user", user);
-        model.addAttribute("ttsds", ttsds);
+        model.addAttribute("ttsdResponse", ttsdResponse);
         return "muon-tra-list";
     }
 
     @GetMapping("/thongtinsudung/search")
-    @ResponseBody
-    public List<ThongTinSuDungDTO> searchThongTinSuDung(@RequestParam(value = "query") String query, Model model) {
+    public String searchThongTinSuDung(@RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+            @RequestParam(value = "query", defaultValue = "", required = false) String query, Model model) {
         String username = SecurityUtil.getUserSession();
         if (username == null) {
-            return null;
+            return "redirect:/login";
         }
-        Long maTV = Long.parseLong(username);
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
         ThanhVienDTO user = thanhVienService.findMemberById(maTV);
-        List<ThongTinSuDungDTO> ttsds = thongTinSuDungService.searchThongTinSuDung(query);
-        return ttsds;
+        ThongTinSuDungResponse ttsdResponse = thongTinSuDungService.getTTSDMuonTra(pageNo - 1, pageSize, query);
+        model.addAttribute("user", user);
+        model.addAttribute("ttsdResponse", ttsdResponse);
+        model.addAttribute("query", query);
+        return "muon-tra-list";
     }
 
     @GetMapping("/thongtinsudung/muon")

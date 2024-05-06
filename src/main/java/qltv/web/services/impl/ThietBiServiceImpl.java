@@ -119,4 +119,21 @@ public class ThietBiServiceImpl implements ThietBiService {
         ThietBi thietBi = tbRepository.findByMaTB(maTB);
         return ThietBiMapper.mapToThietBiDto(thietBi);
     }
+
+    @Override
+    public ThietBiResponse getListThietBi(int pageNo, int pageSize, String query) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<ThietBi> result = tbRepository.findByTenTBContaining(query, pageable);
+        List<ThietBiDTO> content = result.getContent().stream()
+                .map(tb -> ThietBiMapper.mapToThietBiDto(tb))
+                .collect(Collectors.toList());
+
+        ThietBiResponse response = new ThietBiResponse();
+        response.setContent(content);
+        response.setPageNo(pageNo + 1);
+        response.setPageSize(pageSize);
+        response.setTotalElements(result.getTotalElements());
+        response.setTotalPages(result.getTotalPages());
+        return response;
+    }
 }

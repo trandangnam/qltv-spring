@@ -10,8 +10,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import qltv.web.dto.XuLyDTO;
+import qltv.web.dto.XuLyResponse;
 import qltv.web.mappers.XuLyMapper;
 import qltv.web.models.XuLy;
 import qltv.web.repositories.ThanhVienRepository;
@@ -122,8 +126,23 @@ public class XuLyServiceImpl implements XuLyService {
 
     @Override
     public boolean thanhVienDangBiXuLy(long maTV) {
-        return xuLyRepository.thanhVienDangBiXuLy(maTV)>0;
+        return xuLyRepository.thanhVienDangBiXuLy(maTV) > 0;
+    }
+
+    @Override
+    public XuLyResponse getListXuLy(int pageNo, int pageSize, String query) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<XuLy> result = xuLyRepository.getListXuLy(query, pageable);
+        List<XuLyDTO> content = result.getContent().stream()
+                .map(xl -> XuLyMapper.mapToXuLyDTO(xl))
+                .collect(Collectors.toList());
+
+        XuLyResponse response = new XuLyResponse();
+        response.setContent(content);
+        response.setPageNo(pageNo + 1);
+        response.setPageSize(pageSize);
+        response.setTotalElements(result.getTotalElements());
+        response.setTotalPages(result.getTotalPages());
+        return response;
     }
 }
-
-

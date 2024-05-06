@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import qltv.web.dto.ThanhVienDTO;
 import qltv.web.dto.XuLyDTO;
+import qltv.web.dto.XuLyResponse;
 import qltv.web.mappers.ThanhVienMapper;
 import qltv.web.models.ThanhVien;
 import qltv.web.security.SecurityUtil;
@@ -52,10 +53,9 @@ public class XuLyController {
             return "redirect:/";
         }
         ThanhVienDTO user = thanhVienService.findMemberById(maTV);
-        List<XuLyDTO> xuLys = xuLyService.getAllXuLy();
-
+        XuLyResponse xuLyResponse = xuLyService.getListXuLy(0, 10, "");
         model.addAttribute("user", user);
-        model.addAttribute("xuLys", xuLys);
+        model.addAttribute("xuLyResponse", xuLyResponse);
         return "xu-ly-list";
     }
 
@@ -191,15 +191,22 @@ public class XuLyController {
     }
 
     @GetMapping("/xuly/search")
-    @ResponseBody
-    public List<XuLyDTO> searchThanhVien(@RequestParam(value = "query") String query, Model model) {
+    public String searchThanhVien(@RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+            @RequestParam(value = "query", defaultValue = "", required = false) String query, Model model) {
         String username = SecurityUtil.getUserSession();
         if (username == null) {
-            return null;
+            return "redirect:/login";
         }
-        Long maTV = Long.parseLong(username);
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
         ThanhVienDTO user = thanhVienService.findMemberById(maTV);
-        List<XuLyDTO> xuLys = xuLyService.searchXuLy(query);
-        return xuLys;
+        XuLyResponse xuLyResponse = xuLyService.getListXuLy(pageNo - 1, pageSize, query);
+        model.addAttribute("user", user);
+        model.addAttribute("xuLyResponse", xuLyResponse);
+        model.addAttribute("query", query);
+        return "xu-ly-list";
     }
 }
