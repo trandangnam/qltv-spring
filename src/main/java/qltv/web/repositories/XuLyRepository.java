@@ -1,6 +1,8 @@
 package qltv.web.repositories;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import qltv.web.models.XuLy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +22,7 @@ public interface XuLyRepository extends JpaRepository<XuLy, Long> { // trong Ä‘Ã
 
     @Query("SELECT COUNT(xuLy) FROM XuLy xuLy WHERE xuLy.thanhVien.maTV = :maTV AND xuLy.trangThaiXL = 1")
     int thanhVienDangBiXuLy(@Param("maTV") long maTV);
+
+    @Query("SELECT xuLy FROM XuLy xuLy WHERE CAST(xuLy.thanhVien.maTV AS string) LIKE %:query%")
+    Page<XuLy> getListXuLy(String query, Pageable pageable);
 }

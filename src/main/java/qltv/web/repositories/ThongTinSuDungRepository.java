@@ -46,15 +46,15 @@ public interface ThongTinSuDungRepository extends JpaRepository<ThongTinSuDung, 
     // hàm này lấy tất cả các thông tin sử dụng có tgMuon != null và tgTra = null tức là chưa trả
     @Query("SELECT ttsd FROM ThongTinSuDung ttsd WHERE ttsd.tgMuon IS NOT NULL AND ttsd.tgTra IS NULL")
     List<ThongTinSuDung> findAllttsdChuaTra();
-    
+
     // hàm này lấy tất cả các thông tin sử dụng có tgMuon != null và tgTra = null tức là chưa trả và có thietBi.maTB = :maTB
     @Query("SELECT ttsd FROM ThongTinSuDung ttsd WHERE ttsd.tgMuon IS NOT NULL AND ttsd.tgTra IS NULL AND CAST(ttsd.thietBi.maTB AS string) LIKE %:query%")
     List<ThongTinSuDung> SearchTtsdSoHuuThietBiDangMuon(@Param("query") String query);
-    
+
     ThongTinSuDung findByMaTT(long maTT);
-    
-    @Query(value = 
-            """
+
+    @Query(value
+            = """
             SELECT ttsd
             FROM ThongTinSuDung ttsd
                 JOIN ttsd.thietBi tb
@@ -67,12 +67,15 @@ public interface ThongTinSuDungRepository extends JpaRepository<ThongTinSuDung, 
 
     @Query("SELECT ttsd FROM ThongTinSuDung ttsd RIGHT JOIN ttsd.thietBi tb WHERE tb.maTB = :maTB")
     List<ThongTinSuDung> getTtsdByMaTB(long maTB);
-    
+
     @Query("SELECT MAX(ttsd.maTT) + 1 FROM ThongTinSuDung ttsd")
     int getMaxIdFlusOne();
-    
+
     // hàm này lấy tất cả các thông tin sử dụng có tgMuon != null và tgTra = null tức là chưa trả của một thành viên
     @Query("SELECT ttsd FROM ThongTinSuDung ttsd WHERE ttsd.tgMuon IS NOT NULL AND ttsd.tgTra IS NULL AND ttsd.thanhVien.maTV = :maTV")
     List<ThongTinSuDung> findAllttsdChuaTraTheoMaTV(@Param("maTV") long maTV);
+
+    @Query("SELECT ttsd FROM ThongTinSuDung ttsd WHERE (CAST(ttsd.thanhVien.maTV AS string) LIKE %:query% OR CAST(ttsd.thietBi.maTB AS string) LIKE %:query%) AND ttsd.thietBi.maTB IS NOT NULL")
+    Page<ThongTinSuDung> getTTSDMuonTra(String query, Pageable pageable);
 
 }

@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", function (event) {
-  const btnSearch = document.getElementById("btn-search");
-  const inputSearch = document.getElementById("input-search");
   const arrbtnXoaXuLy = document.querySelectorAll(".btn-xoaXuLy");
 
   btnSearch.addEventListener("click", function () {
@@ -68,3 +66,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
     });
   });
 });
+
+// Pagination
+const paginationNav = document.querySelector(".pagination-container");
+const curPage = Number.parseInt(paginationNav.dataset.pageNo);
+const totalPages = Number.parseInt(paginationNav.dataset.totalPages);
+const query = paginationNav.dataset.query;
+const urlArgs = { query };
+const pagination = new Pagination("/xuly/search", urlArgs, curPage, totalPages);

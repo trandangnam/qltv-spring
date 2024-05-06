@@ -163,4 +163,20 @@ public class ThongTinSuDungServiceImpl implements ThongTinSuDungService {
         return thongTinSuDungs.stream().map(thongTinSuDung -> ThongTinSuDungMapper.mapToThongTinSuDungDTO(thongTinSuDung)).collect(Collectors.toList());
     }
 
+    @Override
+    public ThongTinSuDungResponse getTTSDMuonTra(int pageNo, int pageSize, String query) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<ThongTinSuDung> result = thongTinSuDungRepository.getTTSDMuonTra(query, pageable);
+        List<ThongTinSuDungDTO> content = result.getContent().stream()
+                .map(ttsd -> ThongTinSuDungMapper.mapToThongTinSuDungDTO(ttsd))
+                .collect(Collectors.toList());
+
+        ThongTinSuDungResponse response = new ThongTinSuDungResponse();
+        response.setContent(content);
+        response.setPageNo(pageNo + 1);
+        response.setPageSize(pageSize);
+        response.setTotalElements(result.getTotalElements());
+        response.setTotalPages(result.getTotalPages());
+        return response;
+    }
 }

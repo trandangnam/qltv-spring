@@ -43,5 +43,7 @@ public interface ThongTinSuDungService {
     public ThongTinSuDungResponse findThietBiDatChoUser(int pageNo, int pageSize, long maTV, String query);
 
     public List<ThongTinSuDungDTO> getThongTinSuDungChuaTraTheoMaTV(long maTV);
+    
+    public ThongTinSuDungResponse getTTSDMuonTra(int pageNo, int pageSize, String query);
 
 }
