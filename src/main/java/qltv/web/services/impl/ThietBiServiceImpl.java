@@ -70,13 +70,13 @@ public class ThietBiServiceImpl implements ThietBiService {
     }
 
     @Override
-    public ThietBiResponse findThietBiMuonTrongNgay(int pageNo, int pageSize, String query) {
+    public ThietBiResponse findThietBiDatChoTrongNgay(int pageNo, int pageSize, String query) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         Page<ThietBi> result = tbRepository.findByTenTBContaining(query, pageable);
         List<ThietBi> listThietBi = result.getContent();
         Date today = new Date();
         for (ThietBi tb : listThietBi) {
-            List<ThongTinSuDung> listTTSD = ttsdRepository.findAllByThietBiMaTBAndTgMuon(tb.getMaTB(), today);
+            List<ThongTinSuDung> listTTSD = ttsdRepository.findAllByMaTBAndTgDatCho(tb.getMaTB(), today);
             tb.setThongTinSuDung(listTTSD);
         }
         List<ThietBiDTO> content = listThietBi.stream()

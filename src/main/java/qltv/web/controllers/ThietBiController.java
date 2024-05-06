@@ -258,34 +258,28 @@ public class ThietBiController {
         }
     }
 
-    @GetMapping("/thietbi/datchothietbi")
+    @GetMapping("/datchothietbi")
     public String listThietBiDatCho(Model model) {
         String username = SecurityUtil.getUserSession();
-        if (username == null) {
-            return "redirect:/login";
+        ThanhVienDTO user = null;
+        if (username != null) {
+            int maTV = Integer.parseInt(username);
+            user = thanhVienService.findMemberById(maTV);
         }
-        int maTV = Integer.parseInt(username);
-        if (maTV > 10) {
-            return "redirect:/";
-        }
-        ThanhVienDTO user = thanhVienService.findMemberById(maTV);
         List<ThietBiDTO> tblist = thietBiService.getAllThietBi();
         model.addAttribute("user", user);
         model.addAttribute("tblist", tblist);
         return "datchothietbi";
     }
 
-    @GetMapping("/thietbi/datchothietbi/search")
+    @GetMapping("/datchothietbi/search")
     public String searchThietBiDatCho(@RequestParam(value = "query") String query, Model model) {
         String username = SecurityUtil.getUserSession();
-        if (username == null) {
-            return "redirect:/login";
+        ThanhVienDTO user = null;
+        if (username != null) {
+            int maTV = Integer.parseInt(username);
+            user = thanhVienService.findMemberById(maTV);
         }
-        int maTV = Integer.parseInt(username);
-        if (maTV > 10) {
-            return "redirect:/";
-        }
-        ThanhVienDTO user = thanhVienService.findMemberById(maTV);
         model.addAttribute("user", user);
         List<ThietBiDTO> tblist = thietBiService.searchThietBi(query);
         model.addAttribute("tblist", tblist);
@@ -294,16 +288,13 @@ public class ThietBiController {
 
     }
 
-    @GetMapping("/thietbi/datchothietbi/{maTB}/datcho")
+    @GetMapping("/datchothietbi/{maTB}/datcho")
     public String DatchoThietBi(@PathVariable("maTB") long maTB, Model model) {
         String username = SecurityUtil.getUserSession();
         if (username == null) {
             return "redirect:/login";
         }
         int maTV = Integer.parseInt(username);
-        if (maTV > 10) {
-            return "redirect:/";
-        }
         ThanhVienDTO user = thanhVienService.findMemberById(maTV);
         model.addAttribute("user", user);
         ThietBiDTO thietbi = thietBiService.findByMaTB(maTB);
@@ -313,7 +304,7 @@ public class ThietBiController {
         return "datcho";
     }
 
-    @PostMapping("/thietbi/datchothietbi/save")
+    @PostMapping("/datchothietbi/save")
     public String saveDatCho(@RequestParam("maTV") String maTV, @RequestParam("tenTV") String tenTV, @RequestParam("maTB") String maTB, @RequestParam("tenTB") String tenTB, @RequestParam("thoiGian") String thoiGian) {
         ThongTinSuDungDTO ttsdDTO = new ThongTinSuDungDTO();
         long maTVLong = Long.parseLong(maTV);
@@ -333,7 +324,7 @@ public class ThietBiController {
         ttsdDTO.setThietBi(tb);
         ttsdDTO.setTgDatCho(tgDatCho);
         ttsdService.saveThongTinSuDung(ttsdDTO);
-        return "redirect:/thietbi/datchothietbi";
+        return "redirect:/datchothietbi";
     }
 
     // ---------------------------------hàm này của tiến nha đừng có xóa---------------------------------

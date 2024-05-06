@@ -11,8 +11,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface ThongTinSuDungRepository extends JpaRepository<ThongTinSuDung, Long> {
 
-    @Query("SELECT ttsd FROM ThongTinSuDung ttsd WHERE ttsd.thietBi.maTB = :maTB AND DATE(ttsd.tgMuon) = DATE(:tgMuon)")
-    public List<ThongTinSuDung> findAllByThietBiMaTBAndTgMuon(int maTB, Date tgMuon);
+    @Query("SELECT ttsd FROM ThongTinSuDung ttsd WHERE ttsd.thietBi.maTB = :maTB AND DATE(ttsd.tgDatCho) = DATE(:tgMuon)")
+    public List<ThongTinSuDung> findAllByMaTBAndTgDatCho(int maTB, Date tgMuon);
 
     @Query("SELECT ttsd FROM ThongTinSuDung ttsd WHERE (CAST(ttsd.thanhVien.maTV AS string) LIKE %:query% OR CAST(ttsd.thietBi.maTB AS string) LIKE %:query%) AND ttsd.thietBi.maTB IS NOT NULL")
     List<ThongTinSuDung> searchThongTinSuDung(@Param("query") String query);
