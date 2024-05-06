@@ -34,18 +34,12 @@ import qltv.web.services.XuLyService;
  *
  * @author DELL
  */
-@Controller
 public class ProfileController {
 
     private ThanhVienService tvService;
     private ThanhVienRepository tvRepository;
     private XuLyService xuLyService;
     private ThongTinSuDungService thongTinSuDungService;
-<<<<<<< HEAD
-=======
-
->>>>>>> 5bf34dbe5bba31b537fd81425cb59d73148cfe24
-
     @Autowired
     public ProfileController(ThanhVienService tvService, ThanhVienRepository tvRepository, XuLyService xuLyService, ThongTinSuDungService thongTinSuDungService) {
         this.tvService = tvService;
