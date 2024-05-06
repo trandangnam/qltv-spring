@@ -5,6 +5,8 @@
 package qltv.web.services.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import qltv.web.services.XuLyService;
  */
 @Service
 public class XuLyServiceImpl implements XuLyService {
+
     XuLyRepository xuLyRepository;
     ThanhVienRepository thanhVienRepository;
 
@@ -36,8 +39,6 @@ public class XuLyServiceImpl implements XuLyService {
         List<XuLy> xuLys = (ArrayList) xuLyRepository.findAll();
         return xuLys.stream().map(xuLy -> XuLyMapper.mapToXuLyDTO(xuLy)).collect(Collectors.toList());
     }
-
-
 
     @Override
     public XuLy saveXuLy(XuLyDTO xuLyDTO) {
@@ -85,11 +86,44 @@ public class XuLyServiceImpl implements XuLyService {
             result += "Hình thức xử lý không hợp lệ,";
         } else if (hinhThucXL.contains("oiThuong")) {
             if (soTien == null || soTien.isEmpty() || !soTien.matches("[0-9]+") || Integer.parseInt(soTien) < 10000 || Integer.parseInt(soTien) > 100000000) {
-                result+= "Số tiền không hợp lệ";
+                result += "Số tiền không hợp lệ";
             }
         }
-        
+
         return result.isEmpty() ? "" : result.substring(0, result.length() - 1); //cắt cái dấu , cuối cùng
     }
 
+    @Override
+    public void updateXuLyDuThoiGian() {
+        List<XuLy> xuLys = (ArrayList) xuLyRepository.findXuLyCoKhoaThe();
+        List<XuLyDTO> xuLyDTOs = xuLys.stream().map(xuLy -> XuLyMapper.mapToXuLyDTO(xuLy)).collect(Collectors.toList());
+        Date today = new Date(System.currentTimeMillis());
+        for (XuLyDTO xuLyDTO : xuLyDTOs) {
+            if (xuLyDTO.getHinhThucXL().contains("1") || xuLyDTO.getHinhThucXL().contains("2") || xuLyDTO.getHinhThucXL().contains("3")) {
+                // Tính toán ngày kết thúc của thời gian khóa thẻ
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(xuLyDTO.getNgayXL());
+                int soThangKhoaThe = 1;
+                if (xuLyDTO.getHinhThucXL().contains("2")) {
+                    soThangKhoaThe = 2;
+                } else if (xuLyDTO.getHinhThucXL().contains("3")) {
+                    soThangKhoaThe = 3;
+                }
+                calendar.add(Calendar.MONTH, soThangKhoaThe);
+                Date ngayKetThuc = calendar.getTime();
+                // Kiểm tra xem ngày hiện tại có vượt quá ngày kết thúc của thời gian khóa thẻ không
+                if (today.after(ngayKetThuc)) {
+                    xuLyDTO.setTrangThaiXL(0);
+                    updateXuLy(xuLyDTO);
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean thanhVienDangBiXuLy(long maTV) {
+        return xuLyRepository.thanhVienDangBiXuLy(maTV)>0;
+    }
 }
+
+

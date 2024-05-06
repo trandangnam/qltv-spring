@@ -1,5 +1,6 @@
 package qltv.web.dto;
 
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
 import lombok.Builder;
@@ -22,6 +23,7 @@ public class ThanhVienDTO {
     private String password;
     @NotEmpty(message = "Email không được để trống")
     private String email;
+
     private List<ThongTinSuDungDTO> thongTinSuDung;
     private List<XuLyDTO> xuLy;
 

@@ -102,6 +102,12 @@
             <version>3.0.15.RELEASE</version>
             <type>jar</type>
         </dependency>
+        <!--        <dependency>
+            <groupId>qltv-spring</groupId>
+            <artifactId>mail-sender</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>-->
         <dependency>
             <groupId>com.laptrinhb2a.springboot</groupId>
             <artifactId>mail-sender</artifactId>

@@ -32,7 +32,7 @@ public class HomeController {
             user = tvService.findMemberById(maTV);
         }
         model.addAttribute("user", user);
-        ThietBiResponse thietBiResponse = tbService.findThietBiMuonTrongNgay(0, 10, "");
+        ThietBiResponse thietBiResponse = tbService.findThietBiDatChoTrongNgay(0, 10, "");
         model.addAttribute("thietBiResponse", thietBiResponse);
         return "index";
     }
@@ -50,7 +50,7 @@ public class HomeController {
             user = tvService.findMemberById(maTV);
         }
         model.addAttribute("user", user);
-        ThietBiResponse thietBiResponse = tbService.findThietBiMuonTrongNgay(pageNo - 1, pageSize, query);
+        ThietBiResponse thietBiResponse = tbService.findThietBiDatChoTrongNgay(pageNo - 1, pageSize, query);
         model.addAttribute("thietBiResponse", thietBiResponse);
         model.addAttribute("query", query);
         return "index";

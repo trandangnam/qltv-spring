@@ -42,7 +42,8 @@ public class AuthController {
     public String getRegisterForm(Model model) {
         String username = SecurityUtil.getUserSession();
         if (username != null) {
-            return "redirect:/thanhvien";
+            int maTV = Integer.parseInt(username);
+            return maTV > 10 ? "redirect:/thanhvien" : "redirect:/";
         }
         ThanhVienDTO thanhVien = new ThanhVienDTO();
         model.addAttribute("thanhVien", thanhVien);
@@ -54,7 +55,8 @@ public class AuthController {
             BindingResult result, Model model) {
         String username = SecurityUtil.getUserSession();
         if (username != null) {
-            return "redirect:/thanhvien";
+            int maTV = Integer.parseInt(username);
+            return maTV > 10 ? "redirect:/thanhvien" : "redirect:/";
         }
 
         ThanhVienDTO tvDTO = tvService.findMemberById(thanhVien.getMaTV());
@@ -75,7 +77,8 @@ public class AuthController {
     public String loginPage() {
         String username = SecurityUtil.getUserSession();
         if (username != null) {
-            return "redirect:/thanhvien";
+            int maTV = Integer.parseInt(username);
+            return maTV > 10 ? "redirect:/thanhvien" : "redirect:/";
         }
         return "login";
     }

@@ -1,0 +1,283 @@
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{main-layout}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đặt chỗ thiết bị</title>
+    <script defer th:src="@{/assets/js/pagination.js}"></script>
+    <script
+      defer
+      th:src="@{/assets/js/pages/list-thiet-bi-dat-cho.js}"
+    ></script>
+  </head>
+  <body>
+    <div layout:fragment="body">
+      <div
+        class="content content-full content-boxed account_ID"
+        th:attr="data-id=${user.maTV}"
+      >
+        <!-- Hero -->
+        <div class="rounded border overflow-hidden push">
+          <div
+            class="bg-image pt-9"
+            style="background-image: url('/assets/media/photos/photo36@2x.jpg')"
+          ></div>
+          <div
+            class="px-4 py-3 bg-body-extra-light d-flex flex-column flex-md-row align-items-center"
+          >
+            <a class="d-block img-link mt-n5" href="#">
+              <img
+                class="img-avatar img-avatar128 img-avatar-thumb"
+                src="/assets/media/avatars/avatar10.jpg"
+                alt=""
+              />
+            </a>
+            <div
+              class="ms-3 flex-grow-1 text-center text-md-start my-3 my-md-0"
+            >
+              <h1 class="fs-4 fw-bold mb-1" th:text="${user.hoTen}"></h1>
+              <h2 class="fs-sm fw-medium text-muted mb-0">Chỉnh sửa hồ sơ</h2>
+            </div>
+          </div>
+        </div>
+        <!-- END Hero -->
+
+        <!-- Edit Account -->
+        <div class="block block-bordered block-rounded">
+          <ul class="nav nav-tabs nav-tabs-alt" role="tablist">
+            <li class="nav-item">
+              <a th:href="@{/profile/{maTV}(maTV=${user.maTV})}">
+                <button
+                  class="nav-link space-x-1"
+                  id="account-profile-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#account-profile"
+                  role="tab"
+                  aria-controls="account-profile"
+                >
+                  <i class="fa fa-user-circle d-sm-none"></i>
+                  <span class="d-none d-sm-inline">Hồ sơ</span>
+                </button>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a th:href="@{/profile/updatePassword/{maTV}(maTV=${user.maTV})}">
+                <button
+                  class="nav-link space-x-1"
+                  id="account-password-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#account-password"
+                  role="tab"
+                  aria-controls="account-password"
+                >
+                  <i class="fa fa-asterisk d-sm-none"></i>
+                  <span class="d-none d-sm-inline">Mật khẩu</span>
+                </button>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a th:href="@{/profile/vipham/{maTV}(maTV=${user.maTV})}">
+                <button
+                  class="nav-link space-x-1"
+                  id="account-password-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#account-password"
+                  role="tab"
+                  aria-controls="account-password"
+                >
+                  <i class="fa fa-asterisk d-sm-none"></i>
+                  <span class="d-none d-sm-inline">Vi Phạm</span>
+                </button>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a th:href="@{/profile/datcho/{maTV}(maTV=${user.maTV})}">
+                <button
+                  class="nav-link space-x-1 active"
+                  id="account-password-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#account-password"
+                  role="tab"
+                  aria-controls="account-password"
+                >
+                  <i class="fa fa-asterisk d-sm-none"></i>
+                  <span class="d-none d-sm-inline">Đặt chỗ</span>
+                </button>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a th:href="@{/profile/danhsachmuon/{maTV}(maTV=${user.maTV})}">
+                <button
+                  class="nav-link space-x-1"
+                  id="account-password-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#account-password"
+                  role="tab"
+                  aria-controls="account-password"
+                >
+                  <i class="fa fa-asterisk d-sm-none"></i>
+                  <span class="d-none d-sm-inline">Thiết bị đang mượn</span>
+                </button>
+              </a>
+            </li>
+            <!--                    <li class="nav-item">
+                                                <button class="nav-link space-x-1" id="account-connections-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#account-connections" role="tab" aria-controls="account-connections"
+                                                        aria-selected="false">
+                                                    <i class="fa fa-share-alt d-sm-none"></i>
+                                                    <span class="d-none d-sm-inline">Connections</span>
+                                                </button>
+                                            </li>
+                                            <li class="nav-item">
+                                                <button class="nav-link space-x-1" id="account-billing-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#account-billing" role="tab" aria-controls="account-billing" aria-selected="false">
+                                                    <i class="fa fa-credit-card d-sm-none"></i>
+                                                    <span class="d-none d-sm-inline">Billing</span>
+                                                </button>
+                                            </li>-->
+          </ul>
+          <div class="block block-rounded">
+            <div class="block-content">
+              <div class="col-md-6">
+                <form
+                  th:action="@{/profile/datcho/{maTV}/search(maTV=${user.maTV})}"
+                  method="GET"
+                >
+                  <div class="input-group">
+                    <input
+                      type="search"
+                      class="form-control"
+                      placeholder="Tìm kiếm theo tên..."
+                      name="query"
+                      th:value="${query}"
+                    />
+                    <input type="hidden" name="pageNo" th:value="1" />
+                    <button type="submit" class="btn btn-alt-primary">
+                      <i class="fa fa-search me-1 opacity-50"></i>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="block-content">
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped table-vcenter">
+                  <thead>
+                    <tr>
+                      <th>Mã thiết bị</th>
+                      <th>Tên thiết bị</th>
+                      <th>Thời gian đặt chỗ</th>
+                      <th>Thời gian mượn</th>
+                      <th>Thời gian trả</th>
+                      <th class="text-center" style="width: 150px">
+                        Hành động
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="ttsd : ${ttsdResponse.content}">
+                      <td
+                        class="fw-semibold fs-sm"
+                        th:utext="${ttsd.thietBi.maTB}"
+                      ></td>
+                      <td class="fs-sm" th:utext="${ttsd.thietBi.tenTB}"></td>
+                      <td class="fs-sm" th:unless="${ttsd.tgDatCho}">
+                        Chưa có
+                      </td>
+                      <td
+                        class="fs-sm"
+                        th:if="${ttsd.tgDatCho}"
+                        th:utext="${#dates.format(ttsd.tgDatCho, 'dd/MM/yyyy HH:mm')}"
+                      ></td>
+                      <td class="fs-sm" th:unless="${ttsd.tgMuon}">Chưa có</td>
+                      <td
+                        class="fs-sm"
+                        th:if="${ttsd.tgMuon}"
+                        th:utext="${#dates.format(ttsd.tgMuon, 'dd/MM/yyyy HH:mm')}"
+                      ></td>
+                      <td class="fs-sm" th:unless="${ttsd.tgTra}">Chưa có</td>
+                      <td
+                        class="fs-sm"
+                        th:if="${ttsd.tgTra}"
+                        th:utext="${#dates.format(ttsd.tgTra, 'dd/MM/yyyy HH:mm')}"
+                      ></td>
+                      <td class="text-center">
+                        <form
+                          th:if="${ttsd.tgMuon != null && ttsd.tgMuon.after(#dates.createNow())}"
+                          th:action="@{/profile/datcho/{maTV}/delete(maTV=${user.maTV})}"
+                          method="POST"
+                        >
+                          <input
+                            type="hidden"
+                            name="maTT"
+                            th:attr="value=${ttsd.maTT}"
+                          />
+                          <button type="submit" class="btn btn-alt-primary">
+                            Hủy
+                          </button>
+                        </form>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <nav
+                class="pagination-container"
+                th:attr="data-page-no=${ttsdResponse.pageNo},data-total-pages=${ttsdResponse.totalPages},data-query=${query},data-user-id=${user.maTV}"
+              >
+                <ul class="pagination justify-content-end mt-2">
+                  <li class="page-item">
+                    <a
+                      class="page-link first-page disabled"
+                      href="javascript:void(0)"
+                      tabindex="-1"
+                      aria-label="First"
+                      data-page="1"
+                    >
+                      <i class="fas fa-angle-double-left"></i>
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a
+                      class="page-link prev-page disabled"
+                      href="javascript:void(0)"
+                      tabindex="-1"
+                      aria-label="Previous"
+                    >
+                      <i class="fas fa-angle-left"></i>
+                    </a>
+                  </li>
+                  <div class="d-flex list-page"></div>
+                  <li class="page-item">
+                    <a
+                      class="page-link next-page disabled"
+                      href="javascript:void(0)"
+                      tabindex="-1"
+                      aria-label="Next"
+                    >
+                      <i class="fas fa-angle-right"></i>
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a
+                      class="page-link last-page disabled"
+                      href="javascript:void(0)"
+                      tabindex="-1"
+                      aria-label="Last"
+                    >
+                      <i class="fas fa-angle-double-right"></i>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <!-- END Edit Account -->
+      </div>
+    </div>
+  </body>
+</html>
