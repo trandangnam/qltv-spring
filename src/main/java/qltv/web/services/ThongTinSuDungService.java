@@ -2,6 +2,7 @@ package qltv.web.services;
 
 import java.util.List;
 import qltv.web.dto.ThongTinSuDungDTO;
+import qltv.web.dto.ThongTinSuDungResponse;
 import qltv.web.models.ThongTinSuDung;
 
 public interface ThongTinSuDungService {
@@ -15,6 +16,10 @@ public interface ThongTinSuDungService {
     public void deleteThongTinSuDung(long maTTSD);
 
     public List<ThongTinSuDungDTO> searchThongTinSuDung(String query);
+    
+    public List<ThongTinSuDungDTO> getTtsdByMaTB(long maTB);
+    
+    public int getMaxIdFlusOne();
 
     public List<ThongTinSuDungDTO> findTtsdSoHuuThietBiDangBan();
 
@@ -26,13 +31,17 @@ public interface ThongTinSuDungService {
 
     public boolean thietBiDangDuocDatCho(int maTB);
 
+
     public void xoaDatChoQuaHan();
 
     public List<ThongTinSuDungDTO> getAllThongTinSuDungChuaTra();
-    
+
     public List<ThongTinSuDungDTO> searchTtsdSoHuuThietBiDangMuon(String query);
-    
+
     public void traThietBi(long maTTSD);
 
+    public ThongTinSuDungResponse findThietBiDatChoUser(int pageNo, int pageSize, long maTV, String query);
+
+    public List<ThongTinSuDungDTO> getThongTinSuDungChuaTraTheoMaTV(long maTV);
 
 }

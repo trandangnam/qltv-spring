@@ -29,4 +29,19 @@ public class ThietBiMapper {
                 .build();
         return dto;
     }
+    
+    public static ThietBiDTO mapToThietBiDtoWithForeignKeys(ThietBi tb) {
+        if (tb == null) {
+            return new ThietBiDTO();
+        }
+        ThietBiDTO dto = ThietBiDTO.builder()
+                .maTB(tb.getMaTB())
+                .tenTB(tb.getTenTB())
+                .moTaTB(tb.getMoTaTB())
+                .thongTinSuDung(tb.getThongTinSuDung().stream()
+                    .map(ttsd -> ThongTinSuDungMapper.mapToThongTinSuDungDtoExceptForeignKeys(ttsd))
+                    .collect(Collectors.toList()))
+                .build();
+        return dto;
+    }
 }

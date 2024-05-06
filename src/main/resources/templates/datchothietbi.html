@@ -1,0 +1,72 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{main-layout}">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <title>Đặt chỗ thiết bị</title>
+</head>
+
+<body>
+  <div layout:fragment="body">
+    <div class="content content-full">
+      <div class="block-header block-header-default">
+        <h3 class="block-title">Danh sách thiết bị</h3>
+      </div>
+      <div class="block-content">
+        <form th:action="@{/datchothietbi/search}">
+          <div class="input-group">
+            <input type="search" class="form-control" placeholder="Tìm kiếm theo tên..." name="query"
+              th:value="${query}" />
+            <button type="submit" class="btn btn-alt-primary">
+              <i class="fa fa-search me-1 opacity-50"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="block-content">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-vcenter">
+            <thead>
+              <tr>
+                <th>Mã</th>
+                <th>Tên thiết bị</th>
+                <th>Mô tả</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="tb : ${tblist}">
+                <td class="fw-semibold fs-sm" th:utext="${tb.maTB}"></td>
+                <td class="fs-sm" th:utext="${tb.tenTB}"></td>
+                <td class="fs-sm" th:utext="${tb.moTaTB}"></td>
+                <td class="text-center">
+                  <div class="btn-group">
+                    <a th:href="@{/datchothietbi/{maTB}/datcho(maTB=${tb.maTB})}" class="btn btn-sm btn-alt-secondary"
+                      data-bs-toggle="tooltip" title="Đặt chỗ" <i class="fa fa-fw fa-pencil-alt datchobtn"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+<script th:if="${isViPham}">
+  var disabledLinks = document.querySelectorAll(".datchobtn");
+  disabledLinks.forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+      Swal.fire({
+        title: "Không thể đặt chỗ",
+        text: "Bạn không thể đặt chỗ cho tới khi phạt vi phạm hết",
+        icon: "warning",
+      })
+    });
+  });
+</script>

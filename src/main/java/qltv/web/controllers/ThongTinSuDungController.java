@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import qltv.web.dto.ThanhVienDTO;
 import qltv.web.dto.ThongTinSuDungDTO;
+import qltv.web.dto.ThongTinSuDungResponse;
 import qltv.web.security.SecurityUtil;
 import qltv.web.services.ThanhVienService;
 import qltv.web.services.ThietBiService;
 import qltv.web.services.ThongTinSuDungService;
+import qltv.web.services.XuLyService;
 
 /**
  *
@@ -30,12 +32,14 @@ public class ThongTinSuDungController {
 
     ThietBiService thietBiService;
     ThanhVienService thanhVienService;
+    XuLyService xuLyService;
     ThongTinSuDungService thongTinSuDungService;
 
     @Autowired
-    public ThongTinSuDungController(ThietBiService thietBiService, ThanhVienService thanhVienService, ThongTinSuDungService thongTinSuDungService) {
+    public ThongTinSuDungController(ThietBiService thietBiService, ThanhVienService thanhVienService, XuLyService xuLyService, ThongTinSuDungService thongTinSuDungService) {
         this.thietBiService = thietBiService;
         this.thanhVienService = thanhVienService;
+        this.xuLyService = xuLyService;
         this.thongTinSuDungService = thongTinSuDungService;
         this.thongTinSuDungService.xoaDatChoQuaHan();
     }
@@ -43,10 +47,13 @@ public class ThongTinSuDungController {
     @GetMapping("/thongtinsudung")
     public String listThongTinSuDung(Model model) {
         String username = SecurityUtil.getUserSession();
-        if (username == null) { // kiểm tra đăng nhập
+        if (username == null) {
             return "redirect:/login";
         }
-        Long maTV = Long.parseLong(username);
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
         ThanhVienDTO user = thanhVienService.findMemberById(maTV);
         List<ThongTinSuDungDTO> ttsds = thongTinSuDungService.getAllThongTinSuDung();
         model.addAttribute("user", user);
@@ -70,10 +77,13 @@ public class ThongTinSuDungController {
     @GetMapping("/thongtinsudung/muon")
     public String loadMuonThietBiPage(Model model) {
         String username = SecurityUtil.getUserSession();
-        if (username == null) { // kiểm tra đăng nhập
+        if (username == null) {
             return "redirect:/login";
         }
-        Long maTV = Long.parseLong(username);
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
         ThanhVienDTO user = thanhVienService.findMemberById(maTV);
         List<ThongTinSuDungDTO> ttsds = thongTinSuDungService.findTtsdSoHuuThietBiDangBan();
         Long nextMaTT = thongTinSuDungService.getMaxMaTT() + 1;
@@ -98,6 +108,9 @@ public class ThongTinSuDungController {
         }
         if (thongTinSuDungService.thietBiDangDuocDatCho(ttsdDTO.getThietBi().getMaTB())) {
             return "Thiết bị đã được đặt chổ trong hôm nay";
+        }
+        if(xuLyService.thanhVienDangBiXuLy(ttsdDTO.getThanhVien().getMaTV())){
+            return "Thành viên đang bị xử lý vi phạm";
         }
         try {
             thongTinSuDungService.saveThongTinSuDung(ttsdDTO);
@@ -127,7 +140,7 @@ public class ThongTinSuDungController {
             return "redirect:/login";
         }
         Long maTV = Long.parseLong(username);
-        ThanhVienDTO user = thanhVienService.findMemberById(maTV);
+        ThanhVienDTO user = thanhVienService.findMemberById(maTV); 
         List<ThongTinSuDungDTO> ttsds = thongTinSuDungService.getAllThongTinSuDungChuaTra();
         model.addAttribute("user", user);
         model.addAttribute("ttsds", ttsds);
@@ -152,6 +165,10 @@ public class ThongTinSuDungController {
         String username = SecurityUtil.getUserSession();
         if (username == null) {
             return "redirect:/login";
+        }
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
         }
         thongTinSuDungService.traThietBi(maTT);
         return "redirect:/thongtinsudung/tra";

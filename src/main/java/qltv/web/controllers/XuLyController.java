@@ -44,10 +44,13 @@ public class XuLyController {
     @GetMapping("/xuly")
     public String listXuLy(Model model) {
         String username = SecurityUtil.getUserSession();
-        if (username == null) { // kiểm tra đăng nhập
+        if (username == null) {
             return "redirect:/login";
         }
-        Long maTV = Long.parseLong(username);
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
         ThanhVienDTO user = thanhVienService.findMemberById(maTV);
         List<XuLyDTO> xuLys = xuLyService.getAllXuLy();
 
@@ -59,10 +62,13 @@ public class XuLyController {
     @GetMapping("/xuly/new")
     public String CreateXuLy(Model model) {
         String username = SecurityUtil.getUserSession();
-        if (username == null) { // kiểm tra đăng nhập
+        if (username == null) {
             return "redirect:/login";
         }
-        Long maTV = Long.parseLong(username);
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
         ThanhVienDTO user = thanhVienService.findMemberById(maTV);
         XuLyDTO xuLy = new XuLyDTO();
         Long nextMaXL = xuLyService.getMaxMaXL() + 1;
@@ -133,7 +139,10 @@ public class XuLyController {
         if (username == null) {
             return "redirect:/login";
         }
-        Long maTV = Long.parseLong(username);
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
         ThanhVienDTO user = thanhVienService.findMemberById(maTV);
         XuLyDTO xuLy = xuLyService.findXuLyByMaXL(maXL);
 
@@ -169,6 +178,10 @@ public class XuLyController {
         String username = SecurityUtil.getUserSession();
         if (username == null) {
             return "redirect:/login";
+        }
+        int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
         }
 
         if (xuLyService.findXuLyByMaXL(maXL) != null) {

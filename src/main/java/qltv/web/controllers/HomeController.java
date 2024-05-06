@@ -10,17 +10,20 @@ import qltv.web.dto.ThietBiResponse;
 import qltv.web.security.SecurityUtil;
 import qltv.web.services.ThanhVienService;
 import qltv.web.services.ThietBiService;
+import qltv.web.services.XuLyService;
 
 @Controller
 public class HomeController {
 
     private ThanhVienService tvService;
     private ThietBiService tbService;
+    private XuLyService xuLyService;
 
     @Autowired
-    public HomeController(ThanhVienService tvService, ThietBiService tbService) {
+    public HomeController(ThanhVienService tvService, ThietBiService tbService,XuLyService xuLyService) {
         this.tvService = tvService;
         this.tbService = tbService;
+        this.xuLyService = xuLyService;
     }
 
     @GetMapping("/")
@@ -30,9 +33,11 @@ public class HomeController {
         if (username != null) {
             int maTV = Integer.parseInt(username);
             user = tvService.findMemberById(maTV);
+            boolean isViPham = xuLyService.thanhVienDangBiXuLy(maTV);
+            model.addAttribute("isViPham", isViPham);
         }
         model.addAttribute("user", user);
-        ThietBiResponse thietBiResponse = tbService.findThietBiMuonTrongNgay(0, 10, "");
+        ThietBiResponse thietBiResponse = tbService.findThietBiDatChoTrongNgay(0, 10, "");
         model.addAttribute("thietBiResponse", thietBiResponse);
         return "index";
     }
@@ -50,7 +55,7 @@ public class HomeController {
             user = tvService.findMemberById(maTV);
         }
         model.addAttribute("user", user);
-        ThietBiResponse thietBiResponse = tbService.findThietBiMuonTrongNgay(pageNo - 1, pageSize, query);
+        ThietBiResponse thietBiResponse = tbService.findThietBiDatChoTrongNgay(pageNo - 1, pageSize, query);
         model.addAttribute("thietBiResponse", thietBiResponse);
         model.addAttribute("query", query);
         return "index";
