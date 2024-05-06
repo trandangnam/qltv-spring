@@ -1,93 +1,147 @@
 <html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{dashboard-layout}"
->
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Thêm thiết bị</title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script defer th:src="@{/assets/js/pages/thiet-bi-create.js}"></script>
-  </head>
-  <body>
-    <div layout:fragment="body">
-      <div class="content content-full">
-        <div class="block-header block-header-default">
-          <h3 class="block-title">Thêm thiết bị</h3>
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{dashboard-layout}"
+    >
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Thêm thiết bị</title>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script defer th:src="@{/assets/js/pages/thiet-bi-create.js}"></script>
+    </head>
+    <body>
+        <div layout:fragment="body">
+            <div class="content content-full">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">Thêm thiết bị</h3>
+                </div>
+                <div class="block block-content">
+                    <form
+                        role="form"
+                        method="post"
+                        id="form-themTB"
+                        th:action="@{/thietbi/new}"
+                        th:object="${thietBi}"
+                        >
+                        <div class="mb-4">
+                            <label class="form-label" for="val-matb"
+                                   >Mã thiết bị <span class="text-danger">*</span></label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                th:classappend="${#fields.hasErrors('maTB')} ? is-invalid : ''"
+                                id="val-matb"
+                                name="val-matb"
+                                th:field="*{maTB}"
+                                placeholder="Nhập mã thiết bị"
+                                readonly
+                                />
+                            <div
+                                th:if="${#fields.hasErrors('maTB')}"
+                                class="invalid-feedback"
+                                th:errors="*{maTB}"
+                                ></div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label" for="val-tentb"
+                                   >Tên thiết bị <span class="text-danger">*</span></label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                th:classappend="${#fields.hasErrors('tenTB')} ? is-invalid : ''"
+                                id="val-tentb"
+                                name="val-tentb"
+                                th:field="*{tenTB}"
+                                placeholder="Nhập tên thiết bị"
+                                disabled
+                                />
+                            <div
+                                th:if="${#fields.hasErrors('tenTB')}"
+                                class="invalid-feedback"
+                                th:errors="*{tenTB}"
+                                ></div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label" for="val-motatb"
+                                   >Mô tả <span class="text-danger">*</span></label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                th:classappend="${#fields.hasErrors('moTaTB')} ? is-invalid : ''"
+                                id="val-motatb"
+                                name="val-motatb"
+                                th:field="*{moTaTB}"
+                                placeholder="Nhập mô tả"
+                                />
+                            <div
+                                th:if="${#fields.hasErrors('moTaTB')}"
+                                class="invalid-feedback"
+                                th:errors="*{moTaTB}"
+                                ></div>
+                        </div>
+                        <div class="mb-4">
+                            <button type="submit" class="btn btn-alt-primary" id="btn-save">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="block block-content">
-          <form
-            role="form"
-            method="post"
-            id="form-themTB"
-            th:action="@{/thietbi/new}"
-            th:object="${thietBi}"
-          >
-            <div class="mb-4">
-              <label class="form-label" for="val-matb"
-                >Mã thiết bị <span class="text-danger">*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                th:classappend="${#fields.hasErrors('maTB')} ? is-invalid : ''"
-                id="val-matb"
-                name="val-matb"
-                th:field="*{maTB}"
-                placeholder="Nhập mã thiết bị"
-                readonly
-              />
-              <div
-                th:if="${#fields.hasErrors('maTB')}"
-                class="invalid-feedback"
-                th:errors="*{maTB}"
-              ></div>
-            </div>
-            <div class="mb-4">
-              <label class="form-label" for="val-tentb"
-                >Tên thiết bị <span class="text-danger">*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                th:classappend="${#fields.hasErrors('tenTB')} ? is-invalid : ''"
-                id="val-tentb"
-                name="val-tentb"
-                th:field="*{tenTB}"
-                placeholder="Nhập tên thiết bị"
-              />
-              <div
-                th:if="${#fields.hasErrors('tenTB')}"
-                class="invalid-feedback"
-                th:errors="*{tenTB}"
-              ></div>
-            </div>
-            <div class="mb-4">
-              <label class="form-label" for="val-motatb"
-                >Mô tả <span class="text-danger">*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                th:classappend="${#fields.hasErrors('moTaTB')} ? is-invalid : ''"
-                id="val-motatb"
-                name="val-motatb"
-                th:field="*{moTaTB}"
-                placeholder="Nhập mô tả"
-              />
-              <div
-                th:if="${#fields.hasErrors('moTaTB')}"
-                class="invalid-feedback"
-                th:errors="*{moTaTB}"
-              ></div>
-            </div>
-            <div class="mb-4">
-              <button type="submit" class="btn btn-alt-primary" id="btn-save">Lưu</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </body>
+        <script>
+            // Function to generate device code based on device name
+            function generateDeviceCode(deviceName) {
+            // Mapping of device types to their prefixes
+            const deviceTypePrefix = {
+            'Micro': '1',
+            'Máy chiếu': '2',
+            'Máy ảnh': '3',
+            'Cassette': '4',
+            'Tivi': '5',
+            'Quạt đứng': '6'
+            };
+
+            // Extract device type from the device name
+            const deviceType = deviceName.split(' ')[0];
+
+            // Get current year
+            const currentYear = new Date().getFullYear().toString().slice(2);
+
+            // Get current quantity (you may fetch this from your backend or maintain it in your frontend logic)
+            const currentQuantity = 1;
+
+            // Generate device code
+            const deviceTypeCode = deviceTypePrefix[deviceType];
+            const quantityCode = currentQuantity.toString().padStart(2, '0');
+
+            return deviceTypeCode + currentYear + quantityCode;
+            }
+
+            // Event listener for input change event on device name input field
+            document.getElementById('val-tentb').addEventListener('input', function () {
+            const deviceName = this.value.trim();
+            const deviceCode = generateDeviceCode(deviceName);
+            document.getElementById('val-matb').value = deviceCode;
+            });
+
+            // Event listener for keypress event on device name input field
+            document.getElementById('val-tentb').addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+            const deviceName = this.value.trim();
+            const deviceCode = generateDeviceCode(deviceName);
+            document.getElementById('val-matb').value = deviceCode;
+            }
+            });
+
+            // Event listener for blur event on device name input field
+            document.getElementById('val-tentb').addEventListener('blur', function () {
+            const deviceName = this.value.trim();
+            const deviceCode = generateDeviceCode(deviceName);
+            document.getElementById('val-matb').value = deviceCode;
+            });
+        </script>
+
+    </body>
 </html>
