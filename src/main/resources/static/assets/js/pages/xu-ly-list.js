@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                             <td class="fw-semibold fs-sm">${xl.maXL}</td>
                             <td class="fs-sm">${xl.thanhVien.maTV}</td>
                             <td class="fs-sm">${xl.thanhVien.hoTen}</td>
-                            <td class="fs-sm">${xl.hinhThucXuLy}</td>
+                            <td class="fs-sm">${xl.hinhThucXL}</td>
                             <td class="fs-sm">${xl.ngayXL}</td>
                             <td class="fs-sm">${
                               xl.trangThaiXL == 1 ? "Đang xử lý" : "Đã xử lý"

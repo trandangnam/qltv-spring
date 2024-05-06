@@ -1,155 +1,133 @@
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{main-layout}"
->
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <title>Trang chủ</title>
-    <script defer th:src="@{assets/js/pagination.js}"></script>
-    <script defer th:src="@{assets/js/pages/index.js}"></script>
-  </head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{main-layout}">
 
-  <body>
-    <div layout:fragment="body">
-      <!-- Hero -->
-      <div
-        class="bg-image"
-        style="background-image: url('assets/media/photos/photo36@2x.jpg')"
-      >
-        <div class="bg-primary-dark-op py-9 overflow-hidden">
-          <div class="content content-full text-center">
-            <h1 class="display-4 fw-semibold text-white mb-2">
-              Đặt chỗ mượn thiết bị
-            </h1>
-            <p class="fs-4 fw-normal text-white-50 mb-5">Quản lý thành viên</p>
-            <div>
-              <button class="btn btn-primary px-3 py-2 m-1 btn--scroll-to">
-                <i class="fa fa-fw fa-arrow-down-long opacity-50 me-1"></i> Xem
-                thiết bị
-              </button>
-            </div>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Trang chủ</title>
+  <script defer th:src="@{assets/js/pagination.js}"></script>
+  <script defer th:src="@{assets/js/pages/index.js}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+  <div layout:fragment="body">
+    <!-- Hero -->
+    <div class="bg-image" style="background-image: url('assets/media/photos/photo36@2x.jpg')">
+      <div class="bg-primary-dark-op py-9 overflow-hidden">
+        <div class="content content-full text-center">
+          <h1 class="display-4 fw-semibold text-white mb-2">
+            Đặt chỗ mượn thiết bị
+          </h1>
+          <p class="fs-4 fw-normal text-white-50 mb-5">Quản lý thành viên</p>
+          <div>
+            <button class="btn btn-primary px-3 py-2 m-1 btn--scroll-to">
+              <i class="fa fa-fw fa-arrow-down-long opacity-50 me-1"></i> Xem
+              thiết bị
+            </button>
           </div>
         </div>
       </div>
-      <!-- END Hero -->
+    </div>
+    <!-- END Hero -->
 
-      <section id="section--1">
-        <div class="content content-full">
-          <div class="block block-rounded">
-            <div class="block-content">
-              <div class="col-md-6 mb-4">
-                <form th:action="@{/search}">
-                  <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Tìm kiếm theo tên..."
-                      name="query"
-                      th:value="${query}"
-                    />
-                    <input type="hidden" name="pageNo" th:value="1" />
-                    <button type="submit" class="btn btn-alt-primary">
-                      <i class="fa fa-search me-1 opacity-50"></i>
-                    </button>
-                  </div>
-                </form>
-              </div>
-              <div class="table-responsive">
-                <table class="table table-bordered table-striped table-vcenter">
-                  <thead>
-                    <tr>
-                      <th>Mã</th>
-                      <th>Tên thiết bị</th>
-                      <th>Mô tả</th>
-                      <th>Thời gian đặt chỗ trong hôm nay</th>
-                      <th class="text-center" style="width: 160px"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr th:each="tb : ${thietBiResponse.content}">
-                      <td th:utext="${tb.maTB}"></td>
-                      <td th:utext="${tb.tenTB}"></td>
-                      <td th:utext="${tb.moTaTB}"></td>
-                      <td th:if="${#lists.isEmpty(tb.thongTinSuDung)}">
-                        Chưa có
-                      </td>
-                      <td th:unless="${#lists.isEmpty(tb.thongTinSuDung)}">
-                        <ul class="list-unstyled mb-0">
-                          <li th:each="ttsd : ${tb.thongTinSuDung}">
-                            <span
-                              th:utext="${#dates.format(ttsd.tgDatCho, 'dd/MM/yyyy HH:mm')}"
-                            ></span>
-                          </li>
-                        </ul>
-                      </td>
-                      <td class="text-center">
-                        <a
-                          th:href="@{/datchothietbi/{maTB}/datcho(maTB=${tb.maTB})}"
-                          class="btn btn-alt-primary"
-                          >Đặt chỗ</a
-                        >
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <nav
-                class="pagination-container"
-                th:attr="data-page-no=${thietBiResponse.pageNo},data-total-pages=${thietBiResponse.totalPages},data-query=${query}"
-              >
-                <ul class="pagination justify-content-end mt-2">
-                  <li class="page-item">
-                    <a
-                      class="page-link first-page disabled"
-                      href="javascript:void(0)"
-                      tabindex="-1"
-                      aria-label="First"
-                      data-page="1"
-                    >
-                      <i class="fas fa-angle-double-left"></i>
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <a
-                      class="page-link prev-page disabled"
-                      href="javascript:void(0)"
-                      tabindex="-1"
-                      aria-label="Previous"
-                    >
-                      <i class="fas fa-angle-left"></i>
-                    </a>
-                  </li>
-                  <div class="d-flex list-page"></div>
-                  <li class="page-item">
-                    <a
-                      class="page-link next-page disabled"
-                      href="javascript:void(0)"
-                      tabindex="-1"
-                      aria-label="Next"
-                    >
-                      <i class="fas fa-angle-right"></i>
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <a
-                      class="page-link last-page disabled"
-                      href="javascript:void(0)"
-                      tabindex="-1"
-                      aria-label="Last"
-                    >
-                      <i class="fas fa-angle-double-right"></i>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+    <section id="section--1">
+      <div class="content content-full">
+        <div class="block block-rounded">
+          <div class="block-content">
+            <div class="col-md-6 mb-4">
+              <form th:action="@{/search}">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Tìm kiếm theo tên..." name="query"
+                    th:value="${query}" />
+                  <input type="hidden" name="pageNo" th:value="1" />
+                  <button type="submit" class="btn btn-alt-primary">
+                    <i class="fa fa-search me-1 opacity-50"></i>
+                  </button>
+                </div>
+              </form>
             </div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-vcenter">
+                <thead>
+                  <tr>
+                    <th>Mã</th>
+                    <th>Tên thiết bị</th>
+                    <th>Mô tả</th>
+                    <th>Thời gian đặt chỗ trong hôm nay</th>
+                    <th class="text-center" style="width: 160px"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="tb : ${thietBiResponse.content}">
+                    <td th:utext="${tb.maTB}"></td>
+                    <td th:utext="${tb.tenTB}"></td>
+                    <td th:utext="${tb.moTaTB}"></td>
+                    <td th:if="${#lists.isEmpty(tb.thongTinSuDung)}">
+                      Chưa có
+                    </td>
+                    <td th:unless="${#lists.isEmpty(tb.thongTinSuDung)}">
+                      <ul class="list-unstyled mb-0">
+                        <li th:each="ttsd : ${tb.thongTinSuDung}">
+                          <span th:utext="${#dates.format(ttsd.tgDatCho, 'dd/MM/yyyy HH:mm')}"></span>
+                        </li>
+                      </ul>
+                    </td>
+                    <td class="text-center">
+                      <a th:href="@{/datchothietbi/{maTB}/datcho(maTB=${tb.maTB})}"
+                        class="btn btn-alt-primary datchobtn">Đặt chỗ</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <nav class="pagination-container"
+              th:attr="data-page-no=${thietBiResponse.pageNo},data-total-pages=${thietBiResponse.totalPages},data-query=${query}">
+              <ul class="pagination justify-content-end mt-2">
+                <li class="page-item">
+                  <a class="page-link first-page disabled" href="javascript:void(0)" tabindex="-1" aria-label="First"
+                    data-page="1">
+                    <i class="fas fa-angle-double-left"></i>
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link prev-page disabled" href="javascript:void(0)" tabindex="-1" aria-label="Previous">
+                    <i class="fas fa-angle-left"></i>
+                  </a>
+                </li>
+                <div class="d-flex list-page"></div>
+                <li class="page-item">
+                  <a class="page-link next-page disabled" href="javascript:void(0)" tabindex="-1" aria-label="Next">
+                    <i class="fas fa-angle-right"></i>
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link last-page disabled" href="javascript:void(0)" tabindex="-1" aria-label="Last">
+                    <i class="fas fa-angle-double-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section></section>
-    </div>
-  </body>
+    <section></section>
+  </div>
+</body>
+
 </html>
+<script th:if="${isViPham}">
+  var disabledLinks = document.querySelectorAll(".datchobtn");
+  disabledLinks.forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+      Swal.fire({
+        title: "Không thể đặt chỗ",
+        text: "Bạn không thể đặt chỗ cho tới khi phạt vi phạm hết",
+        icon: "warning",
+      })
+    });
+  });
+</script>

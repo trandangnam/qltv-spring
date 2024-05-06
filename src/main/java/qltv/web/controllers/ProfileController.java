@@ -41,6 +41,10 @@ public class ProfileController {
     private ThanhVienRepository tvRepository;
     private XuLyService xuLyService;
     private ThongTinSuDungService thongTinSuDungService;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5bf34dbe5bba31b537fd81425cb59d73148cfe24
 
     @Autowired
     public ProfileController(ThanhVienService tvService, ThanhVienRepository tvRepository, XuLyService xuLyService, ThongTinSuDungService thongTinSuDungService) {
