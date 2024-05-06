@@ -123,23 +123,8 @@
                 </button>
               </a>
             </li>
-            <!--                    <li class="nav-item">
-                                                <button class="nav-link space-x-1" id="account-connections-tab" data-bs-toggle="tab"
-                                                        data-bs-target="#account-connections" role="tab" aria-controls="account-connections"
-                                                        aria-selected="false">
-                                                    <i class="fa fa-share-alt d-sm-none"></i>
-                                                    <span class="d-none d-sm-inline">Connections</span>
-                                                </button>
-                                            </li>
-                                            <li class="nav-item">
-                                                <button class="nav-link space-x-1" id="account-billing-tab" data-bs-toggle="tab"
-                                                        data-bs-target="#account-billing" role="tab" aria-controls="account-billing" aria-selected="false">
-                                                    <i class="fa fa-credit-card d-sm-none"></i>
-                                                    <span class="d-none d-sm-inline">Billing</span>
-                                                </button>
-                                            </li>-->
           </ul>
-          <div class="block block-rounded">
+          <div class="block-rounded">
             <div class="block-content">
               <div class="col-md-6">
                 <form
@@ -206,7 +191,7 @@
                       ></td>
                       <td class="text-center">
                         <form
-                          th:if="${ttsd.tgMuon != null && ttsd.tgMuon.after(#dates.createNow())}"
+                          th:if="${ttsd.tgDatCho != null && ttsd.tgDatCho.after(#dates.createNow())}"
                           th:action="@{/profile/datcho/{maTV}/delete(maTV=${user.maTV})}"
                           method="POST"
                         >

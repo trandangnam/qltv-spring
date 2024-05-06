@@ -2,6 +2,7 @@ package qltv.web.services;
 
 import java.util.List;
 import qltv.web.dto.XuLyDTO;
+import qltv.web.dto.XuLyResponse;
 import qltv.web.models.XuLy;
 
 public interface XuLyService {
@@ -25,5 +26,7 @@ public interface XuLyService {
     public void updateXuLyDuThoiGian();
 
     public boolean thanhVienDangBiXuLy(long maTV);
+
+    public XuLyResponse getListXuLy(int pageNo, int pageSize, String query);
 
 }
