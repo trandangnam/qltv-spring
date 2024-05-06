@@ -32,12 +32,10 @@ import qltv.web.services.ThanhVienService;
 public class ProfileController {
 
     private ThanhVienService tvService;
-    private ThanhVienRepository tvRepository;
 
     @Autowired
     public ProfileController(ThanhVienService tvService, ThanhVienRepository tvRepository) {
         this.tvService = tvService;
-        this.tvRepository = tvRepository;
     }
     @GetMapping("/profile/{maTV}")
     public String editProfileForm(@PathVariable("maTV") long maTV, Model model) {
@@ -98,7 +96,7 @@ public class ProfileController {
         ThanhVienDTO user = tvService.findMemberById(userId);
         model.addAttribute("user", user);
 
-        String encryptedPassword = tvRepository.findPasswordByMaTV(maTV);
+        String encryptedPassword = tvService.findPasswordByMaTV(maTV);
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         if (passwordEncoder.matches(currentPassword, encryptedPassword)) {
