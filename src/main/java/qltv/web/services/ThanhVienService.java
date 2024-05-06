@@ -18,8 +18,16 @@ public interface ThanhVienService {
     public void updateThanhVien(ThanhVienDTO thanhVien);
 
     public void updateInfoThanhVien(long maTV, String hoTen, String khoa, String nganh, String sdt, String email);
+    
+    public String findPasswordByMaTV(@Param("maTV") long maTV);
 
     public void updatePassword(long maTV, String newPassword);
+    
+    public void changePasswordByEmail(String email, String password);
+
+    public boolean existsByEmail(String email);
+    
+    public ThanhVien findByEmail(String email);
 
     public void deleteThanhVien(long maTV);
 

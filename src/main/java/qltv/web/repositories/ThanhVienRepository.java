@@ -34,7 +34,14 @@ public interface ThanhVienRepository extends JpaRepository<ThanhVien, Long> {
     @Query("UPDATE ThanhVien tv SET tv.password = :password WHERE tv.maTV = :maTV")
     void updatePassword(long maTV, String password);
     
+    @Modifying
+    @Transactional
+    @Query("UPDATE ThanhVien tv SET tv.password = :password WHERE tv.email = :email")
+    void changePasswordByEmail(String email, String password);
+    
     @Query("SELECT tv.password FROM ThanhVien tv WHERE tv.maTV = :maTV")
     String findPasswordByMaTV(@Param("maTV") long maTV);
+    
+    boolean existsByEmail(String email);
 
 }
