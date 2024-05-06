@@ -16,3 +16,4 @@ btnScrollTo.addEventListener("click", function () {
 if (window.location.search !== "") {
   section1.scrollIntoView({ behavior: "instant" });
 }
+
