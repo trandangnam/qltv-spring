@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import qltv.web.dto.ThanhVienResponse;
 import qltv.web.security.SecurityUtil;
 import qltv.web.services.ThanhVienService;
 
@@ -59,8 +60,8 @@ public class ThanhVienController {
         }
         ThanhVienDTO user = tvService.findMemberById(maTV);
         model.addAttribute("user", user);
-        List<ThanhVienDTO> listThanhVien = tvService.getAllThanhVien();
-        model.addAttribute("listThanhVien", listThanhVien);
+        ThanhVienResponse thanhVienResponse = tvService.getListThanhVien(0, 10, "");
+        model.addAttribute("thanhVienResponse", thanhVienResponse);
         return "thanh-vien-list";
     }
 
@@ -149,7 +150,9 @@ public class ThanhVienController {
     }
 
     @GetMapping("/thanhvien/search")
-    public String searchThanhVien(@RequestParam(value = "query") String query, Model model) {
+    public String searchThanhVien(@RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+            @RequestParam(value = "query", defaultValue = "", required = false) String query, Model model) {
         String username = SecurityUtil.getUserSession();
         if (username == null) {
             return "redirect:/login";
@@ -160,8 +163,8 @@ public class ThanhVienController {
         }
         ThanhVienDTO user = tvService.findMemberById(userId);
         model.addAttribute("user", user);
-        List<ThanhVienDTO> listThanhVien = tvService.searchThanhVien(query);
-        model.addAttribute("listThanhVien", listThanhVien);
+        ThanhVienResponse thanhVienResponse = tvService.getListThanhVien(pageNo - 1, pageSize, query);
+        model.addAttribute("thanhVienResponse", thanhVienResponse);
         model.addAttribute("query", query);
         return "thanh-vien-list";
     }

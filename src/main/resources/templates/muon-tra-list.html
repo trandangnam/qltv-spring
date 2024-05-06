@@ -7,40 +7,48 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script defer th:src="@{/assets/js/pagination.js}"></script>
     <script defer th:src="@{/assets/js/pages/muon-tra-list.js}"></script>
     <title>Mượn Trả Thiết Bị</title>
   </head>
   <body>
     <div layout:fragment="body">
-      <div class="block block-rounded"></div>
-      <div class="block-header block-header-default">
-        <h3 class="block-title">Danh Sách Sử Dụng Thiết Bị</h3>
-        <div class="block-options">
-          <a href="/thongtinsudung/muon" class="btn btn-success">
-            <i class="fa fa-fw fa-plus me-1"></i> Mượn thiết bị
-          </a>
-        </div>
-        <div class="block-options">
+      <div class="block block-rounded">
+        <div class="block-header block-header-default">
+          <h3 class="block-title">Danh Sách Sử Dụng Thiết Bị</h3>
+          <div class="block-options">
+            <a href="/thongtinsudung/muon" class="btn btn-success">
+              <i class="fa fa-fw fa-plus me-1"></i> Mượn thiết bị
+            </a>
+          </div>
+          <div class="block-options">
             <a href="/thongtinsudung/tra" class="btn btn-info">
               <i class="fa fa-fw fa-plus me-1"></i> Trả thiết bị
             </a>
           </div>
-      </div>
-      <div class="block-content">
-        <!---Thanh tim kiem---->
-        <div class="input-group">
-          <input
-            type="search"
-            class="form-control"
-            placeholder="Tìm kiếm theo mã thành viên, mã thiết bị"
-            name="query"
-            id="input-search"
-          />
-          <button class="btn btn-alt-primary" id="btn-search">
-            <i class="fa fa-search me-1 opacity-50"></i>
-          </button>
         </div>
-        <!---Ket thuc thanh tim kiem---->
+        <div class="block-content">
+          <!---Thanh tim kiem---->
+          <div class="col-md-6">
+            <form th:action="@{/thongtinsudung/search}">
+              <div class="input-group">
+                <input
+                  type="search"
+                  class="form-control"
+                  placeholder="Tìm kiếm theo mã thành viên, mã thiết bị"
+                  name="query"
+                  id="input-search"
+                  th:value="${query}"
+                />
+                <input type="hidden" name="pageNo" th:value="1" />
+                <button class="btn btn-alt-primary" id="btn-search">
+                  <i class="fa fa-search me-1 opacity-50"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+          <!---Ket thuc thanh tim kiem---->
+        </div>
         <div class="block-content">
           <div class="table-responsive">
             <table class="table table-bordered table-striped table-vcenter">
@@ -58,8 +66,11 @@
                 </tr>
               </thead>
               <tbody id="tbl-ttsd">
-                <tr th:each="ttsd : ${ttsds}">
-                  <td class="fw-semibold fs-sm" th:utext="${ttsd.getMaTT()}"></td>
+                <tr th:each="ttsd : ${ttsdResponse.content}">
+                  <td
+                    class="fw-semibold fs-sm"
+                    th:utext="${ttsd.getMaTT()}"
+                  ></td>
                   <td
                     class="fs-sm"
                     th:utext="${ttsd.getThanhVien().getMaTV()}"
@@ -88,6 +99,55 @@
               </tbody>
             </table>
           </div>
+          <nav
+            class="pagination-container"
+            th:attr="data-page-no=${ttsdResponse.pageNo},data-total-pages=${ttsdResponse.totalPages},data-query=${query}"
+          >
+            <ul class="pagination justify-content-end mt-2">
+              <li class="page-item">
+                <a
+                  class="page-link first-page disabled"
+                  href="javascript:void(0)"
+                  tabindex="-1"
+                  aria-label="First"
+                  data-page="1"
+                >
+                  <i class="fas fa-angle-double-left"></i>
+                </a>
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link prev-page disabled"
+                  href="javascript:void(0)"
+                  tabindex="-1"
+                  aria-label="Previous"
+                >
+                  <i class="fas fa-angle-left"></i>
+                </a>
+              </li>
+              <div class="d-flex list-page"></div>
+              <li class="page-item">
+                <a
+                  class="page-link next-page disabled"
+                  href="javascript:void(0)"
+                  tabindex="-1"
+                  aria-label="Next"
+                >
+                  <i class="fas fa-angle-right"></i>
+                </a>
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link last-page disabled"
+                  href="javascript:void(0)"
+                  tabindex="-1"
+                  aria-label="Last"
+                >
+                  <i class="fas fa-angle-double-right"></i>
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </div>

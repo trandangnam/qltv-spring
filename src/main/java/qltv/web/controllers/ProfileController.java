@@ -42,6 +42,7 @@ public class ProfileController {
     private XuLyService xuLyService;
     private ThongTinSuDungService thongTinSuDungService;
 
+
     @Autowired
     public ProfileController(ThanhVienService tvService, ThanhVienRepository tvRepository, XuLyService xuLyService, ThongTinSuDungService thongTinSuDungService) {
         this.tvService = tvService;
@@ -108,7 +109,7 @@ public class ProfileController {
         ThanhVienDTO user = tvService.findMemberById(userId);
         model.addAttribute("user", user);
 
-        String encryptedPassword = tvRepository.findPasswordByMaTV(maTV);
+        String encryptedPassword = tvService.findPasswordByMaTV(maTV);
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         if (passwordEncoder.matches(currentPassword, encryptedPassword)) {

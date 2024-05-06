@@ -24,4 +24,5 @@ public interface ThietBiService {
 
     public ThietBiDTO findThietBiById(long maTB);
 
+    public ThietBiResponse getListThietBi(int pageNo, int pageSize, String query);
 }

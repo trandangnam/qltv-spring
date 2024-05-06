@@ -29,11 +29,13 @@ import org.springframework.stereotype.Controller;
 import qltv.web.dto.ThanhVienDTO;
 
 import qltv.web.dto.ThietBiDTO;
+import qltv.web.dto.ThietBiResponse;
 import qltv.web.dto.ThongTinSuDungDTO;
 import qltv.web.security.SecurityUtil;
 import qltv.web.services.ThanhVienService;
 import qltv.web.services.ThietBiService;
 import qltv.web.services.ThongTinSuDungService;
+import qltv.web.services.XuLyService;
 
 //@RestController
 //@RequestMapping("/thietbi")
@@ -43,12 +45,14 @@ public class ThietBiController {
     private ThietBiService thietBiService;
     private ThanhVienService thanhVienService;
     private ThongTinSuDungService ttsdService;
+    private XuLyService xuLyService;
 
     @Autowired
-    public ThietBiController(ThietBiService thietBiService, ThanhVienService thanhVienService, ThongTinSuDungService ttsdService) {
+    public ThietBiController(ThietBiService thietBiService, ThanhVienService thanhVienService, ThongTinSuDungService ttsdService,XuLyService xuLyService) {
         this.thietBiService = thietBiService;
         this.thanhVienService = thanhVienService;
         this.ttsdService = ttsdService;
+        this.xuLyService = xuLyService;
     }
 
     @GetMapping("/thietbi")
@@ -63,8 +67,8 @@ public class ThietBiController {
         }
         ThanhVienDTO user = thanhVienService.findMemberById(maTV);
         model.addAttribute("user", user);
-        List<ThietBiDTO> listThietBi = thietBiService.getAllThietBi();
-        model.addAttribute("listThietBi", listThietBi);
+        ThietBiResponse thietBiResponse = thietBiService.getListThietBi(0, 10, "");
+        model.addAttribute("thietBiResponse", thietBiResponse);
         return "thiet-bi-list";
     }
 
@@ -162,7 +166,9 @@ public class ThietBiController {
     }
 
     @GetMapping("/thietbi/search")
-    public String searchThietBi(@RequestParam(value = "query") String query, Model model) {
+    public String searchThietBi(@RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+            @RequestParam(value = "query", defaultValue = "", required = false) String query, Model model) {
         String username = SecurityUtil.getUserSession();
         if (username == null) {
             return "redirect:/login";
@@ -173,8 +179,8 @@ public class ThietBiController {
         }
         ThanhVienDTO user = thanhVienService.findMemberById(maTV);
         model.addAttribute("user", user);
-        List<ThietBiDTO> listThietBi = thietBiService.searchThietBi(query);
-        model.addAttribute("listThietBi", listThietBi);
+        ThietBiResponse thietBiResponse = thietBiService.getListThietBi(pageNo - 1, pageSize, query);
+        model.addAttribute("thietBiResponse", thietBiResponse);
         model.addAttribute("query", query);
         return "thiet-bi-list";
     }
@@ -265,6 +271,9 @@ public class ThietBiController {
         if (username != null) {
             int maTV = Integer.parseInt(username);
             user = thanhVienService.findMemberById(maTV);
+            boolean isViPham = xuLyService.thanhVienDangBiXuLy(maTV);
+            model.addAttribute("isViPham", isViPham);
+            System.out.println(isViPham);
         }
         List<ThietBiDTO> tblist = thietBiService.getAllThietBi();
         model.addAttribute("user", user);
@@ -330,7 +339,7 @@ public class ThietBiController {
     // ---------------------------------hàm này của tiến nha đừng có xóa---------------------------------
     @GetMapping("/thietbi/getbyid")
     @ResponseBody
-    public ThietBiDTO getThanhVienById(@RequestParam(value = "query") String query, Model model) {
+    public ThietBiDTO getThietBiById(@RequestParam(value = "query") String query, Model model) {
         try {
             Long maTB = Long.parseLong(query);
             ThietBiDTO thietBi = thietBiService.findThietBiById(maTB);
