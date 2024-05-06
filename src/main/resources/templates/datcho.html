@@ -1,7 +1,7 @@
 <html
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{dashboard-layout}"
+  layout:decorate="~{main-layout}"
 >
   <head>
     <meta charset="UTF-8" />
@@ -27,7 +27,7 @@
             role="form"
             method="post"
             id="form-datChoThietBi"
-            th:action="@{/thietbi/datchothietbi/save}"
+            th:action="@{/datchothietbi/save}"
           >
             <div class="mb-4">
               <label class="form-label" for="val-maTV">Mã thành viên</label>

@@ -7,7 +7,7 @@ import qltv.web.models.ThietBi;
 
 public interface ThietBiService {
 
-    public ThietBiResponse findThietBiMuonTrongNgay(int pageNo, int pageSize, String query);
+    public ThietBiResponse findThietBiDatChoTrongNgay(int pageNo, int pageSize, String query);
     public List<ThietBiDTO> getAllThietBi();
     public ThietBiDTO findByMaTB(long maTB);
     

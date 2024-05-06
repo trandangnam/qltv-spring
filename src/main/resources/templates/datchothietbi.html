@@ -1,7 +1,7 @@
 <html
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{dashboard-layout}"
+  layout:decorate="~{main-layout}"
 >
   <head>
     <meta charset="UTF-8" />
@@ -10,12 +10,12 @@
   </head>
   <body>
     <div layout:fragment="body">
-      <div class="block block-rounded">
+      <div class="content content-full">
         <div class="block-header block-header-default">
           <h3 class="block-title">Danh sách thiết bị</h3>
         </div>
         <div class="block-content">
-          <form th:action="@{/thietbi/datchothietbi/search}">
+          <form th:action="@{/datchothietbi/search}">
             <div class="input-group">
               <input
                 type="search"
@@ -48,7 +48,7 @@
                   <td class="text-center">
                     <div class="btn-group">
                       <a
-                        th:href="@{/thietbi/datchothietbi/{maTB}/datcho(maTB=${tb.maTB})}"
+                        th:href="@{/datchothietbi/{maTB}/datcho(maTB=${tb.maTB})}"
                         class="btn btn-sm btn-alt-secondary"
                         data-bs-toggle="tooltip"
                         title="Đặt chỗ"
