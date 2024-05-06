@@ -5,7 +5,7 @@ const totalPages = Number.parseInt(paginationNav.dataset.totalPages);
 const query = paginationNav.dataset.query;
 const urlArgs = { query };
 const pagination = new Pagination(
-  "/thongtinsudung/search",
+  "/thietbi/search",
   urlArgs,
   curPage,
   totalPages

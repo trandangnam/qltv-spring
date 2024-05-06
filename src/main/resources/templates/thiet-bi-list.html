@@ -7,6 +7,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Danh sách thiết bị</title>
+    <script defer th:src="@{/assets/js/pagination.js}"></script>
     <script defer th:src="@{/assets/js/pages/thiet-bi-list.js}"></script>
   </head>
   <body>
@@ -18,30 +19,43 @@
             <a href="/thietbi/new" class="btn btn-success">
               <i class="fa fa-fw fa-plus me-1"></i> Thêm thiết bị
             </a>
-              <button id="btn-export" type="button" class="btn btn-success" title="Xuất toàn bộ thiết bị ra file Excel">
-                 <i class="fa fa-fw fa-file-excel"></i> Xuất excel
+            <button
+              id="btn-export"
+              type="button"
+              class="btn btn-success"
+              title="Xuất toàn bộ thiết bị ra file Excel"
+            >
+              <i class="fa fa-fw fa-file-excel"></i> Xuất excel
             </button>
-              <input type="file" id="file-input" style="display: none;">
-            <button id="btn-import" type="button" class="btn btn-success" title="Nhập thiết bị từ file Excel">
-                 <i class="fa fa-fw fa-file-excel"></i> Nhập excel
+            <input type="file" id="file-input" style="display: none" />
+            <button
+              id="btn-import"
+              type="button"
+              class="btn btn-success"
+              title="Nhập thiết bị từ file Excel"
+            >
+              <i class="fa fa-fw fa-file-excel"></i> Nhập excel
             </button>
           </div>
         </div>
         <div class="block-content">
-          <form th:action="@{/thietbi/search}">
-            <div class="input-group">
-              <input
-                type="search"
-                class="form-control"
-                placeholder="Tìm kiếm theo tên..."
-                name="query"
-                th:value="${query}"
-              />
-              <button type="submit" class="btn btn-alt-primary">
-                <i class="fa fa-search me-1 opacity-50"></i>
-              </button>
-            </div>
-          </form>
+          <div class="col-md-6">
+            <form th:action="@{/thietbi/search}">
+              <div class="input-group">
+                <input
+                  type="search"
+                  class="form-control"
+                  placeholder="Tìm kiếm theo tên..."
+                  name="query"
+                  th:value="${query}"
+                />
+                <input type="hidden" name="pageNo" th:value="1" />
+                <button type="submit" class="btn btn-alt-primary">
+                  <i class="fa fa-search me-1 opacity-50"></i>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
         <div class="block-content">
           <div class="table-responsive">
@@ -55,7 +69,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr th:each="tb : ${listThietBi}">
+                <tr th:each="tb : ${thietBiResponse.content}">
                   <td class="fw-semibold fs-sm" th:utext="${tb.maTB}"></td>
                   <td class="fs-sm" th:utext="${tb.tenTB}"></td>
                   <td class="fs-sm" th:utext="${tb.moTaTB}"></td>
@@ -83,6 +97,55 @@
               </tbody>
             </table>
           </div>
+          <nav
+            class="pagination-container"
+            th:attr="data-page-no=${thietBiResponse.pageNo},data-total-pages=${thietBiResponse.totalPages},data-query=${query}"
+          >
+            <ul class="pagination justify-content-end mt-2">
+              <li class="page-item">
+                <a
+                  class="page-link first-page disabled"
+                  href="javascript:void(0)"
+                  tabindex="-1"
+                  aria-label="First"
+                  data-page="1"
+                >
+                  <i class="fas fa-angle-double-left"></i>
+                </a>
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link prev-page disabled"
+                  href="javascript:void(0)"
+                  tabindex="-1"
+                  aria-label="Previous"
+                >
+                  <i class="fas fa-angle-left"></i>
+                </a>
+              </li>
+              <div class="d-flex list-page"></div>
+              <li class="page-item">
+                <a
+                  class="page-link next-page disabled"
+                  href="javascript:void(0)"
+                  tabindex="-1"
+                  aria-label="Next"
+                >
+                  <i class="fas fa-angle-right"></i>
+                </a>
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link last-page disabled"
+                  href="javascript:void(0)"
+                  tabindex="-1"
+                  aria-label="Last"
+                >
+                  <i class="fas fa-angle-double-right"></i>
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </div>

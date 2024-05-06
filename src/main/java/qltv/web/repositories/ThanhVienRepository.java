@@ -2,6 +2,8 @@ package qltv.web.repositories;
 
 import jakarta.transaction.Transactional;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import qltv.web.models.ThanhVien;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -33,15 +35,17 @@ public interface ThanhVienRepository extends JpaRepository<ThanhVien, Long> {
     @Transactional
     @Query("UPDATE ThanhVien tv SET tv.password = :password WHERE tv.maTV = :maTV")
     void updatePassword(long maTV, String password);
-    
+
     @Modifying
     @Transactional
     @Query("UPDATE ThanhVien tv SET tv.password = :password WHERE tv.email = :email")
     void changePasswordByEmail(String email, String password);
-    
+
     @Query("SELECT tv.password FROM ThanhVien tv WHERE tv.maTV = :maTV")
     String findPasswordByMaTV(@Param("maTV") long maTV);
-    
+
     boolean existsByEmail(String email);
+
+    Page<ThanhVien> findByHoTenContaining(String tenTV, Pageable pageable);
 
 }
