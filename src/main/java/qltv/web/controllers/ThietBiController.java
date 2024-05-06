@@ -35,6 +35,7 @@ import qltv.web.security.SecurityUtil;
 import qltv.web.services.ThanhVienService;
 import qltv.web.services.ThietBiService;
 import qltv.web.services.ThongTinSuDungService;
+import qltv.web.services.XuLyService;
 
 //@RestController
 //@RequestMapping("/thietbi")
@@ -44,12 +45,14 @@ public class ThietBiController {
     private ThietBiService thietBiService;
     private ThanhVienService thanhVienService;
     private ThongTinSuDungService ttsdService;
+    private XuLyService xuLyService;
 
     @Autowired
-    public ThietBiController(ThietBiService thietBiService, ThanhVienService thanhVienService, ThongTinSuDungService ttsdService) {
+    public ThietBiController(ThietBiService thietBiService, ThanhVienService thanhVienService, ThongTinSuDungService ttsdService,XuLyService xuLyService) {
         this.thietBiService = thietBiService;
         this.thanhVienService = thanhVienService;
         this.ttsdService = ttsdService;
+        this.xuLyService = xuLyService;
     }
 
     @GetMapping("/thietbi")
@@ -268,6 +271,9 @@ public class ThietBiController {
         if (username != null) {
             int maTV = Integer.parseInt(username);
             user = thanhVienService.findMemberById(maTV);
+            boolean isViPham = xuLyService.thanhVienDangBiXuLy(maTV);
+            model.addAttribute("isViPham", isViPham);
+            System.out.println(isViPham);
         }
         List<ThietBiDTO> tblist = thietBiService.getAllThietBi();
         model.addAttribute("user", user);
@@ -333,7 +339,7 @@ public class ThietBiController {
     // ---------------------------------hàm này của tiến nha đừng có xóa---------------------------------
     @GetMapping("/thietbi/getbyid")
     @ResponseBody
-    public ThietBiDTO getThanhVienById(@RequestParam(value = "query") String query, Model model) {
+    public ThietBiDTO getThietBiById(@RequestParam(value = "query") String query, Model model) {
         try {
             Long maTB = Long.parseLong(query);
             ThietBiDTO thietBi = thietBiService.findThietBiById(maTB);

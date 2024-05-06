@@ -68,7 +68,7 @@ public interface ThongTinSuDungRepository extends JpaRepository<ThongTinSuDung, 
     @Query("SELECT ttsd FROM ThongTinSuDung ttsd RIGHT JOIN ttsd.thietBi tb WHERE tb.maTB = :maTB")
     List<ThongTinSuDung> getTtsdByMaTB(long maTB);
 
-    @Query("SELECT COUNT(*) + 1 FROM ThongTinSuDung ttsd")
+    @Query("SELECT MAX(ttsd.maTT) + 1 FROM ThongTinSuDung ttsd")
     int getMaxIdFlusOne();
 
     // hàm này lấy tất cả các thông tin sử dụng có tgMuon != null và tgTra = null tức là chưa trả của một thành viên
