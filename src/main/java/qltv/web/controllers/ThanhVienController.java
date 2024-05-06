@@ -37,7 +37,6 @@ import org.springframework.web.multipart.MultipartFile;
 import qltv.web.security.SecurityUtil;
 import qltv.web.services.ThanhVienService;
 
-
 @Controller
 public class ThanhVienController {
 
@@ -55,6 +54,9 @@ public class ThanhVienController {
             return "redirect:/login";
         }
         int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
         ThanhVienDTO user = tvService.findMemberById(maTV);
         model.addAttribute("user", user);
         List<ThanhVienDTO> listThanhVien = tvService.getAllThanhVien();
@@ -69,6 +71,9 @@ public class ThanhVienController {
             return "redirect:/login";
         }
         int maTV = Integer.parseInt(username);
+        if (maTV > 10) {
+            return "redirect:/";
+        }
         ThanhVienDTO user = tvService.findMemberById(maTV);
         model.addAttribute("user", user);
         ThanhVienDTO thanhVien = new ThanhVienDTO();
@@ -95,6 +100,9 @@ public class ThanhVienController {
             return "redirect:/login";
         }
         int userId = Integer.parseInt(username);
+        if (userId > 10) {
+            return "redirect:/";
+        }
         ThanhVienDTO user = tvService.findMemberById(userId);
         model.addAttribute("user", user);
         ThanhVienDTO thanhVien = tvService.findMemberById(maTV);
@@ -112,6 +120,9 @@ public class ThanhVienController {
             return "redirect:/login";
         }
         int userId = Integer.parseInt(username);
+        if (userId > 10) {
+            return "redirect:/";
+        }
         ThanhVienDTO user = tvService.findMemberById(userId);
         model.addAttribute("user", user);
 
@@ -129,6 +140,10 @@ public class ThanhVienController {
         if (username == null) {
             return "redirect:/login";
         }
+        int userId = Integer.parseInt(username);
+        if (userId > 10) {
+            return "redirect:/";
+        }
         tvService.deleteThanhVien(maTV);
         return "redirect:/thanhvien";
     }
@@ -140,6 +155,9 @@ public class ThanhVienController {
             return "redirect:/login";
         }
         int userId = Integer.parseInt(username);
+        if (userId > 10) {
+            return "redirect:/";
+        }
         ThanhVienDTO user = tvService.findMemberById(userId);
         model.addAttribute("user", user);
         List<ThanhVienDTO> listThanhVien = tvService.searchThanhVien(query);
@@ -148,24 +166,20 @@ public class ThanhVienController {
         return "thanh-vien-list";
     }
 
-    // hàm này của tiến nha đừng có xóa
+    // ---------------------------------hàm này của tiến nha đừng có xóa---------------------------------
     @GetMapping("/thanhvien/getbyid")
     @ResponseBody
     public ThanhVienDTO getThanhVienById(@RequestParam(value = "query") String query, Model model) {
-//        String username = SecurityUtil.getUserSession();
-//        if (username == null) {
-//            return null;
-//        }
         try {
             Long maTV = Long.parseLong(query);
             ThanhVienDTO user = tvService.findMemberById(maTV);
             return user;
-        }catch(Exception e){
+        } catch (Exception e) {
             return null;
         }
-
     }
-    //---------------------------------------------
+
+    //--------------------------------------------------------------
     @GetMapping("/thanhvien/getbynganh")
     @ResponseBody
     public String getThanhVienByNganh(@RequestParam(value = "query") String query, Model model) {
@@ -173,26 +187,27 @@ public class ThanhVienController {
             String nganh = String.valueOf(query);
             List<ThanhVienDTO> listUser = tvService.findMemberByNganh(nganh);
             int max = 0;
-            for(ThanhVienDTO tv : listUser){
-                String maTV = tv.getMaTV()+"";
+            for (ThanhVienDTO tv : listUser) {
+                String maTV = tv.getMaTV() + "";
                 String soCuoi = maTV.substring(maTV.length() - 4);
                 int soCuoiInt = Integer.parseInt(soCuoi) + 1;
-                if(soCuoiInt>max){
+                if (soCuoiInt > max) {
                     max = soCuoiInt;
                 }
             }
             return String.format("%04d", max);
-        }catch(Exception e){
+        } catch (Exception e) {
             return null;
         }
 
     }
+
     // Endpoint để xuất file Excel từ danh sách thành viên
     @GetMapping("/thanhvien/export-excel")
     public ResponseEntity<byte[]> exportExcel(HttpServletResponse response) throws IOException {
         // Tạo một workbook Excel mới
         Workbook workbook = new XSSFWorkbook();
-        XSSFSheet sheet =  (XSSFSheet) workbook.createSheet("Danh sách thành viên");
+        XSSFSheet sheet = (XSSFSheet) workbook.createSheet("Danh sách thành viên");
 
         // Tạo dòng header
         Row headerRow = sheet.createRow(0);
@@ -236,6 +251,7 @@ public class ThanhVienController {
                 .headers(headers)
                 .body(excelBytes);
     }
+
     @PostMapping("/thanhvien/import-excel")
     public String importExcel(@RequestParam("file") MultipartFile file) {
         try {
@@ -250,29 +266,29 @@ public class ThanhVienController {
             if (rowIterator.hasNext()) {
                 rowIterator.next();
             }
-            while(rowIterator.hasNext()){
+            while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
                 int maTV = (int) row.getCell(0).getNumericCellValue();
-                boolean flag=false;
-                for (ThanhVienDTO tv : list){
-                    if(maTV==tv.getMaTV()){
+                boolean flag = false;
+                for (ThanhVienDTO tv : list) {
+                    if (maTV == tv.getMaTV()) {
                         flag = true;
                     }
                 }
-                if(flag==false){
+                if (flag == false) {
                     ThanhVienDTO thanhVien = new ThanhVienDTO();
                     thanhVien.setMaTV((int) row.getCell(0).getNumericCellValue());
                     thanhVien.setHoTen(row.getCell(1).getStringCellValue());
                     thanhVien.setKhoa(row.getCell(2).getStringCellValue());
                     thanhVien.setNganh(row.getCell(3).getStringCellValue());
                     thanhVien.setSdt(row.getCell(4).getStringCellValue());
-                    thanhVien.setPassword(row.getCell(5).getNumericCellValue()+"");
+                    thanhVien.setPassword(row.getCell(5).getNumericCellValue() + "");
                     thanhVien.setEmail(row.getCell(6).getStringCellValue());
 
                     // Lưu thành viên vào cơ sở dữ liệu
                     tvService.saveThanhVien(thanhVien);
                 }
-            }     
+            }
             // Đóng workbook và trả về thông báo thành công
             workbook.close();
             return "redirect:/thanhvien";

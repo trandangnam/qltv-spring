@@ -80,6 +80,15 @@
                   <span class="nav-main-link-name">Đăng nhập</span>
                 </a>
               </li>
+              <li
+                class="nav-main-item"
+                th:if="${user != null && user.maTV lt 10}"
+              >
+                <a class="nav-main-link" th:href="@{/thanhvien}">
+                  <i class="nav-main-link-icon si si-user"></i>
+                  <span class="nav-main-link-name">Dashboard</span>
+                </a>
+              </li>
               <li class="nav-main-item" th:if="${user != null}">
                 <a class="nav-main-link" th:href="@{/profile}">
                   <i class="nav-main-link-icon si si-user"></i>
@@ -145,6 +154,15 @@
                     <i class="nav-main-link-icon fa fa-circle-user"></i>
                   </a>
                   <ul class="nav-main-submenu nav-main-submenu-right">
+                    <li
+                      class="nav-main-item"
+                      th:if="${user != null && user.maTV lt 10}"
+                    >
+                      <a class="nav-main-link" th:href="@{/thanhvien}">
+                        <i class="nav-main-link-icon si si-user"></i>
+                        <span class="nav-main-link-name">Dashboard</span>
+                      </a>
+                    </li>
                     <li class="nav-main-item">
                       <a
                         class="nav-main-link"
